@@ -1,18 +1,18 @@
 package com.project.dao;
 
-import com.project.domain.exposition.Exposition;
+import com.project.entity.exposition.ExpositionEntity;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public interface ExpositionDao extends CrudDao<Exposition, Long> {
-    Optional<Exposition> findByTitle(String title);
+public interface ExpositionDao extends CrudDao<ExpositionEntity, Long> {
+    Optional<ExpositionEntity> findByTitle(String title);
 
-    List<Exposition> findByTheme(String theme);
+    List<ExpositionEntity> findByTheme(String theme);
 
-    List<Exposition> findByPriceRange(BigDecimal min, BigDecimal max);
+    List<ExpositionEntity> findByPriceRange(BigDecimal min, BigDecimal max);
 
-    List<Exposition> findByTimeRange(Timestamp start, Timestamp finish);
+    List<ExpositionEntity> findByTimeRange(LocalDate start, LocalDate finish);
 }

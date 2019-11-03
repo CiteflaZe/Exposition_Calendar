@@ -16,7 +16,7 @@ public class UserEntity {
     private final List<PaymentEntity> payments;
     private final List<TicketEntity> tickets;
 
-    public UserEntity(Builder builder) {
+    private UserEntity(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.surname = builder.surname;
@@ -25,6 +25,10 @@ public class UserEntity {
         this.role = builder.role;
         this.payments = builder.payments;
         this.tickets = builder.tickets;
+    }
+
+    public static Builder builder(){
+        return new Builder();
     }
 
     public Long getId() {

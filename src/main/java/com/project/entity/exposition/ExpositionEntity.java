@@ -4,14 +4,15 @@ import com.project.entity.hall.HallEntity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class ExpositionEntity {
     private final Long id;
     private final String title;
     private final String theme;
-    private final Timestamp startTime;
-    private final Timestamp finishTime;
+    private final LocalDate startTime;
+    private final LocalDate finishTime;
     private final BigDecimal ticketPrice;
     private final String description;
     private final HallEntity hall;
@@ -43,11 +44,11 @@ public class ExpositionEntity {
         return theme;
     }
 
-    public Timestamp getStartTime() {
+    public LocalDate getStartTime() {
         return startTime;
     }
 
-    public Timestamp getFinishTime() {
+    public LocalDate getFinishTime() {
         return finishTime;
     }
 
@@ -105,8 +106,8 @@ public class ExpositionEntity {
         private Long id;
         private String title;
         private String theme;
-        private Timestamp startTime;
-        private Timestamp finishTime;
+        private LocalDate startTime;
+        private LocalDate finishTime;
         private BigDecimal ticketPrice;
         private String description;
         private HallEntity hall;
@@ -133,12 +134,12 @@ public class ExpositionEntity {
             return this;
         }
 
-        public Builder withStartTime(Timestamp startTime) {
+        public Builder withStartTime(LocalDate startTime) {
             this.startTime = startTime;
             return this;
         }
 
-        public Builder withFinishTime(Timestamp finishTime) {
+        public Builder withFinishTime(LocalDate finishTime) {
             this.finishTime = finishTime;
             return this;
         }
@@ -153,7 +154,7 @@ public class ExpositionEntity {
             return this;
         }
 
-        public Builder withHallEntity(HallEntity hall) {
+        public Builder withHall(HallEntity hall) {
             this.hall = hall;
             return this;
         }

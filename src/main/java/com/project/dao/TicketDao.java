@@ -1,14 +1,19 @@
 package com.project.dao;
 
-import com.project.domain.ticket.Ticket;
 
-import java.sql.Date;
+import com.project.entity.ticket.TicketEntity;
+
+import java.time.LocalDate;
 import java.util.List;
 
-public interface TicketDao extends CrudDao<Ticket, Long> {
-    List<Ticket> findByExpirationDateRange(Date from, Date to);
+public interface TicketDao extends CrudDao<TicketEntity, Long> {
+    List<TicketEntity> findByExpirationDateRange(LocalDate from, LocalDate to);
 
-    List<Ticket> findByUserId(Long id);
+    List<TicketEntity> findByUserId(Long id);
 
-    List<Ticket> findByExpositionId(Long id);
+    List<TicketEntity> findByExpositionId(Long id);
+
+    List<TicketEntity> findByHallId(Long id);
+
+    List<TicketEntity> findByPaymentId(Long id);
 }

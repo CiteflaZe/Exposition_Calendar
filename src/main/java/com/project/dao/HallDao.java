@@ -1,14 +1,15 @@
 package com.project.dao;
 
-import com.project.domain.hall.Hall;
+
+import com.project.entity.hall.HallEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface HallDao extends CrudDao<Hall, Long> {
-    Optional<Hall> findByName(String name);
+public interface HallDao extends CrudDao<HallEntity, Long> {
+    Optional<HallEntity> findByName(String name);
 
-    List<Hall> findByCity(String city);
+    List<HallEntity> findByCity(String city);
 
-    Optional<Hall> findByStreetName(String streetName);
+    Optional<HallEntity> findByStreetName(String streetName);
 }

@@ -1,5 +1,6 @@
 package com.project.entity.payment;
 
+import com.project.entity.exposition.ExpositionEntity;
 import com.project.entity.ticket.TicketEntity;
 import com.project.entity.user.UserEntity;
 
@@ -14,6 +15,7 @@ public class PaymentEntity {
     private final Status status;
     private final BigDecimal amount;
     private final UserEntity user;
+    private final ExpositionEntity exposition;
     private final List<TicketEntity> tickets;
 
     private PaymentEntity(Builder builder) {
@@ -23,6 +25,11 @@ public class PaymentEntity {
         this.amount = builder.amount;
         this.user = builder.user;
         this.tickets = builder.tickets;
+        this.exposition = builder.exposition;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public Long getId() {
@@ -49,6 +56,10 @@ public class PaymentEntity {
         return tickets;
     }
 
+    public ExpositionEntity getExposition() {
+        return exposition;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -63,12 +74,13 @@ public class PaymentEntity {
                 status == that.status &&
                 Objects.equals(amount, that.amount) &&
                 Objects.equals(user, that.user) &&
+                Objects.equals(exposition, that.exposition) &&
                 Objects.equals(tickets, that.tickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentTime, status, amount, user, tickets);
+        return Objects.hash(id, paymentTime, status, amount, user, exposition, tickets);
     }
 
     @Override
@@ -79,6 +91,7 @@ public class PaymentEntity {
                 ", status=" + status +
                 ", amount=" + amount +
                 ", user=" + user +
+                ", exposition=" + exposition +
                 ", tickets=" + tickets +
                 '}';
     }
@@ -89,6 +102,7 @@ public class PaymentEntity {
         private Status status;
         private BigDecimal amount;
         private UserEntity user;
+        private ExpositionEntity exposition;
         private List<TicketEntity> tickets;
 
         private Builder() {
@@ -120,6 +134,11 @@ public class PaymentEntity {
 
         public Builder withUser(UserEntity user) {
             this.user = user;
+            return this;
+        }
+
+        public Builder withExposition(ExpositionEntity exposition) {
+            this.exposition = exposition;
             return this;
         }
 
