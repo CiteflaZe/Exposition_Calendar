@@ -5,15 +5,19 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface CrudDao<E, ID> {
-    E create(E entity);
+    boolean save(E entity);
 
     Optional<E> findById(ID id);
 
     List<E> findAll();
 
-    E update(E entity);
+    boolean update(E entity);
 
-    E deleteById(ID id);
+    default void deleteById(ID id){
+        throw new UnsupportedOperationException("The use of this method is not allowed");
+    }
 
-    void deleteAllByIds(Set<ID> ids);
+    default void deleteAllByIds(Set<ID> ids){
+        throw new UnsupportedOperationException("The use of this method is not allowed");
+    }
 }

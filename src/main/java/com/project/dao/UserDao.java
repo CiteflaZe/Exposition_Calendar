@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.entity.User;
+import com.project.domain.user.User;
 
 import java.util.Optional;
 

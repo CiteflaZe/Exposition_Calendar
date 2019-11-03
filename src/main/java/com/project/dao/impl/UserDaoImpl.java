@@ -2,72 +2,54 @@ package com.project.dao.impl;
 
 import com.project.dao.DBConnector;
 import com.project.dao.UserDao;
-import com.project.entity.Role;
-import com.project.entity.User;
-import org.apache.log4j.Logger;
+import com.project.entity.user.Role;
+import com.project.domain.user.User;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-public class UserDaoImpl extends AbstractCrudDaoImpl<User, Long> implements UserDao {
-    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
-
-    private static final String FIND_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private static final String FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
+public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
+    private static final String SAVE_QUERY = "INSERT INTO users(email, password, name, surname) VALUES (?,?,?,?)";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM users";
+    private static final String UPDATE_QUERY = "UPDATE users SET email = ?, password = ?, name = ?, surname = ? WHERE id = ?";
+    private static final String DELETE_BY_ID_QUERY = "DELETE FROM users WHERE id = ?";
+    private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
 
     public UserDaoImpl(DBConnector connector) {
-        super(connector);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, DELETE_BY_ID_QUERY);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        throw new UnsupportedOperationException();
+        return findByStringParam(email, FIND_BY_EMAIL_QUERY);
     }
 
     @Override
-    public User create(User entity) {
-        throw new UnsupportedOperationException();
+    protected void insertStatementMapper(PreparedStatement preparedStatement, User entity) throws SQLException {
+        preparedStatement.setString(1, entity.getEmail());
+        preparedStatement.setString(2, entity.getPassword());
+        preparedStatement.setString(3, entity.getName());
+        preparedStatement.setString(4, entity.getSurname());
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return findById(id, FIND_USER_BY_ID);
-    }
-
-    @Override
-    public List<User> findAll() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public User update(User entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public User deleteById(Long aLong) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void deleteAllByIds(Set<Long> longs) {
-        throw new UnsupportedOperationException();
+    protected void updateStatementMapper(PreparedStatement preparedStatement, User entity) throws SQLException {
+        insertStatementMapper(preparedStatement, entity);
+        preparedStatement.setLong(5, entity.getId());
     }
 
     @Override
     protected Optional<User> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-        return resultSet.next() ?
-                Optional.ofNullable(User.builder()
-                        .withId(resultSet.getLong("id"))
-                        .withEmail(resultSet.getString("email"))
-                        .withPassword(resultSet.getString("password"))
-                        .withName(resultSet.getString("name"))
-                        .withSurname(resultSet.getString("surname"))
-                        .withRole(Role.USER)
-                        .build())
-                : Optional.empty();
+        return Optional.ofNullable(User.builder()
+                .withId(resultSet.getLong("id"))
+                .withEmail(resultSet.getString("email"))
+                .withPassword(resultSet.getString("password"))
+                .withName(resultSet.getString("name"))
+                .withSurname(resultSet.getString("surname"))
+                .withRole((resultSet.getInt("role_id") == 1) ? Role.ADMIN : Role.USER)
+                .build());
     }
 }
