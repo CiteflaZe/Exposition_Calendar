@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import com.project.exception.DataBaseRuntimeException;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -10,28 +11,27 @@ import java.util.ResourceBundle;
 
 public class DBConnector {
     private static final Logger LOGGER = Logger.getLogger(DBConnector.class);
-    private final String url;
-    private final String user;
-    private final String password;
 
-    public DBConnector(String configFileName){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    private static final BasicDataSource dataSource = new BasicDataSource();
+
+    public DBConnector(String configFileName) {
         ResourceBundle bundle = ResourceBundle.getBundle(configFileName);
-        this.url = bundle.getString("db.url");
-        this.user = bundle.getString("db.user");
-        this.password = bundle.getString("db.password");
+
+        dataSource.setDriverClassName(bundle.getString("db.driver"));
+        dataSource.setUrl(bundle.getString("db.url"));
+        dataSource.setUsername(bundle.getString("db.user"));
+        dataSource.setPassword(bundle.getString("db.password"));
+        dataSource.setMinIdle(Integer.parseInt(bundle.getString("db.minIdle")));
+        dataSource.setMaxIdle(Integer.parseInt(bundle.getString("db.maxIdle")));
+        dataSource.setMaxOpenPreparedStatements(Integer.parseInt(bundle.getString("db.maxOpenPreparedStatements")));
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
-            return DriverManager.getConnection(url, user, password);
+            return dataSource.getConnection();
         } catch (SQLException e) {
-            LOGGER.error("Connection was not established");
-            throw new DataBaseRuntimeException(e);
+            LOGGER.error("Connection was not established", e);
+            throw new DataBaseRuntimeException("Connection not established", e);
         }
     }
 }
