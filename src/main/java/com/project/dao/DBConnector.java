@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.Exception.DataBaseRuntimeException;
+import com.project.exception.DataBaseRuntimeException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -15,6 +15,11 @@ public class DBConnector {
     private final String password;
 
     public DBConnector(String configFileName){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         ResourceBundle bundle = ResourceBundle.getBundle(configFileName);
         this.url = bundle.getString("db.url");
         this.user = bundle.getString("db.user");

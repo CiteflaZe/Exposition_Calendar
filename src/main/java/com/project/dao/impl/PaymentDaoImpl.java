@@ -1,9 +1,8 @@
 package com.project.dao.impl;
 
-import com.project.Exception.DataBaseRuntimeException;
+import com.project.exception.DataBaseRuntimeException;
 import com.project.dao.DBConnector;
 import com.project.dao.PaymentDao;
-import com.project.domain.payment.Payment;
 import com.project.entity.exposition.ExpositionEntity;
 import com.project.entity.payment.PaymentEntity;
 import com.project.entity.payment.Status;

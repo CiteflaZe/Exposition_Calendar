@@ -1,6 +1,6 @@
 package com.project.dao.impl;
 
-import com.project.Exception.DataBaseRuntimeException;
+import com.project.exception.DataBaseRuntimeException;
 import com.project.dao.DBConnector;
 import com.project.dao.ExpositionDao;
 import com.project.entity.exposition.ExpositionEntity;

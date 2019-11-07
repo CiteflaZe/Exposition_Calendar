@@ -1,4 +1,4 @@
-package com.project.Exception;
+package com.project.exception;
 
 public class DataBaseRuntimeException extends RuntimeException {
     public DataBaseRuntimeException(String message) {

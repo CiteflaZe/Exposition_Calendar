@@ -3,7 +3,6 @@ package com.project.entity.exposition;
 import com.project.entity.hall.HallEntity;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
 

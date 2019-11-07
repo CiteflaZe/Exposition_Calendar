@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Ticket {
-    private final Integer id;
+    private final Long id;
     private final LocalDate expirationDate;
     private final Exposition exposition;
     private final Hall hall;
@@ -23,7 +23,7 @@ public class Ticket {
         return new Builder();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -70,7 +70,7 @@ public class Ticket {
     }
     
     public static class Builder{
-        private Integer id;
+        private Long id;
         private LocalDate expirationDate;
         private Exposition exposition;
         private Hall hall;
@@ -81,7 +81,7 @@ public class Ticket {
             return new Ticket(this);
         }
 
-        public Builder withId(Integer id) {
+        public Builder withId(Long id) {
             this.id = id;
             return this;
         }

@@ -20,6 +20,15 @@ public class User {
         this.password = builder.password;
         this.role = builder.role;
     }
+    
+    public User(User user, String encodedPassword){
+        this.id = user.id;
+        this.name = user.name;
+        this.surname = user.surname;
+        this.email = user.email;
+        this.password = encodedPassword;
+        this.role = user.role;
+    }
 
     public static Builder builder() {
         return new Builder();

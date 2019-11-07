@@ -2,7 +2,7 @@ package com.project.dao.impl;
 
 import com.project.dao.CrudDao;
 import com.project.dao.DBConnector;
-import com.project.Exception.DataBaseRuntimeException;
+import com.project.exception.DataBaseRuntimeException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -41,8 +41,9 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
     private final String deleteByIdQuery;
 
 
-    public AbstractDaoImpl(DBConnector connector, String saveQuery, String findByIdQuery,
-                           String findAllQuery, String updateQuery, String deleteByIdQuery) {
+    public AbstractDaoImpl(DBConnector connector, String saveQuery,
+                           String findByIdQuery, String findAllQuery,
+                           String updateQuery, String deleteByIdQuery) {
         this.connector = connector;
         this.saveQuery = saveQuery;
         this.findByIdQuery = findByIdQuery;
@@ -82,6 +83,7 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
         }
     }
 
+    //TODO pagination
     @Override
     public List<E> findAll() {
         try (Connection connection = connector.getConnection();
@@ -153,7 +155,7 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
                 return entities;
             }
         } catch (SQLException e){
-            LOGGER.error("Failed operation" + e.getMessage());
+            LOGGER.error("Failed operation", e);
             throw new DataBaseRuntimeException(e);
         }
     }
