@@ -15,14 +15,13 @@ public class HallDaoImpl extends AbstractDaoImpl<HallEntity> implements HallDao 
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM halls WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM halls";
     private static final String UPDATE_QUERY = "UPDATE halls SET name = ?, city = ?, street = ?, house_number = ? WHERE id = ?";
-    private static final String DELETE_BY_ID_QUERY = "DELETE FROM users WHERE id = ?";
 
     private static final String FIND_BY_NAME_QUERY = "SELECT * FROM halls WHERE name = ?";
     private static final String FIND_BY_CITY_QUERY = "SELECT * FROM halls WHERE city = ?";
     private static final String FIND_BY_STREET_QUERY = "SELECT * FROM halls WHERE street = ?";
 
     public HallDaoImpl(DBConnector connector) {
-        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, DELETE_BY_ID_QUERY);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
     }
 
     @Override

@@ -20,7 +20,6 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM tickets WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM tickets";
     private static final String UPDATE_QUERY = "UPDATE tickets SET expiration_date = ?, exposition_id = ?, exposition_hall_id = ?, user_id = ? WHERE id = ?";
-    private static final String DELETE_BY_ID_QUERY = "DELETE FROM tickets WHERE id = ?";
 
     private static final String FIND_BY_EXPIRATION_DATE_RANGE = "SELECT * FROM tickets WHERE expiration_date > ? AND expiration_date < ?";
     private static final String FIND_BY_USER_ID = "SELECT * FROM tickets WHERE user_id = ?";
@@ -29,7 +28,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
     private static final String FIND_BY_PAYMENT_ID = "SELECT * FROM tickets WHERE payment_id = ?";
 
     public TicketDaoImpl(DBConnector connector) {
-        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, DELETE_BY_ID_QUERY);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
     }
 
     @Override

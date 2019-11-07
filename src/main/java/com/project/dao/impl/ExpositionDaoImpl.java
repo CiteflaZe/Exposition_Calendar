@@ -18,7 +18,6 @@ public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> impleme
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM expositions WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM expositions";
     private static final String UPDATE_QUERY = "UPDATE expositions SET title = ?, theme = ?, start_time = ?, finish_time = ?, ticket_price = ?, description = ?, hall_id = ? WHERE id = ?";
-    private static final String DELETE_BY_ID_QUERY = "DELETE FROM users WHERE id = ?";
 
     private static final String FIND_BY_TITLE_QUERY = "SELECT * FROM expositions WHERE title = ?";
     private static final String FIND_BY_THEME_QUERY = "SELECT * FROM expositions WHERE theme = ?";
@@ -26,7 +25,7 @@ public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> impleme
     private static final String FIND_BY_TIME_RANGE_QUERY = "SELECT * FROM expositions WHERE finish_time > ? AND start_time < ?";
 
     public ExpositionDaoImpl(DBConnector connector) {
-        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, DELETE_BY_ID_QUERY);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
     }
 
     @Override

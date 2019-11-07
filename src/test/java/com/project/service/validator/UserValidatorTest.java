@@ -13,7 +13,7 @@ public class UserValidatorTest {
     private final UserValidator userValidator = new UserValidator();
 
     @Test
-    public void validateShouldThrowInvalidRegistrationRuntimeExceptionWithNullUser() {
+    public void validateShouldThrowInvalidRegistrationExceptionWithNullUser() {
         expectedException.expect(InvalidRegistrationException.class);
         expectedException.expectMessage("Invalid user");
 
@@ -21,9 +21,9 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void validateShouldThrowInvalidRegistrationRuntimeExceptionWithInvalidName() {
+    public void validateShouldThrowInvalidRegistrationExceptionWithInvalidName() {
         expectedException.expect(InvalidRegistrationException.class);
-        expectedException.expectMessage("Invalid Name");
+        expectedException.expectMessage("Name does not match regex");
 
 
         userValidator.validate(User.builder()
@@ -32,9 +32,9 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void validateShouldThrowInvalidRegistrationRuntimeExceptionWithInvalidEmail() {
+    public void validateShouldThrowInvalidRegistrationExceptionWithInvalidEmail() {
         expectedException.expect(InvalidRegistrationException.class);
-        expectedException.expectMessage("Invalid Email");
+        expectedException.expectMessage("Email does not match regex");
 
         userValidator.validate(User.builder()
                 .withName("Name")
@@ -43,9 +43,9 @@ public class UserValidatorTest {
     }
 
     @Test
-    public void validateShouldThrowInvalidRegistrationRuntimeExceptionWithInvalidPassword() {
+    public void validateShouldThrowInvalidRegistrationExceptionWithInvalidPassword() {
         expectedException.expect(InvalidRegistrationException.class);
-        expectedException.expectMessage("Invalid Password");
+        expectedException.expectMessage("Password does not match regex");
 
         userValidator.validate(User.builder()
                 .withName("Name")
@@ -56,7 +56,11 @@ public class UserValidatorTest {
 
     @Test
     public void validateShouldNotThrowException(){
-//        userValidator.validate();
+        userValidator.validate(User.builder()
+                .withName("Name")
+                .withEmail("email@gmail.com")
+                .withPassword("Pass111")
+                .build());
     }
 
 }

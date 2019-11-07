@@ -38,18 +38,16 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
     private final String findByIdQuery;
     private final String findAllQuery;
     private final String updateQuery;
-    private final String deleteByIdQuery;
 
 
     public AbstractDaoImpl(DBConnector connector, String saveQuery,
                            String findByIdQuery, String findAllQuery,
-                           String updateQuery, String deleteByIdQuery) {
+                           String updateQuery) {
         this.connector = connector;
         this.saveQuery = saveQuery;
         this.findByIdQuery = findByIdQuery;
         this.findAllQuery = findAllQuery;
         this.updateQuery = updateQuery;
-        this.deleteByIdQuery = deleteByIdQuery;
     }
 
     @Override
@@ -85,10 +83,12 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
 
     //TODO pagination
     @Override
-    public List<E> findAll() {
+    public List<E> findAll(Integer firstRow, Integer startFrom) {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
 
+            preparedStatement.setInt(1, firstRow);
+            preparedStatement.setInt(2, startFrom);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();
                 while (resultSet.next()) {
@@ -97,7 +97,7 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
                 return entities;
             }
         } catch (SQLException e) {
-            LOGGER.error("Connection not established" + e.getMessage());
+            LOGGER.error("Connection not established", e);
             throw new DataBaseRuntimeException(e);
         }
     }
@@ -138,7 +138,7 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
                 return resultSet.next() ? mapResultSetToEntity(resultSet) : Optional.empty();
             }
         } catch (SQLException e){
-            LOGGER.error("Failed operation" + e.getMessage());
+            LOGGER.error("Failed operation", e);
             throw new DataBaseRuntimeException(e);
         }
     }

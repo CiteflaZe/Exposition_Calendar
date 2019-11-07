@@ -43,7 +43,7 @@
 <%--    </c:forEach>--%>
 <%--  </div>--%>
 
-  <form method="post" action="<c:url value='user.jsp'/>">
+  <form method="post" action="<c:url value='/user'/>">
 <%--    <label for="inputEmail">Email</label>--%>
 <%--    <input type="email" id="inputEmail" placeholder= <fmt:message key="signIn.email"/> required autofocus name="email" value="">--%>
 <%--    <label for="inputPassword">Password</label>--%>
@@ -56,6 +56,13 @@
   </form>
 
   <a href="<c:url value='/show'/>">Show users</a>
+  <form action="<c:url value='/show'/>" method="post">
+<%--    <c:set var="rowCount" scope="session" value="15"/>--%>
+<%--    <c:set var="startFrom" scope="session" value="0"/>--%>
+    <input type="hidden" name="rowCount" value="${15}">
+    <input type="hidden" name="startFrom" value="${0}">
+    <input type="submit" value="<fmt:message key='signIn.submit'/>">
+  </form>
 
   </body>
 </html>

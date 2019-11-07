@@ -64,8 +64,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> showAll() {
-        List<UserEntity> userEntities = userDao.findAll();
+    public List<User> showAll(Integer firstRow, Integer startFrom) {
+        List<UserEntity> userEntities = userDao.findAll(firstRow, startFrom);
         return userEntities.stream()
                 .map(mapper::mapUserEntityToUser)
                 .collect(Collectors.toList());

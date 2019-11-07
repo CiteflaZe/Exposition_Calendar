@@ -24,35 +24,17 @@ public class UserValidator implements Validator<User> {
             throw new InvalidRegistrationException("Invalid user");
         }
 
-        validateName(entity.getName());
-        validateEmail(entity.getEmail());
-        validatePassword(entity.getPassword());
-    }
-    //TODO generic string validator, matcher, message, string
-    private void validateName(String name){
-        Matcher matcher = NAME_PATTERN.matcher(name);
-
-        if(!matcher.find()){
-            LOGGER.warn("Name does not match regex");
-            throw new InvalidRegistrationException("Invalid Name");
-        }
+        validateParam(entity.getName(), NAME_PATTERN, "Name does not match regex");
+        validateParam(entity.getEmail(), EMAIL_PATTERN, "Email does not match regex");
+        validateParam(entity.getPassword(), PASSWORD_PATTERN, "Password does not match regex");
     }
 
-    private void validatePassword(String password){
-        Matcher matcher = PASSWORD_PATTERN.matcher(password);
+    private void validateParam(String param, Pattern pattern, String message) {
+        Matcher matcher = pattern.matcher(param);
 
-        if(!matcher.find()){
-            LOGGER.warn("Password does not match regex");
-            throw new InvalidRegistrationException("Invalid Password");
-        }
-    }
-
-    private void validateEmail(String email){
-        Matcher matcher = EMAIL_PATTERN.matcher(email);
-
-        if (!matcher.find()){
-            LOGGER.warn("Email does not match regex");
-            throw new InvalidRegistrationException("Invalid Email");
+        if (!matcher.find()) {
+            LOGGER.warn(message);
+            throw new InvalidRegistrationException(message);
         }
     }
 }

@@ -15,18 +15,49 @@ public class ShowUsersServlet extends HttpServlet {
 
     private final UserService userService;
 
-    public ShowUsersServlet(){
+    public ShowUsersServlet() {
         ApplicationContextInjector injector = ApplicationContextInjector.getInstance();
         userService = injector.getUserService();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> users = userService.showAll();
-        req.setAttribute("users", users);
-        req.setAttribute("listSize", users.size());
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Integer rowCount = Integer.valueOf((String) req.getSession().getAttribute("rowCount"));
+//        Integer startFrom = Integer.valueOf((String) req.getSession().getAttribute("startFrom"));
+        if (req.getParameter("rowCount") != null && req.getParameter("startFrom") != null) {
+            Integer rowCount = Integer.valueOf(req.getParameter("rowCount"));
+            Integer startFrom = Integer.valueOf(req.getParameter("startFrom"));
 
+            String page = req.getParameter("page");
 
-        req.getRequestDispatcher("show.jsp").forward(req, resp);
+            if (!(rowCount > 0 && startFrom >= 0)) {
+                throw new RuntimeException("Invalid values");
+            }
+            List<User> users = userService.showAll(rowCount, startFrom);
+            Long lastId = users.get(users.size() - 1).getId();
+
+            if (page != null) {
+                if (page.equals("next")) {
+                    if (!(startFrom + rowCount > lastId)) {
+                        startFrom += rowCount;
+                    }
+                } else {
+                    if(startFrom - rowCount < 0){
+                        startFrom = 0;
+                    }else {
+                        startFrom -= rowCount;
+                    }
+                }
+            }
+
+            users = userService.showAll(rowCount, startFrom);
+            req.setAttribute("users", users);
+            req.setAttribute("rowCount", rowCount);
+            req.setAttribute("startFrom", startFrom);
+
+            req.getRequestDispatcher("show.jsp").forward(req, resp);
+        } else {
+            throw new RuntimeException("Something went wrong");
+        }
     }
 }

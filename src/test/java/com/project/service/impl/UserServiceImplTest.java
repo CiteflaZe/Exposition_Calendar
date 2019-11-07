@@ -109,10 +109,10 @@ public class UserServiceImplTest {
     public void showAllShouldReturnList(){
         users.add(user);
         entities.add(entity);
-        when(userDao.findAll()).thenReturn(entities);
+        when(userDao.findAll(anyInt(), anyInt())).thenReturn(entities);
         when(mapper.mapUserEntityToUser(entity)).thenReturn(user);
 
-        List<User> actual = userService.showAll();
+        List<User> actual = userService.showAll(1, 1);
 
         assertThat(actual, is(users));
 

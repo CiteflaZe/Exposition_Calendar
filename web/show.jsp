@@ -15,19 +15,6 @@
 <body>
 
 <a href="index.jsp">Home</a>
-
-<c:set var="totalCount" value="${listSize}"/>
-<c:set var="perPage" scope="session"  value="${5}"/>
-<c:set var="pageStart" value="${param.start}"/>
-<c:if test="${empty pageStart or pageStart < 0}">
-    <c:set var="pageStart" value="0"/>
-</c:if>
-<c:if test="${totalCount < pageStart}">
-    <c:set var="pageStart" value="${pageStart - perPage}"/>
-</c:if>
-<a href="?start=${pageStart - perPage}"><<</a>${pageStart + 1} - ${pageStart + perPage}
-<a href="?start=${pageStart + perPage}">>></a>
-
 <div>
     <table>
         <thead>
@@ -41,7 +28,7 @@
         </thead>
 
         <tbody>
-        <c:forEach var="user" items="${users}" begin="${pageStart}" end="${pageStart + perPage - 1}">
+        <c:forEach var="user" items="${users}">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
@@ -52,9 +39,15 @@
         </c:forEach>
 
         </tbody>
-
-
     </table>
+
+    <form action="<c:url value='/show'/>" method="post">
+        <input type="hidden" name="rowCount" value="${rowCount}">
+        <input type="hidden" name="startFrom" value="${startFrom}">
+        <input type="submit" name="page" value="previous">
+        <input type="submit" name="page" value="next">
+    </form>
+
 </div>
 </body>
 </html>

@@ -18,7 +18,6 @@ public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements Pa
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM payments WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM payments";
     private static final String UPDATE_QUERY = "UPDATE payments SET transaction_time = ?, status = ?, tickets_amount = ?, amount = ?, user_id = ?, exposition_id = ? WHERE id = ?";
-    private static final String DELETE_BY_ID_QUERY = "DELETE FROM payments WHERE id = ?";
 
     private static final String FIND_BY_STATUS = "SELECT * FROM payments WHERE status = ?";
     private static final String FIND_BY_TIME_RANGE = "SELECT * FROM payments WHERE transaction_time > ? AND transaction_time < ?";
@@ -26,7 +25,7 @@ public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements Pa
     private static final String FIND_BY_EXPOSITION_ID = "SELECT * FROM payments WHERE exposition_id = ?";
 
     public PaymentDaoImpl(DBConnector connector) {
-        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, DELETE_BY_ID_QUERY);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
     }
 
     @Override

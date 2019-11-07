@@ -9,6 +9,6 @@ public interface UserService {
 
     boolean register(User user);
 
-    List<User> showAll();
+    List<User> showAll(Integer rowCount, Integer startFrom);
 
 }
