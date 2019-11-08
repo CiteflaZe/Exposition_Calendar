@@ -1,13 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
   User: CiteflaZe
-  Date: 05-Nov-19
-  Time: 9:59 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
-  User: CiteflaZe
   Date: 08-Nov-19
   Time: 9:06 AM
   To change this template use File | Settings | File Templates.
@@ -25,15 +18,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 mx-auto">
-            <div id="first">
+            <div id="second">
                 <div class="myform form ">
                     <div class="logo mb-3">
                         <div class="col-md-12 text-center">
-                            <h1>Login</h1>
+                            <h1 >Signup</h1>
                         </div>
                     </div>
-                    <form action="/user" method="post" name="login">
-                        <input type="hidden" name="command" value="login">
+                    <form action="/user" name="registration" method="post">
+                        <input type="hidden" name="command" value="register">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">First Name</label>
+                            <input type="text"  name="name" class="form-control" id="firstname" aria-describedby="emailHelp" placeholder="Enter Firstname">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Last Name</label>
+                            <input type="text"  name="surname" class="form-control" id="lastname" aria-describedby="emailHelp" placeholder="Enter Lastname">
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
                             <input type="email" name="email"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -42,21 +43,23 @@
                             <label for="exampleInputEmail1">Password</label>
                             <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
                         </div>
-<%--                        <div class="form-group">--%>
-<%--                            <p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>--%>
-<%--                        </div>--%>
-                        <div class="col-md-12 text-center ">
-                            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
-                        </div>
                         <div class="form-group">
-                            <p class="text-center">Don't have account? <a href="register.jsp" id="signup">Sign up here</a></p>
+                            <label for="exampleInputEmail1">Confirm password</label>
+                            <input type="password" name="passwordConfirmation" id="passwordConfirmation"  class="form-control" aria-describedby="emailHelp" placeholder="Confirm Password">
                         </div>
-                    </form>
+                        <div class="col-md-12 text-center mb-3">
+                            <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Register</button>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="form-group">
+                                <p class="text-center"><a href="sign-in.jsp" id="signin">Already have an account?</a></p>
+                            </div>
+                        </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 </body>
-

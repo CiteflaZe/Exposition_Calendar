@@ -17,11 +17,11 @@ public class RegisterCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        final String name = request.getParameter("name");
+        final String surname = request.getParameter("surname");
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
         final String passwordConfirmation = request.getParameter("passwordConfirmation");
-        final String name = request.getParameter("name");
-        final String surname = request.getParameter("surname");
 
         if (!Objects.equals(password, passwordConfirmation)){
             return "register.jsp";
