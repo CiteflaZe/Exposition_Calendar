@@ -16,7 +16,8 @@
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link href="css/sign-in.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
+        <script src="script.js" type="text/javascript"></script>
         <title>Login</title>
 
         <style>
@@ -75,8 +76,12 @@
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                            <div class="form-group">
+                                <p class="text-center">Please fill in all fields</p>
+                            </div>
                             <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
                         </div>
+
                         <div class="form-group">
                             <p class="text-center">Don't have account? <a href="register.jsp" id="signup">Sign up here</a></p>
                         </div>
