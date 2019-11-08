@@ -64,6 +64,20 @@
     <input type="submit" value="<fmt:message key='signIn.submit'/>">
   </form>
 
+  <form action="/user" method="post">
+      <input type="hidden" name="command" value="login">
+      <label><input type="email" name="email"></label><fmt:message key="signIn.email"/><br>
+      <label><input type="password" name="password"></label><fmt:message key="signIn.password"/><br>
+      <button type="submit"><fmt:message key='signIn.submit'/></button>
+  </form>
+
+  <p><c:out value = "${requestScope.dataForView}"/></p>
+
+  <form method="post" action="">
+      <input type="text" name="data" />
+      <input type="submit" value="Send" />
+  </form>
+
   </body>
 </html>
 

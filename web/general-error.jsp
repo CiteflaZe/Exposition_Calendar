@@ -1,19 +1,17 @@
 <%--
   Created by IntelliJ IDEA.
   User: CiteflaZe
-  Date: 06-Nov-19
-  Time: 2:07 PM
+  Date: 08-Nov-19
+  Time: 2:09 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    <input type="text" value="<c:out value='${user.email}'/>">
+    <h1>It seems like something went wrong.</h1>
+    <a href="index.jsp">Back to home</a>
 </body>
 </html>

@@ -81,13 +81,12 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
         }
     }
 
-    //TODO pagination
     @Override
-    public List<E> findAll(Integer firstRow, Integer startFrom) {
+    public List<E> findAll(Integer rowCount, Integer startFrom) {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
 
-            preparedStatement.setInt(1, firstRow);
+            preparedStatement.setInt(1, rowCount);
             preparedStatement.setInt(2, startFrom);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();

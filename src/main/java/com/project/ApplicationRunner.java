@@ -40,5 +40,7 @@ public class ApplicationRunner {
 //                    .build());
 //        }
 
+        System.out.println(Role.valueOf("Admin".toUpperCase()));
+
     }
 }

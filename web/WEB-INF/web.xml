@@ -4,6 +4,14 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <servlet>
+        <servlet-name>SomeServlet</servlet-name>
+        <servlet-class>com.project.controller.SomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SomeServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
@@ -11,7 +19,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
-        <url-pattern>/user.jsp</url-pattern>
+        <url-pattern>/user</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -31,4 +39,8 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <error-page>
+        <location>/general-error.jsp</location>
+    </error-page>
 </web-app>

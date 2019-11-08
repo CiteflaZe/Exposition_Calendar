@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> implements ExpositionDao {
     private static final String SAVE_QUERY = "INSERT INTO expositions(title, theme, start_time, finish_time, ticket_price, description, hall_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM expositions WHERE id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM expositions";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM expositions LIMIT ? OFFSET ?";
     private static final String UPDATE_QUERY = "UPDATE expositions SET title = ?, theme = ?, start_time = ?, finish_time = ?, ticket_price = ?, description = ?, hall_id = ? WHERE id = ?";
 
     private static final String FIND_BY_TITLE_QUERY = "SELECT * FROM expositions WHERE title = ?";

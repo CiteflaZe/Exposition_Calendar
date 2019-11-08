@@ -18,7 +18,7 @@ import java.util.Optional;
 public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements TicketDao {
     private static final String SAVE_QUERY = "INSERT INTO tickets(expiration_date, exposition_id, exposition_hall_id, user_id, payment_id) VALUES (?,?,?,?,?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM tickets WHERE id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM tickets";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM tickets LIMIT ? OFFSET ?";
     private static final String UPDATE_QUERY = "UPDATE tickets SET expiration_date = ?, exposition_id = ?, exposition_hall_id = ?, user_id = ? WHERE id = ?";
 
     private static final String FIND_BY_EXPIRATION_DATE_RANGE = "SELECT * FROM tickets WHERE expiration_date > ? AND expiration_date < ?";
