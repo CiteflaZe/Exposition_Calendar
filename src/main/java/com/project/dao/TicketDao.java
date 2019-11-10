@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TicketDao extends CrudDao<TicketEntity, Long> {
-    List<TicketEntity> findByExpirationDateRange(LocalDate from, LocalDate to);
+    List<TicketEntity> findByValidDateRange(LocalDate from, LocalDate to);
 
     List<TicketEntity> findByUserId(Long id);
 

@@ -11,4 +11,6 @@ public interface UserService {
 
     List<User> showAll(Integer rowCount, Integer startFrom);
 
+    Integer showEntriesAmount();
+
 }

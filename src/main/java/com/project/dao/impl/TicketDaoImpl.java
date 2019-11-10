@@ -16,25 +16,26 @@ import java.util.List;
 import java.util.Optional;
 
 public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements TicketDao {
-    private static final String SAVE_QUERY = "INSERT INTO tickets(expiration_date, exposition_id, exposition_hall_id, user_id, payment_id) VALUES (?,?,?,?,?)";
+    private static final String SAVE_QUERY = "INSERT INTO tickets(valid_date, exposition_id, hall_id, user_id, payment_id) VALUES (?,?,?,?,?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM tickets WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM tickets LIMIT ? OFFSET ?";
-    private static final String UPDATE_QUERY = "UPDATE tickets SET expiration_date = ?, exposition_id = ?, exposition_hall_id = ?, user_id = ? WHERE id = ?";
+    private static final String UPDATE_QUERY = "UPDATE tickets SET valid_date = ?, exposition_id = ?, hall_id = ?, user_id = ? WHERE id = ?";
+    private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM tickets";
 
-    private static final String FIND_BY_EXPIRATION_DATE_RANGE = "SELECT * FROM tickets WHERE expiration_date > ? AND expiration_date < ?";
+    private static final String FIND_BY_valid_date_RANGE = "SELECT * FROM tickets WHERE valid_date > ? AND valid_date < ?";
     private static final String FIND_BY_USER_ID = "SELECT * FROM tickets WHERE user_id = ?";
     private static final String FIND_BY_EXPOSITION_ID = "SELECT * FROM tickets WHERE exposition_id = ?";
-    private static final String FIND_BY_HALL_ID = "SELECT * FROM tickets WHERE exposition_hall_id = ?";
+    private static final String FIND_BY_HALL_ID = "SELECT * FROM tickets WHERE hall_id = ?";
     private static final String FIND_BY_PAYMENT_ID = "SELECT * FROM tickets WHERE payment_id = ?";
 
     public TicketDaoImpl(DBConnector connector) {
-        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 
     @Override
-    public List<TicketEntity> findByExpirationDateRange(LocalDate from, LocalDate to) {
+    public List<TicketEntity> findByValidDateRange(LocalDate from, LocalDate to) {
         try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_EXPIRATION_DATE_RANGE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_valid_date_RANGE)) {
 
             preparedStatement.setDate(1, Date.valueOf(from));
             preparedStatement.setDate(2, Date.valueOf(to));
@@ -72,7 +73,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
 
     @Override
     protected void insertStatementMapper(PreparedStatement preparedStatement, TicketEntity entity) throws SQLException {
-        preparedStatement.setDate(1, Date.valueOf(entity.getExpirationDate()));
+        preparedStatement.setDate(1, Date.valueOf(entity.getValidDate()));
         preparedStatement.setLong(2, entity.getExposition().getId());
         preparedStatement.setLong(3, entity.getHall().getId());
         preparedStatement.setLong(4, entity.getUser().getId());
@@ -91,7 +92,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
                 .withId(resultSet.getLong("exposition_id"))
                 .build();
         HallEntity hall = HallEntity.builder()
-                .withId(resultSet.getLong("exposition_hall_id"))
+                .withId(resultSet.getLong("hall_id"))
                 .build();
         UserEntity user = UserEntity.builder()
                 .withId(resultSet.getLong("user_id"))
@@ -102,7 +103,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
 
         return Optional.ofNullable(TicketEntity.builder()
                 .withId(resultSet.getLong("id"))
-                .withExpirationDate(resultSet.getDate("expiration_date").toLocalDate())
+                .withValidDate(resultSet.getDate("valid_date").toLocalDate())
                 .withExposition(exposition)
                 .withHall(hall)
                 .withUser(user)

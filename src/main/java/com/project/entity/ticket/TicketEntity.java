@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class TicketEntity {
     private final Long id;
-    private final LocalDate expirationDate;
+    private final LocalDate validDate;
     private final ExpositionEntity exposition;
     private final HallEntity hall;
     private final UserEntity user;
@@ -18,7 +18,7 @@ public class TicketEntity {
 
     private TicketEntity(Builder builder) {
         this.id = builder.id;
-        this.expirationDate = builder.expirationDate;
+        this.validDate = builder.validDate;
         this.exposition = builder.exposition;
         this.hall = builder.hall;
         this.user = builder.user;
@@ -33,8 +33,8 @@ public class TicketEntity {
         return id;
     }
 
-    public LocalDate getExpirationDate() {
-        return expirationDate;
+    public LocalDate getValidDate() {
+        return validDate;
     }
 
     public ExpositionEntity getExposition() {
@@ -63,7 +63,7 @@ public class TicketEntity {
         }
         TicketEntity that = (TicketEntity) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(expirationDate, that.expirationDate) &&
+                Objects.equals(validDate, that.validDate) &&
                 Objects.equals(exposition, that.exposition) &&
                 Objects.equals(hall, that.hall) &&
                 Objects.equals(user, that.user) &&
@@ -72,24 +72,24 @@ public class TicketEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, expirationDate, exposition, hall, user, payment);
+        return Objects.hash(id, validDate, exposition, hall, user, payment);
     }
 
     @Override
     public String toString() {
         return "TicketEntity{" +
                 "id=" + id +
-                ", expirationDate=" + expirationDate +
-                ", exposition=" + exposition +
-                ", hall=" + hall +
-                ", user=" + user +
-                ", payment=" + payment +
+                ", expirationDate=" + validDate +
+                ", exposition=" + exposition.getId() +
+                ", hall=" + hall.getId() +
+                ", user=" + user.getId() +
+                ", payment=" + payment.getId() +
                 '}';
     }
 
     public static class Builder {
         private Long id;
-        private LocalDate expirationDate;
+        private LocalDate validDate;
         private ExpositionEntity exposition;
         private HallEntity hall;
         private UserEntity user;
@@ -107,8 +107,8 @@ public class TicketEntity {
             return this;
         }
 
-        public Builder withExpirationDate(LocalDate expirationDate) {
-            this.expirationDate = expirationDate;
+        public Builder withValidDate(LocalDate validDate) {
+            this.validDate = validDate;
             return this;
         }
 

@@ -56,11 +56,11 @@
   </form>
 
   <a href="<c:url value='/show'/>">Show users</a>
-  <form action="<c:url value='/show'/>" method="post">
+  <form action="<c:url value='/show'/>" method="get">
 <%--    <c:set var="rowCount" scope="session" value="15"/>--%>
 <%--    <c:set var="startFrom" scope="session" value="0"/>--%>
-    <input type="hidden" name="rowCount" value="${15}">
-    <input type="hidden" name="startFrom" value="${0}">
+    <input type="hidden" name="rowCount" value="15">
+    <input type="hidden" name="startFrom" value="0">
     <input type="submit" value="<fmt:message key='signIn.submit'/>">
   </form>
 

@@ -21,36 +21,22 @@ public class ShowUsersServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        Integer rowCount = Integer.valueOf((String) req.getSession().getAttribute("rowCount"));
-//        Integer startFrom = Integer.valueOf((String) req.getSession().getAttribute("startFrom"));
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("rowCount") != null && req.getParameter("startFrom") != null) {
             Integer rowCount = Integer.valueOf(req.getParameter("rowCount"));
             Integer startFrom = Integer.valueOf(req.getParameter("startFrom"));
 
             String page = req.getParameter("page");
 
-            if (!(rowCount > 0 && startFrom >= 0)) {
-                throw new RuntimeException("Invalid values");
-            }
-            List<User> users = userService.showAll(rowCount, startFrom);
-            Long lastId = users.get(users.size() - 1).getId();
-
             if (page != null) {
                 if (page.equals("next")) {
-                    if (!(startFrom + rowCount > lastId)) {
-                        startFrom += rowCount;
-                    }
+                    startFrom += rowCount;
                 } else {
-                    if(startFrom - rowCount < 0){
-                        startFrom = 0;
-                    }else {
-                        startFrom -= rowCount;
-                    }
+                    startFrom -= rowCount;
                 }
             }
 
-            users = userService.showAll(rowCount, startFrom);
+            List<User> users = userService.showAll(rowCount, startFrom);
             req.setAttribute("users", users);
             req.setAttribute("rowCount", rowCount);
             req.setAttribute("startFrom", startFrom);
@@ -59,5 +45,6 @@ public class ShowUsersServlet extends HttpServlet {
         } else {
             throw new RuntimeException("Something went wrong");
         }
+
     }
 }

@@ -13,7 +13,7 @@ public class PaymentEntity {
     private final Long id;
     private final LocalDateTime paymentTime;
     private final Status status;
-    private final BigDecimal amount;
+    private final BigDecimal price;
     private final UserEntity user;
     private final ExpositionEntity exposition;
     private final List<TicketEntity> tickets;
@@ -22,7 +22,7 @@ public class PaymentEntity {
         this.id = builder.id;
         this.paymentTime = builder.paymentTime;
         this.status = builder.status;
-        this.amount = builder.amount;
+        this.price = builder.price;
         this.user = builder.user;
         this.tickets = builder.tickets;
         this.exposition = builder.exposition;
@@ -44,8 +44,8 @@ public class PaymentEntity {
         return status;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public UserEntity getUser() {
@@ -72,7 +72,7 @@ public class PaymentEntity {
         return Objects.equals(id, that.id) &&
                 Objects.equals(paymentTime, that.paymentTime) &&
                 status == that.status &&
-                Objects.equals(amount, that.amount) &&
+                Objects.equals(price, that.price) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(exposition, that.exposition) &&
                 Objects.equals(tickets, that.tickets);
@@ -80,7 +80,7 @@ public class PaymentEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentTime, status, amount, user, exposition, tickets);
+        return Objects.hash(id, paymentTime, status, price, user, exposition, tickets);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class PaymentEntity {
                 "id=" + id +
                 ", paymentTime=" + paymentTime +
                 ", status=" + status +
-                ", amount=" + amount +
+                ", price=" + price +
                 ", user=" + user +
                 ", exposition=" + exposition +
                 ", tickets=" + tickets +
@@ -100,7 +100,7 @@ public class PaymentEntity {
         private Long id;
         private LocalDateTime paymentTime;
         private Status status;
-        private BigDecimal amount;
+        private BigDecimal price;
         private UserEntity user;
         private ExpositionEntity exposition;
         private List<TicketEntity> tickets;
@@ -127,8 +127,8 @@ public class PaymentEntity {
             return this;
         }
 
-        public Builder withAmount(BigDecimal amount) {
-            this.amount = amount;
+        public Builder WithPrice(BigDecimal price) {
+            this.price = price;
             return this;
         }
 

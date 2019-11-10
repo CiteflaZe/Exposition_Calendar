@@ -14,5 +14,7 @@ public interface ExpositionDao extends CrudDao<ExpositionEntity, Long> {
 
     List<ExpositionEntity> findByPriceRange(BigDecimal min, BigDecimal max);
 
-    List<ExpositionEntity> findByTimeRange(LocalDate start, LocalDate finish);
+    List<ExpositionEntity> findByDate(LocalDate date);
+
+    List<ExpositionEntity> findByHallId(Long id);
 }

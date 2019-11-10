@@ -38,16 +38,18 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
     private final String findByIdQuery;
     private final String findAllQuery;
     private final String updateQuery;
+    private final String countQuery;
 
 
     public AbstractDaoImpl(DBConnector connector, String saveQuery,
                            String findByIdQuery, String findAllQuery,
-                           String updateQuery) {
+                           String updateQuery, String countQuery) {
         this.connector = connector;
         this.saveQuery = saveQuery;
         this.findByIdQuery = findByIdQuery;
         this.findAllQuery = findAllQuery;
         this.updateQuery = updateQuery;
+        this.countQuery = countQuery;
     }
 
     @Override
@@ -114,18 +116,37 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
         }
     }
 
+    @Override
+    public Integer countEntries() {
+        return countEntriesByQuery(countQuery);
+    }
+
+    protected Integer countEntriesByQuery(String query){
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next() ? resultSet.getInt("count") : 0;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Connection was not established", e);
+            throw new DataBaseRuntimeException(e);
+        }
+    }
+
     protected Optional<E> findByLongParam(Long id, String query) {
         return findByParam(id, query, LONG_CONSUMER);
     }
 
-    protected List<E> findListByLongParam(Long id, String query){
+    protected List<E> findListByLongParam(Long id, String query) {
         return findListByParam(id, query, LONG_CONSUMER);
     }
 
     protected Optional<E> findByStringParam(String param, String query) {
         return findByParam(param, query, STRING_CONSUMER);
     }
-    protected List<E> findListByStringParam(String param, String query){
+
+    protected List<E> findListByStringParam(String param, String query) {
         return findListByParam(param, query, STRING_CONSUMER);
     }
 
@@ -133,27 +154,27 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             consumer.accept(preparedStatement, param);
-            try(final ResultSet resultSet = preparedStatement.executeQuery()){
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 return resultSet.next() ? mapResultSetToEntity(resultSet) : Optional.empty();
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Failed operation", e);
             throw new DataBaseRuntimeException(e);
         }
     }
 
-    private <T> List<E> findListByParam(T param, String query, BiConsumer<PreparedStatement, T> consumer){
+    private <T> List<E> findListByParam(T param, String query, BiConsumer<PreparedStatement, T> consumer) {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             consumer.accept(preparedStatement, param);
-            try(final ResultSet resultSet = preparedStatement.executeQuery()){
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();
                 while (resultSet.next()) {
                     mapResultSetToEntity(resultSet).ifPresent(entities::add);
                 }
                 return entities;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Failed operation", e);
             throw new DataBaseRuntimeException(e);
         }

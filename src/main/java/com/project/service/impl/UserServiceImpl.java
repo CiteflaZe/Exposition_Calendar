@@ -34,8 +34,10 @@ public class UserServiceImpl implements UserService {
     public User login(String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
         Optional<UserEntity> entity = userDao.findByEmail(email);
+        //TODO rewrite to full Optional
+
         if (!entity.isPresent()) {
-            LOGGER.error("No such email");
+            LOGGER.warn("No such email");
             throw new InvalidLoginException("Invalid email or password");
         } else {
             if (entity.get().getPassword().equals(encodedPassword)) {
@@ -64,10 +66,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> showAll(Integer firstRow, Integer startFrom) {
-        List<UserEntity> userEntities = userDao.findAll(firstRow, startFrom);
-        return userEntities.stream()
-                .map(mapper::mapUserEntityToUser)
-                .collect(Collectors.toList());
+    public List<User> showAll(Integer rowCount, Integer startFrom) {
+        if (rowCount != null && startFrom != null) {
+            Integer count = userDao.countEntries();
+            if (rowCount <= 0) {
+                rowCount = 15;
+            }
+            if (startFrom > count) {
+                startFrom = count - rowCount;
+            } else if (startFrom < 0) {
+                startFrom = 0;
+            }
+            List<UserEntity> userEntities = userDao.findAll(rowCount, startFrom);
+            return userEntities.stream()
+                    .map(mapper::mapUserEntityToUser)
+                    .collect(Collectors.toList());
+        } else {
+            LOGGER.warn("Null is not allowed");
+            throw new IllegalArgumentException("rowCount and startFrom can't be null");
+        }
     }
+
+    @Override
+    public Integer showEntriesAmount() {
+        return userDao.countEntries();
+    }
+
 }

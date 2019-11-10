@@ -8,13 +8,13 @@ import java.util.Objects;
 
 public class Ticket {
     private final Long id;
-    private final LocalDate expirationDate;
+    private final LocalDate validDate;
     private final Exposition exposition;
     private final Hall hall;
 
     private Ticket(Builder builder) {
         this.id = builder.id;
-        this.expirationDate = builder.expirationDate;
+        this.validDate = builder.validDate;
         this.exposition = builder.exposition;
         this.hall = builder.hall;
     }
@@ -27,8 +27,8 @@ public class Ticket {
         return id;
     }
 
-    public LocalDate getExpirationDate() {
-        return expirationDate;
+    public LocalDate getValidDate() {
+        return validDate;
     }
 
     public Exposition getExposition() {
@@ -49,21 +49,21 @@ public class Ticket {
         }
         Ticket ticket = (Ticket) o;
         return Objects.equals(id, ticket.id) &&
-                Objects.equals(expirationDate, ticket.expirationDate) &&
+                Objects.equals(validDate, ticket.validDate) &&
                 Objects.equals(exposition, ticket.exposition) &&
                 Objects.equals(hall, ticket.hall);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, expirationDate, exposition, hall);
+        return Objects.hash(id, validDate, exposition, hall);
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", expirationDate=" + expirationDate +
+                ", expirationDate=" + validDate +
                 ", exposition=" + exposition +
                 ", hall=" + hall +
                 '}';
@@ -71,7 +71,7 @@ public class Ticket {
     
     public static class Builder{
         private Long id;
-        private LocalDate expirationDate;
+        private LocalDate validDate;
         private Exposition exposition;
         private Hall hall;
         
@@ -86,8 +86,8 @@ public class Ticket {
             return this;
         }
 
-        public Builder withExpirationDate(LocalDate expirationDate) {
-            this.expirationDate = expirationDate;
+        public Builder withValidDate(LocalDate validDate) {
+            this.validDate = validDate;
             return this;
         }
 

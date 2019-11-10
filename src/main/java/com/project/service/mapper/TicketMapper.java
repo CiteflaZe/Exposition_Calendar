@@ -7,14 +7,14 @@ public class TicketMapper {
     public Ticket mapTicketEntityToTicket(TicketEntity ticketEntity){
         return Ticket.builder()
                 .withId(ticketEntity.getId())
-                .withExpirationDate(ticketEntity.getExpirationDate())
+                .withValidDate(ticketEntity.getValidDate())
                 .build();
     }
 
     public TicketEntity mapTicketToTicketEntity(Ticket ticket){
         return TicketEntity.builder()
                 .withId(ticket.getId())
-                .withExpirationDate(ticket.getExpirationDate())
+                .withValidDate(ticket.getValidDate())
                 .build();
     }
 

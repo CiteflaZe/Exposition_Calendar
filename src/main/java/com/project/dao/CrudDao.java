@@ -12,6 +12,8 @@ public interface CrudDao<E, ID extends Serializable> {
 
     List<E> findAll(Integer rowCount, Integer startFrom);
 
+    Integer countEntries();
+
     boolean update(E entity);
 
     default void deleteById(ID id){

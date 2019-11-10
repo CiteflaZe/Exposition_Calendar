@@ -9,7 +9,7 @@ public class PaymentMapper {
                 .withId(paymentEntity.getId())
                 .withPaymentTime(paymentEntity.getPaymentTime())
                 .withStatus(paymentEntity.getStatus())
-                .withAmount(paymentEntity.getAmount())
+                .withPrice(paymentEntity.getPrice())
                 .build();
     }
 
@@ -18,7 +18,7 @@ public class PaymentMapper {
                 .withId(payment.getId())
                 .withPaymentTime(payment.getPaymentTime())
                 .withStatus(payment.getStatus())
-                .withAmount(payment.getAmount())
+                .WithPrice(payment.getPrice())
                 .build();
     }
 }

@@ -12,14 +12,15 @@ import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDaoImpl<UserEntity> implements UserDao {
     private static final String SAVE_QUERY = "INSERT INTO users(email, password, name, surname) VALUES (?,?,?,?)";
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM users INNER JOIN roles ON role_id = roles.id WHERE users.id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM users LIMIT ? OFFSET ?";
     private static final String UPDATE_QUERY = "UPDATE users SET email = ?, password = ?, name = ?, surname = ? WHERE id = ?";
+    private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM users";
 
-    private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM users WHERE email = ?";
+    private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM users INNER JOIN roles ON role_id = roles.id WHERE email = ?";
 
     public UserDaoImpl(DBConnector connector) {
-        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY);
+        super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class UserDaoImpl extends AbstractDaoImpl<UserEntity> implements UserDao 
                 .withPassword(resultSet.getString("password"))
                 .withName(resultSet.getString("name"))
                 .withSurname(resultSet.getString("surname"))
-                .withRole((resultSet.getInt("role_id") == 1) ? Role.ADMIN : Role.USER)
+                .withRole(Role.valueOf(resultSet.getString("role_name").toUpperCase()))
                 .build());
     }
 }

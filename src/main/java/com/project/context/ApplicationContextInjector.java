@@ -8,10 +8,12 @@ import com.project.command.user.RegisterCommand;
 import com.project.dao.*;
 import com.project.dao.impl.*;
 import com.project.domain.user.User;
+import com.project.service.ExpositionService;
 import com.project.service.UserService;
 import com.project.service.encoder.PasswordEncoder;
+import com.project.service.impl.ExpositionServiceImpl;
 import com.project.service.impl.UserServiceImpl;
-import com.project.service.mapper.UserMapper;
+import com.project.service.mapper.*;
 import com.project.service.validator.UserValidator;
 import com.project.service.validator.Validator;
 
@@ -37,7 +39,17 @@ public class ApplicationContextInjector {
 
     private static final UserMapper USER_MAPPER = new UserMapper();
 
+    private static final TicketMapper TICKET_MAPPER = new TicketMapper();
+
+    private static final PaymentMapper PAYMENT_MAPPER = new PaymentMapper();
+
+    private static final HallMapper HALL_MAPPER = new HallMapper();
+
+    private static final ExpositionMapper EXPOSITION_MAPPER = new ExpositionMapper();
+
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_VALIDATOR, PASSWORD_ENCODER, USER_MAPPER);
+
+    private static final ExpositionService EXPOSITION_SERVICE = new ExpositionServiceImpl(EXPOSITION_DAO, EXPOSITION_MAPPER);
 
     private static final LogInCommand LOGIN_COMMAND = new LogInCommand(USER_SERVICE);
 
@@ -51,12 +63,13 @@ public class ApplicationContextInjector {
 
     private static ApplicationContextInjector applicationContextInjector;
 
-    private ApplicationContextInjector(){}
+    private ApplicationContextInjector() {
+    }
 
-    public static ApplicationContextInjector getInstance(){
-        if(applicationContextInjector == null){
-            synchronized (ApplicationContextInjector.class){
-                if(applicationContextInjector == null){
+    public static ApplicationContextInjector getInstance() {
+        if (applicationContextInjector == null) {
+            synchronized (ApplicationContextInjector.class) {
+                if (applicationContextInjector == null) {
                     applicationContextInjector = new ApplicationContextInjector();
                 }
             }
@@ -64,7 +77,7 @@ public class ApplicationContextInjector {
         return applicationContextInjector;
     }
 
-    private static Map<String, Command> mapUserCommand(){
+    private static Map<String, Command> mapUserCommand() {
         Map<String, Command> userCommandNameToCommand = new HashMap<>();
         userCommandNameToCommand.put("login", LOGIN_COMMAND);
         userCommandNameToCommand.put("logout", LOGOUT_COMMAND);
@@ -74,8 +87,12 @@ public class ApplicationContextInjector {
         return userCommandNameToCommand;
     }
 
-    public UserService getUserService(){
+    public UserService getUserService() {
         return USER_SERVICE;
+    }
+
+    public ExpositionService getExpositionService() {
+        return EXPOSITION_SERVICE;
     }
 
     public Map<String, Command> getUserCommands() {

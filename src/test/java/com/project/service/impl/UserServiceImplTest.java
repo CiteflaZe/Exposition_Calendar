@@ -18,7 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,24 +32,25 @@ public class UserServiceImplTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
+    private final User user = initUser();
+
+    private final UserEntity entity = initEntity();
+
     @Mock
-    UserDao userDao;
+    private UserDao userDao;
     @Mock
-    Validator userValidator;
+    private Validator<User> userValidator;
     @Mock
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
     @Mock
-    UserMapper mapper;
+    private UserMapper mapper;
 
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @After
     public void resetMock() {
-        reset(userDao);
-        reset(userValidator);
-        reset(passwordEncoder);
-        reset(mapper);
+        reset(userDao, userValidator, passwordEncoder, mapper);
     }
 
     @Test
@@ -106,38 +107,37 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void showAllShouldReturnList(){
-        users.add(user);
-        entities.add(entity);
+    public void showAllShouldReturnList() {
+        List<User> users = Collections.singletonList(user);
+        List<UserEntity> entities = Collections.singletonList(entity);
         when(userDao.findAll(anyInt(), anyInt())).thenReturn(entities);
         when(mapper.mapUserEntityToUser(entity)).thenReturn(user);
 
         List<User> actual = userService.showAll(1, 1);
 
         assertThat(actual, is(users));
-
     }
 
-    private final List<User> users = new ArrayList<>();
+    private UserEntity initEntity() {
+        return UserEntity.builder()
+                .withId(1L)
+                .withName("Name")
+                .withSurname("Surname")
+                .withEmail("user@gmail.com")
+                .withPassword("1111")
+                .withRole(Role.USER)
+                .build();
+    }
 
-    private final List<UserEntity> entities = new ArrayList<>();
-
-    private final User user = User.builder()
-            .withId(1L)
-            .withName("Name")
-            .withSurname("Surname")
-            .withEmail("user@gmail.com")
-            .withPassword("1111")
-            .withRole(Role.USER)
-            .build();
-
-    private final UserEntity entity = UserEntity.builder()
-            .withId(1L)
-            .withName("Name")
-            .withSurname("Surname")
-            .withEmail("user@gmail.com")
-            .withPassword("1111")
-            .withRole(Role.USER)
-            .build();
+    private User initUser() {
+        return User.builder()
+                .withId(1L)
+                .withName("Name")
+                .withSurname("Surname")
+                .withEmail("user@gmail.com")
+                .withPassword("1111")
+                .withRole(Role.USER)
+                .build();
+    }
 
 }

@@ -10,13 +10,13 @@ public class Payment {
     private final Long id;
     private final LocalDateTime paymentTime;
     private final Status status;
-    private final BigDecimal amount;
+    private final BigDecimal price;
 
     private Payment(Builder builder) {
         this.id = builder.id;
         this.paymentTime = builder.paymentTime;
         this.status = builder.status;
-        this.amount = builder.amount;
+        this.price = builder.price;
     }
 
     public static Builder builder(){
@@ -35,8 +35,8 @@ public class Payment {
         return status;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getPrice() {
+        return price;
     }
 
     @Override
@@ -51,19 +51,19 @@ public class Payment {
         return Objects.equals(id, payment.id) &&
                 Objects.equals(paymentTime, payment.paymentTime) &&
                 status == payment.status &&
-                Objects.equals(amount, payment.amount);
+                Objects.equals(price, payment.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentTime, status, amount);
+        return Objects.hash(id, paymentTime, status, price);
     }
     
     public static class Builder{
         private Long id;
         private LocalDateTime paymentTime;
         private Status status;
-        private BigDecimal amount;
+        private BigDecimal price;
 
         private Builder(){}
 
@@ -86,8 +86,8 @@ public class Payment {
             return this;
         }
 
-        public Builder withAmount(BigDecimal amount) {
-            this.amount = amount;
+        public Builder withPrice(BigDecimal price) {
+            this.price = price;
             return this;
         }
     }
