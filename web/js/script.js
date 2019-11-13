@@ -1,17 +1,3 @@
-$("#signup").click(function() {
-    $("#first").fadeOut("fast", function() {
-        $("#second").fadeIn("fast");
-    });
-});
-
-$("#signin").click(function() {
-    $("#second").fadeOut("fast", function() {
-        $("#first").fadeIn("fast");
-    });
-});
-
-
-
 $(function() {
     $("form[name='login']").validate({
         rules: {
@@ -46,26 +32,30 @@ $(function() {
 
     $("form[name='registration']").validate({
         rules: {
-            firstname: "required",
-            lastname: "required",
+            name: "required",
+            surname: "required",
             email: {
                 required: true,
                 email: true
             },
             password: {
                 required: true,
-                minlength: 5
+                minlength: 4
+            },
+            passwordConfirmation: {
+                required: true,
             }
         },
 
         messages: {
-            firstname: "Please enter your firstname",
-            lastname: "Please enter your lastname",
+            name: "Please enter your name",
+            surname: "Please enter your surname",
             password: {
                 required: "Please provide a password",
-                minlength: "Your password must be at least 5 characters long"
+                minlength: "Your password must be at least 4 characters long"
             },
-            email: "Please enter a valid email address"
+            email: "Please enter a valid email address",
+            passwordConfirmation: "Please provide a password confirmation"
         },
 
         submitHandler: function(form) {
