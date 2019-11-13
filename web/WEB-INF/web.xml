@@ -3,6 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    
+<!--    <servlet>-->
+<!--        <servlet-name>DefServlet</servlet-name>-->
+<!--        <servlet-class>com.project.controller.DefServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>DefServlet</servlet-name>-->
+<!--        <url-pattern>/</url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
@@ -23,6 +32,15 @@
     </servlet-mapping>
 
     <filter>
+        <filter-name>XSSFilter</filter-name>
+        <filter-class>com.project.filter.XSSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XSSFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>com.project.filter.EncodingFilter</filter-class>
     </filter>
@@ -30,7 +48,17 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
+<!--    <filter>-->
+<!--        <filter-name>AccessRestrictionFilter</filter-name>-->
+<!--        <filter-class>com.project.filter.AccessRestrictionFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>AccessRestrictionFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--        <dispatcher>REQUEST</dispatcher>-->
+<!--    </filter-mapping>-->
+
     <error-page>
         <location>/general-error.jsp</location>
     </error-page>
