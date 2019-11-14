@@ -1,23 +1,30 @@
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
     <title>Header</title>
 </head>
 <body>
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="index.jsp">Header name</a>
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <form action="user" method="post">
-                <input type="hidden" name="command" value="signOut"/>
-                <button type="submit" class="btn btn-primary btn-block">Sign Out</button>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #9ca0fd;">
+    <div class="navbar-nav mr-auto">
+        <a class="navbar-brand mx-auto" href="<c:url value="/"/>">Exposition</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <form class="form-inline my-2 my-lg-0" action="user" method="post">
+                <input class="form-control mr-sm-2" type="hidden" name="command" value="logout">
+                <a class="nav-link" href="?locale=en">English</a>
+                <a class="nav-link" href="?locale=ru">Русский</a>
+                <button class="btn btn-dark" type="submit"><fmt:message key="header.logout"/></button>
             </form>
-        </li>
-    </ul>
+        </ul>
+
+    </div>
 </nav>
 </body>
 </html>
