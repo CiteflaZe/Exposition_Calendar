@@ -5,15 +5,21 @@ import com.project.command.DefaultCommand;
 import com.project.command.user.LogInCommand;
 import com.project.command.user.LogOutCommand;
 import com.project.command.user.RegisterCommand;
+import com.project.command.user.ShowExpositionsCommand;
 import com.project.dao.*;
 import com.project.dao.impl.*;
 import com.project.domain.user.User;
 import com.project.service.ExpositionService;
+import com.project.service.PaymentService;
+import com.project.service.TicketService;
 import com.project.service.UserService;
 import com.project.service.encoder.PasswordEncoder;
 import com.project.service.impl.ExpositionServiceImpl;
+import com.project.service.impl.PaymentServiceImpl;
+import com.project.service.impl.TicketServiceImpl;
 import com.project.service.impl.UserServiceImpl;
 import com.project.service.mapper.*;
+import com.project.service.validator.PaginationValidator;
 import com.project.service.validator.UserValidator;
 import com.project.service.validator.Validator;
 
@@ -47,15 +53,23 @@ public class ApplicationContextInjector {
 
     private static final ExpositionMapper EXPOSITION_MAPPER = new ExpositionMapper();
 
+    private static final PaginationValidator PAGINATION_VALIDATOR = new PaginationValidator();
+
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_VALIDATOR, PASSWORD_ENCODER, USER_MAPPER);
 
     private static final ExpositionService EXPOSITION_SERVICE = new ExpositionServiceImpl(EXPOSITION_DAO, EXPOSITION_MAPPER);
+
+    private static final PaymentService PAYMENT_SERVICE = new PaymentServiceImpl(PAYMENT_DAO, PAYMENT_MAPPER);
+
+    private static final TicketService TICKET_SERVICE = new TicketServiceImpl(TICKET_DAO, TICKET_MAPPER);
 
     private static final LogInCommand LOGIN_COMMAND = new LogInCommand(USER_SERVICE);
 
     private static final LogOutCommand LOGOUT_COMMAND = new LogOutCommand();
 
     private static final RegisterCommand REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
+
+    private static final ShowExpositionsCommand SHOW_EXPOSITIONS_COMMAND = new ShowExpositionsCommand(EXPOSITION_SERVICE);
 
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
@@ -83,8 +97,13 @@ public class ApplicationContextInjector {
         userCommandNameToCommand.put("logout", LOGOUT_COMMAND);
         userCommandNameToCommand.put("register", REGISTER_COMMAND);
         userCommandNameToCommand.put("default", DEFAULT_COMMAND);
+        userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
 
         return userCommandNameToCommand;
+    }
+
+    public PaginationValidator getPaginationValidator() {
+        return PAGINATION_VALIDATOR;
     }
 
     public UserService getUserService() {
@@ -97,5 +116,13 @@ public class ApplicationContextInjector {
 
     public Map<String, Command> getUserCommands() {
         return USER_COMMAND_NAME_TO_COMMAND;
+    }
+
+    public PaymentService getPaymentService() {
+        return PAYMENT_SERVICE;
+    }
+
+    public TicketService getTicketService() {
+        return TICKET_SERVICE;
     }
 }

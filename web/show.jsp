@@ -52,7 +52,7 @@
         </tbody>
     </table>
 
-    <form action="<c:url value='/show'/>" method="post">
+    <form action="<c:url value='/show'/>" method="get">
         <input type="hidden" name="rowCount" value="${rowCount}">
         <input type="hidden" name="startFrom" value="${startFrom}">
         <input type="submit" name="page" value="previous" class="btn btn-indigo btn-sm m-0">

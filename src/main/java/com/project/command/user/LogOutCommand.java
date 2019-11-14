@@ -10,6 +10,7 @@ public class LogOutCommand implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
-        return "main/login.jsp";
+        System.out.println("LogOut");
+        return "/";
     }
 }

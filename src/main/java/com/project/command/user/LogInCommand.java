@@ -2,6 +2,7 @@ package com.project.command.user;
 
 import com.project.command.Command;
 import com.project.domain.user.User;
+import com.project.entity.user.Role;
 import com.project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,14 @@ public class LogInCommand implements Command {
         final String password = request.getParameter("password");
 
         User user = userService.login(email, password);
+        Role role = user.getRole();
 
         request.getSession().setAttribute("user", user);
-        return "user.jsp";
+        if(role == Role.ADMIN){
+            return "admin-page.jsp";
+        }
+        else{
+            return "user-page.jsp";
+        }
     }
 }
