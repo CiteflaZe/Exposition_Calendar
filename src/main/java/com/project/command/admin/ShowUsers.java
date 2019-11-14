@@ -6,6 +6,7 @@ import com.project.service.UserService;
 import com.project.service.validator.PaginationValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ShowUsers implements Command {
@@ -18,7 +19,7 @@ public class ShowUsers implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final Integer currentPage = Integer.valueOf(request.getParameter("currentPage"));
         final Integer rowCount = Integer.valueOf(request.getParameter("rowCount"));
         final Integer startFrom = currentPage*rowCount - rowCount;

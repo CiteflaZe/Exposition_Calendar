@@ -34,7 +34,13 @@
                     <td>${tickets.get(i).getExposition().getTitle()}</td>
                     <td>${tickets.get(i).getHall().getName()}</td>
                     <td>${ticketAmount.get(i)}</td>
-                    <td>Will be user soon</td>
+                    <td>
+                        <form action="user" method="get">
+                            <input type="hidden" name="command" value="download"/>
+                            <input type="hidden" name="paymentId" value="${tickets.get(i).getPayment().getId()}"/>
+                            <button type="submit" class="btn btn-success">DL</button>
+                        </form>
+                    </td>
 
                 </tr>
             </c:forEach>

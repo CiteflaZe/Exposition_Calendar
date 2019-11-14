@@ -36,7 +36,7 @@ public class ExpositionServiceImpl implements ExpositionService {
 
     @Override
     public List<Exposition> showAll() {
-        final List<ExpositionEntity> entities = expositionDao.findAll(5, 0);
+        final List<ExpositionEntity> entities = expositionDao.findAll(0, 5);
         return entities.stream()
                 .map(mapper::mapExpositionEntityToExposition)
                 .collect(Collectors.toList());

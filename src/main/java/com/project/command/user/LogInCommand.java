@@ -6,6 +6,7 @@ import com.project.entity.user.Role;
 import com.project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class LogInCommand implements Command {
 
@@ -16,7 +17,7 @@ public class LogInCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
 

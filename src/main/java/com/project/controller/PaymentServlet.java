@@ -40,11 +40,9 @@ public class PaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        final Exposition pay = (Exposition) req.getSession().getAttribute("pay");
-//        req.setAttribute("exposition", pay);
         final String command = req.getParameter("command");
 
-        final String page = comamnds.getOrDefault(command, comamnds.get("default")).execute(req);
+        final String page = comamnds.getOrDefault(command, comamnds.get("default")).execute(req, resp);
 
         req.getRequestDispatcher(page).forward(req, resp);
     }

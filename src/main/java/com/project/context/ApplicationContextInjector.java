@@ -70,6 +70,8 @@ public class ApplicationContextInjector {
 
     private static final ShowTicketsCommand SHOW_TICKETS_COMMAND = new ShowTicketsCommand(PAYMENT_SERVICE, TICKET_SERVICE);
 
+    private static final DownloadTicketsCommand DOWNLOAD_TICKETS_COMMAND = new DownloadTicketsCommand(TICKET_SERVICE);
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> USER_COMMAND_NAME_TO_COMMAND = mapUserCommand();
@@ -98,6 +100,7 @@ public class ApplicationContextInjector {
         userCommandNameToCommand.put("default", DEFAULT_COMMAND);
         userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
         userCommandNameToCommand.put("showTickets", SHOW_TICKETS_COMMAND);
+        userCommandNameToCommand.put("download", DOWNLOAD_TICKETS_COMMAND);
 
         return userCommandNameToCommand;
     }

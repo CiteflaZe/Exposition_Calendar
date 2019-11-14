@@ -10,6 +10,7 @@ import com.project.service.PaymentService;
 import com.project.service.TicketService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +27,7 @@ public class MakePayment implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final User user = (User) request.getSession().getAttribute("user");
         final Exposition exposition = (Exposition) request.getSession().getAttribute("exposition");
         String[] stringDate = ((String) request.getSession().getAttribute("date")).split("/");

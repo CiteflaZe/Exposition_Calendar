@@ -4,10 +4,11 @@ import com.project.domain.user.User;
 import com.project.entity.user.Role;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class DefaultCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final User user = (User) request.getSession().getAttribute("user");
 
         if(user != null){

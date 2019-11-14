@@ -5,6 +5,7 @@ import com.project.domain.exposition.Exposition;
 import com.project.service.ExpositionService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -16,9 +17,8 @@ public class ShowExpositionsCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final List<Exposition> expositions = expositionService.showAll();
-        System.out.println(expositions);
 
         request.getSession().setAttribute("expositions", expositions);
 

@@ -28,7 +28,7 @@ public class ShowUsersServlet extends HttpServlet {
         String page = null;
 
         if("show".equals(req.getParameter("command"))){
-            page = showUsers.execute(req);
+            page = showUsers.execute(req ,resp);
         }
 
 

@@ -28,11 +28,11 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String command = req.getParameter("command");
 
-        final String page = commandNameToCommand.getOrDefault(command, commandNameToCommand.get("default")).execute(req);
+        final String page = commandNameToCommand.getOrDefault(command, commandNameToCommand.get("default")).execute(req, resp);
 
-        if("logout".equals(command)){
+        if ("logout".equals(command)) {
             resp.sendRedirect(page);
-        }else{
+        }else {
             req.getRequestDispatcher(page).forward(req, resp);
         }
     }

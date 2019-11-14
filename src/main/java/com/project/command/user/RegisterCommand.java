@@ -5,6 +5,7 @@ import com.project.domain.user.User;
 import com.project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 public class RegisterCommand implements Command {
@@ -16,7 +17,7 @@ public class RegisterCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         final String name = request.getParameter("name");
         final String surname = request.getParameter("surname");
         final String email = request.getParameter("email");
