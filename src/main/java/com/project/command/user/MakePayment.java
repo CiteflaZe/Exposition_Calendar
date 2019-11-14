@@ -36,8 +36,6 @@ public class MakePayment implements Command {
                 .toArray();
         LocalDate date = LocalDate.of(indDate[0], indDate[1], indDate[2]);
         final Integer ticketsAmount = Integer.valueOf((String) request.getSession().getAttribute("tickets"));
-        System.out.println("Tickets");
-        System.out.println(request.getSession().getAttribute("tickets"));
         Payment payment = Payment.builder()
                 .withPaymentTime(LocalDateTime.now())
                 .withStatus(Status.PASSED)
@@ -48,7 +46,6 @@ public class MakePayment implements Command {
                 .build();
 
         final boolean add = paymentService.add(payment);
-        System.out.println(add);
 
         final Optional<Payment> lastPayment = paymentService.showLastPaymentByUserId(user.getId());
 

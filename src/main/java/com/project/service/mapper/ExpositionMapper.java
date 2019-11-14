@@ -17,6 +17,7 @@ public class ExpositionMapper {
                 .withDescription(expositionEntity.getDescription())
                 .withHall(Hall.builder()
                         .withId(expositionEntity.getHall().getId())
+                        .withName(expositionEntity.getHall().getName())
                         .build())
                 .build();
     }
@@ -32,6 +33,7 @@ public class ExpositionMapper {
                 .withDescription(exposition.getDescription())
                 .withHall(HallEntity.builder()
                         .withId(exposition.getHall().getId())
+                        .withName(exposition.getHall().getName())
                         .build())
                 .build();
     }

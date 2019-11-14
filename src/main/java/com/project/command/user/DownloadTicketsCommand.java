@@ -62,7 +62,7 @@ public class DownloadTicketsCommand implements Command {
             throw new DownloadTicketsException(e);
         }
 
-        return "/user?command=showTickets";
+        return "user";
     }
 
     private String createPDF(Long paymentId, List<Ticket> tickets) {

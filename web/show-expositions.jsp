@@ -33,7 +33,7 @@
                 <th scope="col">Ends On</th>
                 <th scope="col">Ticket Price</th>
                 <th scope="col" style="width:30%">Description</th>
-                <th scope="col">Hall ID</th>
+                <th scope="col">Hall</th>
                 <th scope="col" style="width:8%"></th>
             </tr>
             </thead>
@@ -47,7 +47,7 @@
                     <td>${expositions.get(i).getFinishTime()}</td>
                     <td>${expositions.get(i).getTicketPrice()}</td>
                     <td>${expositions.get(i).getDescription()}</td>
-                    <td>${expositions.get(i).getHall().getId()}</td>
+                    <td>${expositions.get(i).getHall().getName()}</td>
                     <td>
                         <form action="chooseDate" method="post">
                             <input type="hidden" name="command" value="processExposition"/>

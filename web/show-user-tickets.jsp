@@ -11,6 +11,9 @@
 <html>
 <head>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+<%--    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">--%>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -24,7 +27,8 @@
                 <th scope="col">Exposition Title</th>
                 <th scope="col">Hall</th>
                 <th scope="col">Ticket Amount</th>
-                <th scope="col">Placeholder</th>
+                <th scope="col">Date</th>
+                <th scope="col">Download</th>
             </tr>
             </thead>
 
@@ -34,11 +38,12 @@
                     <td>${tickets.get(i).getExposition().getTitle()}</td>
                     <td>${tickets.get(i).getHall().getName()}</td>
                     <td>${ticketAmount.get(i)}</td>
+                    <td>${tickets.get(i).getValidDate()}</td>
                     <td>
                         <form action="user" method="get">
                             <input type="hidden" name="command" value="download"/>
                             <input type="hidden" name="paymentId" value="${tickets.get(i).getPayment().getId()}"/>
-                            <button type="submit" class="btn btn-success">DL</button>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></button>
                         </form>
                     </td>
 
