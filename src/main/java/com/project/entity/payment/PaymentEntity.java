@@ -14,6 +14,7 @@ public class PaymentEntity {
     private final LocalDateTime paymentTime;
     private final Status status;
     private final BigDecimal price;
+    private final Integer ticketAmount;
     private final UserEntity user;
     private final ExpositionEntity exposition;
     private final List<TicketEntity> tickets;
@@ -23,6 +24,7 @@ public class PaymentEntity {
         this.paymentTime = builder.paymentTime;
         this.status = builder.status;
         this.price = builder.price;
+        this.ticketAmount = builder.ticketAmount;
         this.user = builder.user;
         this.tickets = builder.tickets;
         this.exposition = builder.exposition;
@@ -42,6 +44,10 @@ public class PaymentEntity {
 
     public Status getStatus() {
         return status;
+    }
+
+    public Integer getTicketAmount() {
+        return ticketAmount;
     }
 
     public BigDecimal getPrice() {
@@ -101,6 +107,7 @@ public class PaymentEntity {
         private LocalDateTime paymentTime;
         private Status status;
         private BigDecimal price;
+        private Integer ticketAmount;
         private UserEntity user;
         private ExpositionEntity exposition;
         private List<TicketEntity> tickets;
@@ -127,8 +134,13 @@ public class PaymentEntity {
             return this;
         }
 
-        public Builder WithPrice(BigDecimal price) {
+        public Builder withPrice(BigDecimal price) {
             this.price = price;
+            return this;
+        }
+
+        public Builder withTicketAmount(Integer ticketAmount) {
+            this.ticketAmount = ticketAmount;
             return this;
         }
 

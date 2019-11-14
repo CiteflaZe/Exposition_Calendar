@@ -1,7 +1,9 @@
 package com.project.service.mapper;
 
 import com.project.domain.exposition.Exposition;
+import com.project.domain.hall.Hall;
 import com.project.entity.exposition.ExpositionEntity;
+import com.project.entity.hall.HallEntity;
 
 public class ExpositionMapper {
     public Exposition mapExpositionEntityToExposition(ExpositionEntity expositionEntity){
@@ -13,6 +15,9 @@ public class ExpositionMapper {
                 .withFinishTime(expositionEntity.getFinishTime())
                 .withTicketPrice(expositionEntity.getTicketPrice())
                 .withDescription(expositionEntity.getDescription())
+                .withHall(Hall.builder()
+                        .withId(expositionEntity.getHall().getId())
+                        .build())
                 .build();
     }
 
@@ -25,6 +30,9 @@ public class ExpositionMapper {
                 .withFinishTime(exposition.getFinishTime())
                 .withTicketPrice(exposition.getTicketPrice())
                 .withDescription(exposition.getDescription())
+                .withHall(HallEntity.builder()
+                        .withId(exposition.getHall().getId())
+                        .build())
                 .build();
     }
 }

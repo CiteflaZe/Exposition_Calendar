@@ -6,8 +6,11 @@ import com.project.entity.payment.Status;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface PaymentDao extends CrudDao<PaymentEntity, Long> {
+    Optional<PaymentEntity> findLastByUserId(Long id);
+
     List<PaymentEntity> findByTimeRange(LocalDateTime from, LocalDateTime to);
 
     List<PaymentEntity> findByStatus(Status status);

@@ -1,5 +1,7 @@
 package com.project.domain.payment;
 
+import com.project.domain.exposition.Exposition;
+import com.project.domain.user.User;
 import com.project.entity.payment.Status;
 
 import java.math.BigDecimal;
@@ -10,16 +12,22 @@ public class Payment {
     private final Long id;
     private final LocalDateTime paymentTime;
     private final Status status;
+    private final Integer ticketAmount;
     private final BigDecimal price;
+    private final User user;
+    private final Exposition exposition;
 
     private Payment(Builder builder) {
         this.id = builder.id;
         this.paymentTime = builder.paymentTime;
         this.status = builder.status;
+        this.ticketAmount = builder.ticketAmount;
         this.price = builder.price;
+        this.user = builder.user;
+        this.exposition = builder.exposition;
     }
 
-    public static Builder builder(){
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -39,6 +47,19 @@ public class Payment {
         return price;
     }
 
+    public Integer getTicketAmount() {
+        return ticketAmount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Exposition getExposition() {
+
+        return exposition;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -51,23 +72,30 @@ public class Payment {
         return Objects.equals(id, payment.id) &&
                 Objects.equals(paymentTime, payment.paymentTime) &&
                 status == payment.status &&
-                Objects.equals(price, payment.price);
+                Objects.equals(ticketAmount, payment.ticketAmount) &&
+                Objects.equals(price, payment.price) &&
+                Objects.equals(user, payment.user) &&
+                Objects.equals(exposition, payment.exposition);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paymentTime, status, price);
+        return Objects.hash(id, paymentTime, status, ticketAmount, price, user, exposition);
     }
-    
-    public static class Builder{
+
+    public static class Builder {
         private Long id;
         private LocalDateTime paymentTime;
         private Status status;
+        private Integer ticketAmount;
         private BigDecimal price;
+        private User user;
+        private Exposition exposition;
 
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Payment build(){
+        public Payment build() {
             return new Payment(this);
         }
 
@@ -86,8 +114,23 @@ public class Payment {
             return this;
         }
 
+        public Builder withTicketAmount(Integer ticketAmount) {
+            this.ticketAmount = ticketAmount;
+            return this;
+        }
+
         public Builder withPrice(BigDecimal price) {
             this.price = price;
+            return this;
+        }
+
+        public Builder withUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder withExposition(Exposition exposition) {
+            this.exposition = exposition;
             return this;
         }
     }

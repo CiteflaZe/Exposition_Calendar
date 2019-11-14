@@ -15,16 +15,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements PaymentDao {
-    private static final String SAVE_QUERY = "INSERT INTO payments(transaction_time, status, tickets_amount, price, user_id, exposition_id) VALUES (?,?,?,?,?,?)";
+    private static final String SAVE_QUERY = "INSERT INTO payments(payment_time, status, tickets_amount, price, user_id, exposition_id) VALUES (?,?,?,?,?,?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM payments WHERE id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM payments LIMIT ? OFFSET ?";
-    private static final String UPDATE_QUERY = "UPDATE payments SET transaction_time = ?, status = ?, tickets_amount = ?, price = ?, user_id = ?, exposition_id = ? WHERE id = ?";
+    private static final String UPDATE_QUERY = "UPDATE payments SET payment_time = ?, status = ?, tickets_amount = ?, price = ?, user_id = ?, exposition_id = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM payments";
 
     private static final String FIND_BY_STATUS = "SELECT * FROM payments WHERE status = ?";
-    private static final String FIND_BY_TIME_RANGE = "SELECT * FROM payments WHERE transaction_time > ? AND transaction_time < ?";
+    private static final String FIND_BY_TIME_RANGE = "SELECT * FROM payments WHERE payment_time > ? AND payment_time < ?";
     private static final String FIND_BY_USER_ID = "SELECT * FROM payments WHERE user_id = ?";
     private static final String FIND_BY_EXPOSITION_ID = "SELECT * FROM payments WHERE exposition_id = ?";
+    private static final String FIND_LAST_BY_USER_ID = "SELECT * FROM payments WHERE user_id = ? order by ID DESC LIMIT 1 ";
 
     public PaymentDaoImpl(DBConnector connector) {
         super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -33,6 +34,24 @@ public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements Pa
     @Override
     public List<PaymentEntity> findByStatus(Status status) {
         return findListByStringParam(status.getDescription(), FIND_BY_STATUS);
+    }
+
+    @Override
+    public Optional<PaymentEntity> findLastByUserId(Long id) {
+        try (Connection connection = connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_LAST_BY_USER_ID)) {
+
+            preparedStatement.setLong(1, id);
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToEntity(resultSet);
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataBaseRuntimeException(e);
+        }
     }
 
     @Override
@@ -68,7 +87,7 @@ public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements Pa
     protected void insertStatementMapper(PreparedStatement preparedStatement, PaymentEntity entity) throws SQLException {
         preparedStatement.setTimestamp(1, Timestamp.valueOf(entity.getPaymentTime()));
         preparedStatement.setString(2, entity.getStatus().getDescription());
-        preparedStatement.setInt(3, entity.getTickets().size());
+        preparedStatement.setInt(3, entity.getTicketAmount());
         preparedStatement.setBigDecimal(4, entity.getPrice());
         preparedStatement.setLong(5, entity.getUser().getId());
         preparedStatement.setLong(6, entity.getExposition().getId());
@@ -93,7 +112,8 @@ public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements Pa
                 .withId(resultSet.getLong("id"))
                 .withPaymentTime(resultSet.getTimestamp("payment_time").toLocalDateTime())
                 .withStatus(status)
-                .WithPrice(resultSet.getBigDecimal("price"))
+                .withTicketAmount(resultSet.getInt("tickets_amount"))
+                .withPrice(resultSet.getBigDecimal("price"))
                 .withUser(user)
                 .withExposition(exposition)
                 .build());

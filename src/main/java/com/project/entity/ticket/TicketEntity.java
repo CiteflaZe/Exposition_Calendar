@@ -11,10 +11,10 @@ import java.util.Objects;
 public class TicketEntity {
     private final Long id;
     private final LocalDate validDate;
-    private final ExpositionEntity exposition;
-    private final HallEntity hall;
     private final UserEntity user;
     private final PaymentEntity payment;
+    private final ExpositionEntity exposition;
+    private final HallEntity hall;
 
     private TicketEntity(Builder builder) {
         this.id = builder.id;
