@@ -42,6 +42,15 @@
         <url-pattern>/show</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DownloadServlet</servlet-name>
+        <servlet-class>com.project.controller.DownloadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DownloadServlet</servlet-name>
+        <url-pattern>/download</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>com.project.filter.EncodingFilter</filter-class>
