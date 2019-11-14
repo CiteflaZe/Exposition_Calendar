@@ -21,15 +21,20 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/errorPage.css"/>
 
+    <style>
+        <%@ include file ="css/errorPage.css"%>
+    </style>
+
+
 </head>
 <body>
 <div id="notfound">
     <div class="notfound">
         <div class="notfound-404">
-            <h1>O<span>P</span>S</h1>
+            <h1>O<span>OP</span>S</h1>
         </div>
         <p><fmt:message key="error.message"/></p>
-        <a href="<c:out value="index.jsp"/>"><fmt:message key="error.homepage"/> </a>
+        <a href="<c:out value="/"/>"><fmt:message key="error.homepage"/> </a>
     </div>
 </div>
 </body>
