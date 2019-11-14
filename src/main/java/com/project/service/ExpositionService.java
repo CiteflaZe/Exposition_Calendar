@@ -10,8 +10,6 @@ import java.util.Optional;
 public interface ExpositionService {
     boolean add(Exposition exposition);
 
-    List<Exposition> showAll();
-
     Optional<Exposition> showByTitle(String title);
 
     List<Exposition> showByTheme(String theme);

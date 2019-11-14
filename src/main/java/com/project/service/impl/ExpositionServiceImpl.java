@@ -35,14 +35,6 @@ public class ExpositionServiceImpl implements ExpositionService {
     }
 
     @Override
-    public List<Exposition> showAll() {
-        final List<ExpositionEntity> entities = expositionDao.findAll(5, 0);
-        return entities.stream()
-                .map(mapper::mapExpositionEntityToExposition)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public Optional<Exposition> showByTitle(String title) {
         final Optional<ExpositionEntity> entity = expositionDao.findByTitle(title);
         return entity.map(mapper::mapExpositionEntityToExposition);
