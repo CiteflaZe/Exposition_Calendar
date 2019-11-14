@@ -15,8 +15,8 @@ import java.util.Optional;
 
 public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> implements ExpositionDao {
     private static final String SAVE_QUERY = "INSERT INTO expositions(title, theme, start_time, finish_time, ticket_price, description, hall_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM expositions WHERE id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM expositions LIMIT ? OFFSET ?";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM expositions INNER JOIN halls ON expositions.hall_id = halls.id WHERE expositions.id = ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM expositions INNER JOIN halls ON expositions.hall_id = halls.id LIMIT ?, ?";
     private static final String UPDATE_QUERY = "UPDATE expositions SET title = ?, theme = ?, start_time = ?, finish_time = ?, ticket_price = ?, description = ?, hall_id = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM expositions";
 
@@ -104,9 +104,10 @@ public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> impleme
     protected Optional<ExpositionEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         HallEntity hall = HallEntity.builder()
                 .withId(resultSet.getLong("hall_id"))
+                .withName(resultSet.getString("halls.name"))
                 .build();
         return Optional.ofNullable(ExpositionEntity.builder()
-                .withId(resultSet.getLong("id"))
+                .withId(resultSet.getLong("expositions.id"))
                 .withTitle(resultSet.getString("title"))
                 .withTheme(resultSet.getString("theme"))
                 .withStartTime(resultSet.getDate("start_time").toLocalDate())

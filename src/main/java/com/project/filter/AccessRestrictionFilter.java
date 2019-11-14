@@ -9,39 +9,48 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AccessRestrictionFilter implements Filter {
+
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String adminUrl = "/admin";
-        String userUrl = "/user";
-        String homePageUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/";
-        String indexUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/index.jsp";
+
+        final String adminUrl = "/admin";
+        final String userUrl = "/user";
+        final String signInUrl = "/sign-in.jsp";
+        final String registerUrl = "/register.jsp";
+        final String indexUrl = "/index.jsp";
+        final String homePageUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/";
+
         String command = request.getParameter("command");
+
         final User user = (User) request.getSession().getAttribute("user");
+        final String currentUrl = request.getRequestURL().toString();
 
         if(!"login".equals(command) && !"logout".equals(command) && !"register".equals(command)){
-            if(request.getRequestURL().toString().contains(adminUrl) &&
+            if(currentUrl.contains(adminUrl) &&
                     (user == null || user.getRole() != Role.ADMIN)){
                 request.getRequestDispatcher("404-error.jsp").forward(servletRequest, servletResponse);
                 return;
             }
-            if(request.getRequestURL().toString().contains(userUrl) &&
+            if(currentUrl.contains(userUrl) &&
                     (user == null || user.getRole() != Role.USER)){
                 request.getRequestDispatcher("404-error.jsp").forward(servletRequest, servletResponse);
                 return;
             }
-            if((request.getRequestURL().toString().equals(homePageUrl)||
-                    request.getRequestURL().toString().equals(indexUrl)) &&
-                    user != null && user.getRole() == Role.USER){
-                response.sendRedirect("/user");
-                return;
-            }
-            if((request.getRequestURL().toString().equals(homePageUrl)||
-                    request.getRequestURL().toString().equals(indexUrl)) &&
-                    user != null && user.getRole() == Role.ADMIN){
-                response.sendRedirect("/admin");
-                return;
+            if(currentUrl.equals(homePageUrl) ||
+                    currentUrl.contains(indexUrl) ||
+                    currentUrl.contains(signInUrl) ||
+                    currentUrl.contains(registerUrl)){
+                if(user != null && user.getRole() == Role.USER){
+                    response.sendRedirect("/user");
+                    return;
+                }
+                if(user != null && user.getRole() == Role.ADMIN){
+                    response.sendRedirect("/admin");
+                    return;
+                }
             }
         }
 

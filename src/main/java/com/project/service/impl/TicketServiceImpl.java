@@ -39,6 +39,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Ticket> showByPaymentId(Long id) {
+        final List<TicketEntity> entities = ticketDao.findByPaymentId(id);
+        return mapTicketEntityListToTicketList(entities);
+    }
+
+    @Override
     public List<Ticket> showByValidDateRange(LocalDate from, LocalDate to) {
         final List<TicketEntity> entities = ticketDao.findByValidDateRange(from, to);
         return mapTicketEntityListToTicketList(entities);

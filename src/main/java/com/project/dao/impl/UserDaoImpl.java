@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDaoImpl<UserEntity> implements UserDao {
     private static final String SAVE_QUERY = "INSERT INTO users(email, password, name, surname) VALUES (?,?,?,?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM users INNER JOIN roles ON role_id = roles.id WHERE users.id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM users INNER JOIN roles ON role_id = roles.id LIMIT ? OFFSET ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM users INNER JOIN roles ON role_id = roles.id LIMIT ?, ?";
     private static final String UPDATE_QUERY = "UPDATE users SET email = ?, password = ?, name = ?, surname = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM users";
 

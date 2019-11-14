@@ -24,9 +24,11 @@ public class TicketMapper {
                         .build())
                 .withExposition(Exposition.builder()
                         .withId(ticketEntity.getExposition().getId())
+                        .withTitle(ticketEntity.getExposition().getTitle())
                         .build())
                 .withHall(Hall.builder()
                         .withId(ticketEntity.getHall().getId())
+                        .withName(ticketEntity.getHall().getName())
                         .build())
                 .build();
     }
@@ -43,9 +45,11 @@ public class TicketMapper {
                         .build())
                 .withExposition(ExpositionEntity.builder()
                         .withId(ticket.getExposition().getId())
+                        .withTitle(ticket.getExposition().getTitle())
                         .build())
                 .withHall(HallEntity.builder()
                         .withId(ticket.getHall().getId())
+                        .withName(ticket.getHall().getName())
                         .build())
                 .build();
     }

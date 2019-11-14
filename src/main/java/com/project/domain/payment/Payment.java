@@ -56,7 +56,6 @@ public class Payment {
     }
 
     public Exposition getExposition() {
-
         return exposition;
     }
 
@@ -76,6 +75,19 @@ public class Payment {
                 Objects.equals(price, payment.price) &&
                 Objects.equals(user, payment.user) &&
                 Objects.equals(exposition, payment.exposition);
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", paymentTime=" + paymentTime +
+                ", status=" + status +
+                ", ticketAmount=" + ticketAmount +
+                ", price=" + price +
+                ", user=" + user +
+                ", exposition=" + exposition +
+                '}';
     }
 
     @Override

@@ -16,10 +16,10 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            <a class="nav-link active" href="?locale=en">English</a>
+            <a class="nav-link active" href="?locale=ru">Русский</a>
             <form class="form-inline my-2 my-lg-0" action="user" method="post">
                 <input class="form-control mr-sm-2" type="hidden" name="command" value="logout">
-                <a class="nav-link" href="?locale=en">English</a>
-                <a class="nav-link" href="?locale=ru">Русский</a>
                 <button class="btn btn-dark" type="submit"><fmt:message key="header.logout"/></button>
             </form>
         </ul>

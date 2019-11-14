@@ -10,7 +10,7 @@ public interface CrudDao<E, ID extends Serializable> {
 
     Optional<E> findById(ID id);
 
-    List<E> findAll(Integer rowCount, Integer startFrom);
+    List<E> findAll(Integer startFrom, Integer rowCount);
 
     Integer countEntries();
 

@@ -19,20 +19,18 @@ public class ShowUsers implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        final String rowCountString = request.getParameter("rowCount");
-        final String startFromString = request.getParameter("startFrom");
+        final Integer currentPage = Integer.valueOf(request.getParameter("currentPage"));
+        final Integer rowCount = Integer.valueOf(request.getParameter("rowCount"));
+        final Integer startFrom = currentPage*rowCount - rowCount;
         final Integer entriesAmount = userService.showEntriesAmount();
-        final String action = request.getParameter("page");
-        System.out.println(action);
-        final Integer[] validValues = paginationValidator.validate(rowCountString, startFromString, entriesAmount, action);
+        final Integer numberOfPages = ((Double) Math.ceil(entriesAmount*1.0/rowCount)).intValue();
 
-        Integer rowCount = validValues[0];
-        Integer startFrom = validValues[1];
-
-        final List<User> users = userService.showAll(rowCount, startFrom);
+        final List<User> users = userService.showAll(startFrom, rowCount);
         request.setAttribute("users", users);
+        request.setAttribute("command", "show");
+        request.setAttribute("currentPage", currentPage);
         request.setAttribute("rowCount", rowCount);
-        request.setAttribute("startFrom", startFrom);
+        request.getSession().setAttribute("numberOfPages", numberOfPages);
 
         return "show.jsp";
     }

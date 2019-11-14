@@ -13,8 +13,6 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -22,45 +20,48 @@
     <title>Expositions</title>
 </head>
 <body>
-<div>
-<%--    <c:set var="expositions" value="${expositions}" scope="session"/>--%>
-    <table class="table table-striped table-responsive-md btn-table">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Theme</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
-            <th scope="col">Ticket Price</th>
-            <th scope="col">Description</th>
-            <th scope="col">Hall ID</th>
-            <th scope="col">Place Order</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <c:forEach begin="0" end="${expositions.size()-1}" var="i">
+<c:import url="header.jsp"/>
+<div class="wrapper">
+    <c:import url="user-sidebar.jsp"/>
+    <div id="content">
+        <table class="table table-striped table-responsive-md btn-table">
+            <thead class="thead-dark">
             <tr>
-                <td>${expositions.get(i).getId()}</td>
-                <td>${expositions.get(i).getTitle()}</td>
-                <td>${expositions.get(i).getTheme()}</td>
-                <td>${expositions.get(i).getStartTime()}</td>
-                <td>${expositions.get(i).getFinishTime()}</td>
-                <td>${expositions.get(i).getTicketPrice()}</td>
-                <td>${expositions.get(i).getDescription()}</td>
-                <td>${expositions.get(i).getHall().getId()}</td>
-                <td>
-                    <form action="chooseDate" method="post">
-                        <input type="hidden" name="command" value="processExposition"/>
-                        <input type="text" name="exposition${i}" value="${expositions.get(i).getId()}"/>
-                        <button type="submit" class="btn btn-success">Place order</button>
-                    </form>
-                </td>
+                <th scope="col">Title</th>
+                <th scope="col">Theme</th>
+                <th scope="col">Starts From</th>
+                <th scope="col">Ends On</th>
+                <th scope="col">Ticket Price</th>
+                <th scope="col" style="width:30%">Description</th>
+                <th scope="col">Hall ID</th>
+                <th scope="col" style="width:8%"></th>
             </tr>
-        </c:forEach>
+            </thead>
 
-        </tbody>
-    </table>
+            <tbody>
+            <c:forEach begin="0" end="${expositions.size()-1}" var="i">
+                <tr>
+                    <td>${expositions.get(i).getTitle()}</td>
+                    <td>${expositions.get(i).getTheme()}</td>
+                    <td>${expositions.get(i).getStartTime()}</td>
+                    <td>${expositions.get(i).getFinishTime()}</td>
+                    <td>${expositions.get(i).getTicketPrice()}</td>
+                    <td>${expositions.get(i).getDescription()}</td>
+                    <td>${expositions.get(i).getHall().getId()}</td>
+                    <td>
+                        <form action="chooseDate" method="post">
+                            <input type="hidden" name="command" value="processExposition"/>
+                            <input type="hidden" name="exposition${i}" value="${expositions.get(i).getId()}"/>
+                            <button type="submit" class="btn btn-success">Place order</button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </body>
 </html>

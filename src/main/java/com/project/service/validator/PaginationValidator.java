@@ -1,8 +1,8 @@
 package com.project.service.validator;
 
 public class PaginationValidator {
-    private static final Integer DEFAULT_ROW_COUNT = 15;
     private static final Integer DEFAULT_START_FROM = 0;
+    private static final Integer DEFAULT_ROW_COUNT = 15;
 
     public Integer[] validate(String rowCountString, String startFromString, Integer entriesAmount, String action) {
         if (rowCountString == null || startFromString == null

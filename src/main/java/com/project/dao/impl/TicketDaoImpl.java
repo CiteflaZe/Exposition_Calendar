@@ -16,17 +16,21 @@ import java.util.List;
 import java.util.Optional;
 
 public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements TicketDao {
-    private static final String SAVE_QUERY = "INSERT INTO tickets(valid_date, exposition_id, hall_id, user_id, payment_id) VALUES (?,?,?,?,?)";
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM tickets WHERE id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM tickets LIMIT ? OFFSET ?";
-    private static final String UPDATE_QUERY = "UPDATE tickets SET valid_date = ?, exposition_id = ?, hall_id = ?, user_id = ? WHERE id = ?";
+    private static final String SAVE_QUERY = "INSERT INTO tickets(valid_date, exposition_id, hall_id, user_id," +
+            " payment_id) VALUES (?,?,?,?,?)";
+    private static final String FIND_BY_ID_QUERY = "SELECT * FROM tickets INNER JOIN expositions ON exposition_id =" +
+            " expositions.id INNER JOIN halls ON tickets.hall_id = halls.id WHERE tickets.id = ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM tickets LIMIT ?, ?";
+    private static final String UPDATE_QUERY = "UPDATE tickets SET valid_date = ?, exposition_id = ?, hall_id = ?," +
+            " user_id = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM tickets";
 
-    private static final String FIND_BY_valid_date_RANGE = "SELECT * FROM tickets WHERE valid_date > ? AND valid_date < ?";
+    private static final String FIND_BY_VALID_DATE_RANGE = "SELECT * FROM tickets WHERE valid_date > ? AND valid_date < ?";
     private static final String FIND_BY_USER_ID = "SELECT * FROM tickets WHERE user_id = ?";
     private static final String FIND_BY_EXPOSITION_ID = "SELECT * FROM tickets WHERE exposition_id = ?";
     private static final String FIND_BY_HALL_ID = "SELECT * FROM tickets WHERE hall_id = ?";
-    private static final String FIND_BY_PAYMENT_ID = "SELECT * FROM tickets WHERE payment_id = ?";
+    private static final String FIND_BY_PAYMENT_ID = "SELECT * FROM tickets INNER JOIN expositions ON exposition_id = " +
+            "expositions.id INNER JOIN halls ON tickets.hall_id = halls.id WHERE payment_id = ?";
 
     public TicketDaoImpl(DBConnector connector) {
         super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -35,7 +39,7 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
     @Override
     public List<TicketEntity> findByValidDateRange(LocalDate from, LocalDate to) {
         try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_valid_date_RANGE)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_VALID_DATE_RANGE)) {
 
             preparedStatement.setDate(1, Date.valueOf(from));
             preparedStatement.setDate(2, Date.valueOf(to));
@@ -90,9 +94,11 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
     protected Optional<TicketEntity> mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         ExpositionEntity exposition = ExpositionEntity.builder()
                 .withId(resultSet.getLong("exposition_id"))
+                .withTitle(resultSet.getString("expositions.title"))
                 .build();
         HallEntity hall = HallEntity.builder()
                 .withId(resultSet.getLong("hall_id"))
+                .withName(resultSet.getString("halls.name"))
                 .build();
         UserEntity user = UserEntity.builder()
                 .withId(resultSet.getLong("user_id"))

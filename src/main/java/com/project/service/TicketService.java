@@ -10,6 +10,8 @@ public interface TicketService {
 
     List<Ticket> showByUserId(Long id);
 
+    List<Ticket> showByPaymentId(Long id);
+
     List<Ticket> showByValidDateRange(LocalDate from, LocalDate to);
 
     List<Ticket> showByExpositionId(Long id);

@@ -59,9 +59,10 @@
   <form action="<c:url value='/show'/>" method="get">
 <%--    <c:set var="rowCount" scope="session" value="15"/>--%>
 <%--    <c:set var="startFrom" scope="session" value="0"/>--%>
+    <input type="hidden" name="command" value="show">
+    <input type="hidden" name="currentPage" value="1">
     <input type="hidden" name="rowCount" value="15">
-    <input type="hidden" name="startFrom" value="0">
-    <input type="submit" value="<fmt:message key='signIn.submit'/>">
+    <input type="submit" value="Users">
   </form>
 
   <form action="/user" method="post">

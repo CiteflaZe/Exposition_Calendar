@@ -17,7 +17,7 @@ import java.util.Optional;
 public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements PaymentDao {
     private static final String SAVE_QUERY = "INSERT INTO payments(payment_time, status, tickets_amount, price, user_id, exposition_id) VALUES (?,?,?,?,?,?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM payments WHERE id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM payments LIMIT ? OFFSET ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM payments LIMIT ?, ?";
     private static final String UPDATE_QUERY = "UPDATE payments SET payment_time = ?, status = ?, tickets_amount = ?, price = ?, user_id = ?, exposition_id = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM payments";
 

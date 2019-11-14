@@ -71,11 +71,12 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
              PreparedStatement preparedStatement = connection.prepareStatement(findByIdQuery)) {
             preparedStatement.setLong(1, id);
 
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return mapResultSetToEntity(resultSet);
-            } else {
-                return Optional.empty();
+            try(final ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    return mapResultSetToEntity(resultSet);
+                } else {
+                    return Optional.empty();
+                }
             }
         } catch (SQLException e) {
             LOGGER.error("Connection not established");
@@ -84,12 +85,12 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
     }
 
     @Override
-    public List<E> findAll(Integer rowCount, Integer startFrom) {
+    public List<E> findAll(Integer startFrom, Integer rowCount) {
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
 
-            preparedStatement.setInt(1, rowCount);
-            preparedStatement.setInt(2, startFrom);
+            preparedStatement.setInt(1, startFrom);
+            preparedStatement.setInt(2, rowCount);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();
                 while (resultSet.next()) {

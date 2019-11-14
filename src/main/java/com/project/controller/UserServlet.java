@@ -30,6 +30,10 @@ public class UserServlet extends HttpServlet {
 
         final String page = commandNameToCommand.getOrDefault(command, commandNameToCommand.get("default")).execute(req);
 
-        req.getRequestDispatcher(page).forward(req, resp);
+        if("logout".equals(command)){
+            resp.sendRedirect(page);
+        }else{
+            req.getRequestDispatcher(page).forward(req, resp);
+        }
     }
 }

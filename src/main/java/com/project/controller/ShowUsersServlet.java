@@ -25,8 +25,12 @@ public class ShowUsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ShowUsers showUsers = new ShowUsers(userService, paginationValidator);
+        String page = null;
 
-        final String page = showUsers.execute(req);
+        if("show".equals(req.getParameter("command"))){
+            page = showUsers.execute(req);
+        }
+
 
         req.getRequestDispatcher(page).forward(req, resp);
 

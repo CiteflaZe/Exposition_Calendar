@@ -2,10 +2,7 @@ package com.project.context;
 
 import com.project.command.Command;
 import com.project.command.DefaultCommand;
-import com.project.command.user.LogInCommand;
-import com.project.command.user.LogOutCommand;
-import com.project.command.user.RegisterCommand;
-import com.project.command.user.ShowExpositionsCommand;
+import com.project.command.user.*;
 import com.project.dao.*;
 import com.project.dao.impl.*;
 import com.project.domain.user.User;
@@ -71,6 +68,8 @@ public class ApplicationContextInjector {
 
     private static final ShowExpositionsCommand SHOW_EXPOSITIONS_COMMAND = new ShowExpositionsCommand(EXPOSITION_SERVICE);
 
+    private static final ShowTicketsCommand SHOW_TICKETS_COMMAND = new ShowTicketsCommand(PAYMENT_SERVICE, TICKET_SERVICE);
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> USER_COMMAND_NAME_TO_COMMAND = mapUserCommand();
@@ -98,6 +97,7 @@ public class ApplicationContextInjector {
         userCommandNameToCommand.put("register", REGISTER_COMMAND);
         userCommandNameToCommand.put("default", DEFAULT_COMMAND);
         userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
+        userCommandNameToCommand.put("showTickets", SHOW_TICKETS_COMMAND);
 
         return userCommandNameToCommand;
     }
