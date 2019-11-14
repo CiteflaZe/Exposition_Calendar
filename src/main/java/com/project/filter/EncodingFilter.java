@@ -9,6 +9,8 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
+        request.setCharacterEncoding("UTF-8");
+
         if(request.getParameter("locale") != null){
             request.getSession().setAttribute("locale", request.getParameter("locale"));
         }
