@@ -12,42 +12,38 @@ public class AccessRestrictionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String adminUrl = request.getServerName() + ":" + request.getServerPort() + "/admin";
-        String userUrl = request.getServerName() + ":" + request.getServerPort() + "/user";
+        final HttpServletResponse response = (HttpServletResponse) servletResponse;
+        String adminUrl = "/admin";
+        String userUrl = "/user";
         String homePageUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/";
         String indexUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/index.jsp";
         String command = request.getParameter("command");
         final User user = (User) request.getSession().getAttribute("user");
-//        String page = null;
 
         if(!"login".equals(command) && !"logout".equals(command) && !"register".equals(command)){
             if(request.getRequestURL().toString().contains(adminUrl) &&
                     (user == null || user.getRole() != Role.ADMIN)){
-//                page = "404-error.jsp";
                 request.getRequestDispatcher("404-error.jsp").forward(servletRequest, servletResponse);
+                return;
             }
             if(request.getRequestURL().toString().contains(userUrl) &&
                     (user == null || user.getRole() != Role.USER)){
-//                page = "404-error.jsp";
                 request.getRequestDispatcher("404-error.jsp").forward(servletRequest, servletResponse);
+                return;
             }
             if((request.getRequestURL().toString().equals(homePageUrl)||
                     request.getRequestURL().toString().equals(indexUrl)) &&
                     user != null && user.getRole() == Role.USER){
-//                page = "/user";
-                request.getRequestDispatcher("/user").forward(servletRequest, servletResponse);
+                response.sendRedirect("/user");
+                return;
             }
             if((request.getRequestURL().toString().equals(homePageUrl)||
                     request.getRequestURL().toString().equals(indexUrl)) &&
                     user != null && user.getRole() == Role.ADMIN){
-//                page = "/admin";
-                request.getRequestDispatcher("/admin").forward(servletRequest, servletResponse);
+                response.sendRedirect("/admin");
+                return;
             }
         }
-
-//        if(page != null){
-//            request.getRequestDispatcher(page).forward(servletRequest, servletResponse);
-//        }
 
         filterChain.doFilter(request, servletResponse);
     }
