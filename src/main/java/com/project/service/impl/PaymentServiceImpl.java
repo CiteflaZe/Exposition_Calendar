@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -30,6 +31,11 @@ public class PaymentServiceImpl implements PaymentService {
             throw new InvalidEntityException("Invalid payment parameters");
         }
         return paymentDao.save(mapper.mapPaymentToPaymentEntity(payment));
+    }
+
+    @Override
+    public Optional<Payment> showLastPaymentByUserId(Long id) {
+        return paymentDao.findLastByUserId(id).map(mapper::mapPaymentEntityToPayment);
     }
 
     @Override

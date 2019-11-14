@@ -67,24 +67,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> showAll(Integer rowCount, Integer startFrom) {
-        if (rowCount != null && startFrom != null) {
-            Integer count = userDao.countEntries();
-            if (rowCount <= 0) {
-                rowCount = 15;
-            }
-            if (startFrom > count) {
-                startFrom = count - rowCount;
-            } else if (startFrom < 0) {
-                startFrom = 0;
-            }
-            List<UserEntity> userEntities = userDao.findAll(rowCount, startFrom);
-            return userEntities.stream()
-                    .map(mapper::mapUserEntityToUser)
-                    .collect(Collectors.toList());
-        } else {
-            LOGGER.warn("Null is not allowed");
-            throw new IllegalArgumentException("rowCount and startFrom can't be null");
-        }
+
+        List<UserEntity> userEntities = userDao.findAll(rowCount, startFrom);
+        return userEntities.stream()
+                .map(mapper::mapUserEntityToUser)
+                .collect(Collectors.toList());
     }
 
     @Override
