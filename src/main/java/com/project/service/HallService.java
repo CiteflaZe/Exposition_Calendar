@@ -8,6 +8,10 @@ import java.util.Optional;
 public interface HallService {
     boolean add(Hall hall);
 
+    List<Hall> showAll(Integer startFrom, Integer rowCount);
+
+    Integer showEntriesAmount();
+
     Optional<Hall> showByName(String name);
 
     List<Hall> showByCity(String city);

@@ -13,7 +13,7 @@ import java.util.Optional;
 public class HallDaoImpl extends AbstractDaoImpl<HallEntity> implements HallDao {
     private static final String SAVE_QUERY = "INSERT INTO halls(name, city, street, house_number) VALUES (?,?,?,?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM halls WHERE id = ?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM halls LIMIT ?, ?";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM halls ORDER BY id DESC LIMIT ?, ?";
     private static final String UPDATE_QUERY = "UPDATE halls SET name = ?, city = ?, street = ?, house_number = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM halls";
 

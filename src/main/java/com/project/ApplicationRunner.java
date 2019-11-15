@@ -52,5 +52,9 @@ public class ApplicationRunner {
         final String res = buff.substring(0, buff.length()-1);
 
         System.out.println(res);
+
+        String date = "2019/11/21".replace("/", "-");
+
+        System.out.println(LocalDate.of(1997, 6, 22));
     }
 }

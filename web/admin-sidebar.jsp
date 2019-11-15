@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: CiteflaZe
-  Date: 12-Nov-19
-  Time: 11:27 PM
+  Date: 15-Nov-19
+  Time: 12:32 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -34,6 +34,13 @@
 
     <style>
         <%@ include file ="css/sidebar.css"%>
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #6e3759;
+            color: #cfcfcf;
+            transition: all 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -41,10 +48,19 @@
     <ul class="list-unstyled components">
         <p><fmt:message key="sidebar.menu"/> </p>
         <li>
-            <a href="?command=showExpositions">Show Expositions</a>
+            <a href="?command=expositionForm">Add Exposition</a>
+        </li>
+        <li>
+            <a href="?command=showUsers&currentPage=1&rowCount=15">Show Users</a>
         </li>
         <li>
             <a href="?command=showTickets">View tickets</a>
+        </li>
+        <li>
+            <a href="#">Contact</a>
+        </li>
+        <li>
+            <a href="#">Another</a>
         </li>
     </ul>
 </nav>

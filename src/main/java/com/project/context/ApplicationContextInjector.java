@@ -2,6 +2,9 @@ package com.project.context;
 
 import com.project.command.Command;
 import com.project.command.DefaultCommand;
+import com.project.command.admin.AddExpositionCommand;
+import com.project.command.admin.ExpositionFormCommand;
+import com.project.command.admin.ShowUsersCommand;
 import com.project.command.user.*;
 import com.project.dao.*;
 import com.project.dao.impl.*;
@@ -82,9 +85,17 @@ public class ApplicationContextInjector {
 
     private static final MakePayment MAKE_PAYMENT = new MakePayment(PAYMENT_SERVICE, TICKET_SERVICE);
 
+    private static final ExpositionFormCommand EXPOSITION_FORM_COMMAND = new ExpositionFormCommand(HALL_SERVICE);
+
+    private static final AddExpositionCommand ADD_EXPOSITION_COMMAND = new AddExpositionCommand(EXPOSITION_SERVICE);
+
+    private static final ShowUsersCommand SHOW_USERS_COMMAND = new ShowUsersCommand(USER_SERVICE, PAGINATION_VALIDATOR);
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
     private static final Map<String, Command> USER_COMMAND_NAME_TO_COMMAND = mapUserCommand();
+
+    private static final Map<String, Command> ADMIN_COMMAND_NAME_TO_COMMAND = mapAdminCommand();
 
     private static ApplicationContextInjector applicationContextInjector;
 
@@ -107,15 +118,27 @@ public class ApplicationContextInjector {
         userCommandNameToCommand.put("login", LOGIN_COMMAND);
         userCommandNameToCommand.put("logout", LOGOUT_COMMAND);
         userCommandNameToCommand.put("register", REGISTER_COMMAND);
-        userCommandNameToCommand.put("default", DEFAULT_COMMAND);
         userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
         userCommandNameToCommand.put("showTickets", SHOW_TICKETS_COMMAND);
         userCommandNameToCommand.put("download", DOWNLOAD_TICKETS_COMMAND);
         userCommandNameToCommand.put("processExposition", PROCESS_EXPOSITION_COMMAND);
         userCommandNameToCommand.put("processDate", PROCESS_DATE_COMMAND);
         userCommandNameToCommand.put("makePayment", MAKE_PAYMENT);
+        userCommandNameToCommand.put("default", DEFAULT_COMMAND);
 
         return userCommandNameToCommand;
+    }
+
+    private static Map<String, Command> mapAdminCommand(){
+        Map<String, Command> adminCommandNameToCommand = new HashMap<>();
+
+        adminCommandNameToCommand.put("expositionForm", EXPOSITION_FORM_COMMAND);
+        adminCommandNameToCommand.put("addExposition", ADD_EXPOSITION_COMMAND);
+        adminCommandNameToCommand.put("showUsers", SHOW_USERS_COMMAND);
+        adminCommandNameToCommand.put("logout", LOGOUT_COMMAND);
+        adminCommandNameToCommand.put("default", DEFAULT_COMMAND);
+
+        return adminCommandNameToCommand;
     }
 
     public PaginationValidator getPaginationValidator() {
@@ -130,10 +153,6 @@ public class ApplicationContextInjector {
         return EXPOSITION_SERVICE;
     }
 
-    public Map<String, Command> getUserCommands() {
-        return USER_COMMAND_NAME_TO_COMMAND;
-    }
-
     public PaymentService getPaymentService() {
         return PAYMENT_SERVICE;
     }
@@ -144,5 +163,13 @@ public class ApplicationContextInjector {
 
     public static HallService getHallService() {
         return HALL_SERVICE;
+    }
+
+    public Map<String, Command> getUserCommands() {
+        return USER_COMMAND_NAME_TO_COMMAND;
+    }
+
+    public Map<String, Command> getAdminCommands(){
+        return ADMIN_COMMAND_NAME_TO_COMMAND;
     }
 }

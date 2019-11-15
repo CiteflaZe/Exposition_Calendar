@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowUsers implements Command {
+public class ShowUsersCommand implements Command {
     private final UserService userService;
     private final PaginationValidator paginationValidator;
 
-    public ShowUsers(UserService userService, PaginationValidator paginationValidator) {
+    public ShowUsersCommand(UserService userService, PaginationValidator paginationValidator) {
         this.userService = userService;
         this.paginationValidator = paginationValidator;
     }
@@ -28,11 +28,11 @@ public class ShowUsers implements Command {
 
         final List<User> users = userService.showAll(startFrom, rowCount);
         request.setAttribute("users", users);
-        request.setAttribute("command", "show");
+        request.setAttribute("command", "showUsers");
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("rowCount", rowCount);
         request.getSession().setAttribute("numberOfPages", numberOfPages);
 
-        return "show.jsp";
+        return "admin-show-users.jsp";
     }
 }

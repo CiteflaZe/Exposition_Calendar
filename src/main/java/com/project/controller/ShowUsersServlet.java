@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.command.admin.ShowUsers;
+import com.project.command.admin.ShowUsersCommand;
 import com.project.context.ApplicationContextInjector;
 import com.project.service.UserService;
 import com.project.service.validator.PaginationValidator;
@@ -24,11 +24,11 @@ public class ShowUsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShowUsers showUsers = new ShowUsers(userService, paginationValidator);
+        ShowUsersCommand showUsersCommand = new ShowUsersCommand(userService, paginationValidator);
         String page = null;
 
         if("show".equals(req.getParameter("command"))){
-            page = showUsers.execute(req ,resp);
+            page = showUsersCommand.execute(req ,resp);
         }
 
 

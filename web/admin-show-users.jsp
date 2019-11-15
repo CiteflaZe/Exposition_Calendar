@@ -18,47 +18,40 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <title>Title</title>
+    <title>Users</title>
 </head>
 <body>
 
-<a href="index.jsp">Home</a>
-
-
-
-<div>
-    <table class="table table-striped table-responsive-md btn-table">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Surname</th>
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <c:forEach var="user" items="${users}">
+<c:import url="header.jsp"/>
+<div class="wrapper">
+    <c:import url="admin-sidebar.jsp"/>
+    <div id="content">
+        <table class="table table-striped table-responsive-md btn-table">
+            <thead>
             <tr>
-                <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td>${user.surname}</td>
-                <td>${user.email}</td>
-                <td>${user.role.description}</td>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
             </tr>
-        </c:forEach>
+            </thead>
 
-        </tbody>
-    </table>
+            <tbody>
+            <c:forEach var="user" items="${users}">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.surname}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role.description}</td>
+                </tr>
+            </c:forEach>
 
-    <form action="<c:url value='/show'/>" method="get">
-        <input type="hidden" name="rowCount" value="${rowCount}">
-        <input type="hidden" name="startFrom" value="${startFrom}">
-        <input type="submit" name="page" value="previous" class="btn btn-indigo btn-sm m-0">
-        <input type="submit" name="page" value="next" class="btn btn-indigo btn-sm m-0">
-    </form>
-
+            </tbody>
+        </table>
+        <c:import url="admin-pagination.jsp"/>
+    </div>
 </div>
 </body>
 </html>

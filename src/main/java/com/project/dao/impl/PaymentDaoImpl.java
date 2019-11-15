@@ -23,7 +23,7 @@ public class PaymentDaoImpl extends AbstractDaoImpl<PaymentEntity> implements Pa
 
     private static final String FIND_BY_STATUS = "SELECT * FROM payments WHERE status = ?";
     private static final String FIND_BY_TIME_RANGE = "SELECT * FROM payments WHERE payment_time > ? AND payment_time < ?";
-    private static final String FIND_BY_USER_ID = "SELECT * FROM payments WHERE user_id = ?";
+    private static final String FIND_BY_USER_ID = "SELECT * FROM payments WHERE user_id = ? ORDER BY id DESC";
     private static final String FIND_BY_EXPOSITION_ID = "SELECT * FROM payments WHERE exposition_id = ?";
     private static final String FIND_LAST_BY_USER_ID = "SELECT * FROM payments WHERE user_id = ? order by ID DESC LIMIT 1 ";
 

@@ -33,6 +33,17 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
+    public List<Hall> showAll(Integer startFrom, Integer rowCount) {
+        final List<HallEntity> entities = hallDao.findAll(startFrom, rowCount);
+        return mapHallEntityListToHallList(entities);
+    }
+
+    @Override
+    public Integer showEntriesAmount() {
+        return hallDao.countEntries();
+    }
+
+    @Override
     public Optional<Hall> showByName(String name) {
         final Optional<HallEntity> entity = hallDao.findByName(name);
         return entity.map(mapper::mapHallEntityToHall);

@@ -10,7 +10,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <title>User Pagination</title>
 </head>
@@ -19,7 +18,7 @@
     <ul class="pagination">
         <c:if test="${currentPage ne 1}">
             <li class="page-item"><a class="page-link"
-                                     href="show?command=${command}&currentPage=${currentPage-1}&rowCount=${rowCount}">Prev</a>
+                                     href="admin?command=${command}&currentPage=${currentPage-1}&rowCount=${rowCount}">Prev</a>
             </li>
         </c:if>
 
@@ -33,7 +32,7 @@
                     </c:when>
                     <c:otherwise>
                         <li class="page-item"><a class="page-link"
-                                                 href="show?command=${command}&currentPage=${i}&rowCount=${rowCount}">${i}</a>
+                                                 href="admin?command=${command}&currentPage=${i}&rowCount=${rowCount}">${i}</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
@@ -42,7 +41,7 @@
 
         <c:if test="${currentPage lt numberOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="show?command=${command}&currentPage=${currentPage+1}&rowCount=${rowCount}">Next</a>
+                                     href="admin?command=${command}&currentPage=${currentPage+1}&rowCount=${rowCount}">Next</a>
             </li>
         </c:if>
     </ul>
