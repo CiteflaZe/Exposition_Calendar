@@ -30,12 +30,15 @@ public class MakePayment implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final User user = (User) request.getSession().getAttribute("user");
         final Exposition exposition = (Exposition) request.getSession().getAttribute("exposition");
+
         String[] stringDate = ((String) request.getSession().getAttribute("date")).split("/");
         int[] indDate = Arrays.stream(stringDate)
                 .mapToInt(Integer::parseInt)
                 .toArray();
         LocalDate date = LocalDate.of(indDate[0], indDate[1], indDate[2]);
+
         final Integer ticketsAmount = Integer.valueOf((String) request.getSession().getAttribute("tickets"));
+
         Payment payment = Payment.builder()
                 .withPaymentTime(LocalDateTime.now())
                 .withStatus(Status.PASSED)
@@ -45,7 +48,7 @@ public class MakePayment implements Command {
                 .withExposition(exposition)
                 .build();
 
-        final boolean add = paymentService.add(payment);
+        paymentService.add(payment);
 
         final Optional<Payment> lastPayment = paymentService.showLastPaymentByUserId(user.getId());
 

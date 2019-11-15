@@ -7,11 +7,13 @@ import com.project.dao.*;
 import com.project.dao.impl.*;
 import com.project.domain.user.User;
 import com.project.service.ExpositionService;
+import com.project.service.HallService;
 import com.project.service.PaymentService;
 import com.project.service.TicketService;
 import com.project.service.UserService;
 import com.project.service.encoder.PasswordEncoder;
 import com.project.service.impl.ExpositionServiceImpl;
+import com.project.service.impl.HallServiceImpl;
 import com.project.service.impl.PaymentServiceImpl;
 import com.project.service.impl.TicketServiceImpl;
 import com.project.service.impl.UserServiceImpl;
@@ -60,6 +62,8 @@ public class ApplicationContextInjector {
 
     private static final TicketService TICKET_SERVICE = new TicketServiceImpl(TICKET_DAO, TICKET_MAPPER);
 
+    private static final HallService HALL_SERVICE = new HallServiceImpl(HALL_DAO, HALL_MAPPER);
+
     private static final LogInCommand LOGIN_COMMAND = new LogInCommand(USER_SERVICE);
 
     private static final LogOutCommand LOGOUT_COMMAND = new LogOutCommand();
@@ -71,6 +75,12 @@ public class ApplicationContextInjector {
     private static final ShowTicketsCommand SHOW_TICKETS_COMMAND = new ShowTicketsCommand(PAYMENT_SERVICE, TICKET_SERVICE);
 
     private static final DownloadTicketsCommand DOWNLOAD_TICKETS_COMMAND = new DownloadTicketsCommand(TICKET_SERVICE);
+
+    private static final ProcessExpositionCommand PROCESS_EXPOSITION_COMMAND = new ProcessExpositionCommand();
+
+    private static final ProcessDateCommand PROCESS_DATE_COMMAND = new ProcessDateCommand();
+
+    private static final MakePayment MAKE_PAYMENT = new MakePayment(PAYMENT_SERVICE, TICKET_SERVICE);
 
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
@@ -101,6 +111,9 @@ public class ApplicationContextInjector {
         userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
         userCommandNameToCommand.put("showTickets", SHOW_TICKETS_COMMAND);
         userCommandNameToCommand.put("download", DOWNLOAD_TICKETS_COMMAND);
+        userCommandNameToCommand.put("processExposition", PROCESS_EXPOSITION_COMMAND);
+        userCommandNameToCommand.put("processDate", PROCESS_DATE_COMMAND);
+        userCommandNameToCommand.put("makePayment", MAKE_PAYMENT);
 
         return userCommandNameToCommand;
     }
@@ -127,5 +140,9 @@ public class ApplicationContextInjector {
 
     public TicketService getTicketService() {
         return TICKET_SERVICE;
+    }
+
+    public static HallService getHallService() {
+        return HALL_SERVICE;
     }
 }

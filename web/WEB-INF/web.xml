@@ -3,26 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    
-<!--    <servlet>-->
-<!--        <servlet-name>DefServlet</servlet-name>-->
-<!--        <servlet-class>com.project.controller.DefServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>DefServlet</servlet-name>-->
-<!--        <url-pattern>/</url-pattern>-->
-<!--    </servlet-mapping>-->
-
-    <servlet>
-        <servlet-name>PaymentServlet</servlet-name>
-        <servlet-class>com.project.controller.PaymentServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PaymentServlet</servlet-name>
-        <url-pattern>/payment</url-pattern>
-        <url-pattern>/processPayment</url-pattern>
-        <url-pattern>/chooseDate</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <servlet-name>UserServlet</servlet-name>
@@ -40,15 +20,6 @@
     <servlet-mapping>
         <servlet-name>ShowUsersServlet</servlet-name>
         <url-pattern>/show</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>DownloadServlet</servlet-name>
-        <servlet-class>com.project.controller.DownloadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>DownloadServlet</servlet-name>
-        <url-pattern>/download</url-pattern>
     </servlet-mapping>
 
     <filter>

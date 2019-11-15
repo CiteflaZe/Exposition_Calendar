@@ -49,7 +49,7 @@
                     <td>${expositions.get(i).getDescription()}</td>
                     <td>${expositions.get(i).getHall().getName()}</td>
                     <td>
-                        <form action="chooseDate" method="post">
+                        <form action="user" method="post">
                             <input type="hidden" name="command" value="processExposition"/>
                             <input type="hidden" name="exposition" value="${expositions.get(i).getId()}"/>
                             <button type="submit" class="btn btn-success">Place order</button>

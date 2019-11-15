@@ -26,7 +26,7 @@
                         <h1>Date</h1>
                     </div>
                 </div>
-                <form action="payment" method="post" name="login">
+                <form action="user" method="post" name="login">
                     <input type="hidden" name="command" value="processDate">
                     <div class="form-group">
                         <label for="date">Date<span class="asteriskField">*</span></label>
