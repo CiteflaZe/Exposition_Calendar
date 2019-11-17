@@ -51,7 +51,7 @@
                     <td>
                         <form action="user" method="post">
                             <input type="hidden" name="command" value="processExposition"/>
-                            <input type="hidden" name="exposition" value="${expositions.get(i).getId()}"/>
+                            <input type="hidden" name="exposition" value="${i}"/>
                             <button type="submit" class="btn btn-success">Place order</button>
                         </form>
                     </td>

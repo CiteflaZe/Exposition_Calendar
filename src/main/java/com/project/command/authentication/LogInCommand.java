@@ -1,8 +1,9 @@
-package com.project.command.user;
+package com.project.command.authentication;
 
 import com.project.command.Command;
 import com.project.domain.user.User;
 import com.project.entity.user.Role;
+import com.project.exception.InvalidLoginException;
 import com.project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +22,22 @@ public class LogInCommand implements Command {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
 
-        User user = userService.login(email, password);
+        User user = null;
+        try {
+            user = userService.login(email, password);
+        } catch (InvalidLoginException e) {
+            request.setAttribute("loginMessage", "Invalid Email or Password");
+            return "login?command=loginForm";
+        }
+
         Role role = user.getRole();
 
         request.getSession().setAttribute("user", user);
         if(role == Role.ADMIN){
-            return "admin-page.jsp";
+            return "admin";
         }
         else{
-            return "user-page.jsp";
+            return "user";
         }
     }
 }

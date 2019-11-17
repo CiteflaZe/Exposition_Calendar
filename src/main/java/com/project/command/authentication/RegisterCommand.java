@@ -1,7 +1,8 @@
-package com.project.command.user;
+package com.project.command.authentication;
 
 import com.project.command.Command;
 import com.project.domain.user.User;
+import com.project.exception.EmailAlreadyExistException;
 import com.project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,8 @@ public class RegisterCommand implements Command {
         final String passwordConfirmation = request.getParameter("passwordConfirmation");
 
         if (!Objects.equals(password, passwordConfirmation)){
-            return "register.jsp";
+            request.setAttribute("registerMessage", "Passwords should be the same");
+            return "register?command=registerForm";
         }
 
         User user = User.builder()
@@ -35,8 +37,13 @@ public class RegisterCommand implements Command {
                 .withPassword(password)
                 .build();
 
-        userService.register(user);
+        try {
+            userService.register(user);
+        } catch (EmailAlreadyExistException e) {
+            request.setAttribute("registerMessage", "Email already taken");
+            return "register?command=registerForm";
+        }
 
-        return "index.jsp";
+        return "/";
     }
 }
