@@ -8,15 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <title>Expositions</title>
 </head>
 <body>
@@ -27,13 +26,13 @@
         <table class="table table-striped table-responsive-md btn-table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Theme</th>
-                <th scope="col">Starts From</th>
-                <th scope="col">Ends On</th>
-                <th scope="col">Ticket Price</th>
-                <th scope="col" style="width:30%">Description</th>
-                <th scope="col">Hall</th>
+                <th scope="col"><fmt:message key="user.showExpositions.title"/></th>
+                <th scope="col"><fmt:message key="user.showExpositions.theme"/></th>
+                <th scope="col"><fmt:message key="user.showExpositions.start"/></th>
+                <th scope="col"><fmt:message key="user.showExpositions.end"/></th>
+                <th scope="col"><fmt:message key="user.showExpositions.ticketPrice"/></th>
+                <th scope="col" style="width:30%"><fmt:message key="user.showExpositions.description"/></th>
+                <th scope="col"><fmt:message key="user.showExpositions.hall"/></th>
                 <th scope="col" style="width:8%"></th>
             </tr>
             </thead>
@@ -52,7 +51,7 @@
                         <form action="user" method="post">
                             <input type="hidden" name="command" value="processExposition"/>
                             <input type="hidden" name="exposition" value="${i}"/>
-                            <button type="submit" class="btn btn-success">Place order</button>
+                            <button type="submit" class="btn btn-success"><fmt:message key="user.showExpositions.order"/></button>
                         </form>
                     </td>
                 </tr>

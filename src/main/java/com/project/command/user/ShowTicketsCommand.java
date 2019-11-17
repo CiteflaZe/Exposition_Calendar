@@ -44,6 +44,6 @@ public class ShowTicketsCommand implements Command {
         request.getSession().setAttribute("tickets", tickets);
         request.getSession().setAttribute("ticketAmount", ticketAmount);
 
-        return "show-user-tickets.jsp";
+        return "user-show-tickets.jsp";
     }
 }

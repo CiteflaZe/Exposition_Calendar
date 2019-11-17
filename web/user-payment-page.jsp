@@ -35,11 +35,11 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="cardNumber">
-                                Card Number</label>
+                                <fmt:message key="user.paymentPage.cardNumber"/></label>
                             <div class="input-group">
                                 <input type="hidden" name = "command" value="makePayment">
-                                <input type="text" class="form-control" id="cardNumber" placeholder="Valid Card Number"
-                                       required autofocus />
+                                <input type="text" class="form-control" id="cardNumber" placeholder="<fmt:message key="user.paymentPage.cardNumber"/>"
+                                       required autofocus  pattern="^\d{16}$" title="<fmt:message key="user.paymentPage.cardNumber.message"/>"/>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                             </div>
                         </div>
@@ -47,30 +47,31 @@
                             <div class="col-xs-7 col-md-7">
                                 <div class="form-group">
                                     <label for="expityMonth">
-                                        Expiration Date</label>
+                                    <fmt:message key="user.paymentPage.expirationDate"/></label>
                                     <div class="col-xs-6 col-lg-6 pl-ziro">
-                                        <input type="text" class="form-control" id="expityMonth" placeholder="MM" required />
+                                        <input type="number" class="form-control" id="expityMonth" placeholder="MM" min="1" max="12" required />
                                     </div>
                                     <div class="col-xs-6 col-lg-6 pl-ziro">
-                                        <input type="text" class="form-control" id="expityYear" placeholder="YY" required /></div>
+                                        <input type="number" class="form-control" id="expityYear" placeholder="YY" min="19" max="50" required /></div>
                                 </div>
                             </div>
                             <div class="col-xs-5 col-md-5 pull-right">
                                 <div class="form-group">
                                     <label for="cvCode">
                                         CVC</label>
-                                    <input type="password" class="form-control" id="cvCode" placeholder="CVC" required />
+                                    <input type="password" class="form-control" id="cvCode" placeholder="CVC" required
+                                    pattern="^\d{3}$" title=""/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <ul class="nav nav-pills nav-stacked">
-                                <li class="active"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><c:out value="${exposition.getTicketPrice()*tickets}"/> </span> <h4>Final Payment</h4>
+                                <li class="active"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span><c:out value="${exposition.getTicketPrice()*tickets}"/> </span> <h4><fmt:message key="user.paymentPage.price"/></h4>
                                 </li>
                             </ul>
                         </div>
                         <br/>
-                        <button type="submit" class="btn btn-success btn-lg btn-block" role="button">Pay</button>
+                        <button type="submit" class="btn btn-success btn-lg btn-block" role="button"><fmt:message key="user.paymentPage.submit"/></button>
                     </form>
                 </div>
             </div>

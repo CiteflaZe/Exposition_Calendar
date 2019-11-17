@@ -8,17 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
 
-    <title>User Pagination</title>
+    <title>Admin Pagination</title>
 </head>
 <body>
 <nav aria-label="Navigation for countries">
     <ul class="pagination">
         <c:if test="${currentPage ne 1}">
             <li class="page-item"><a class="page-link"
-                                     href="admin?command=${command}&currentPage=${currentPage-1}&rowCount=${rowCount}">Prev</a>
+                                     href="admin?command=${command}&currentPage=${currentPage-1}&rowCount=${rowCount}"><fmt:message key="pagination.prev"/></a>
             </li>
         </c:if>
 
@@ -41,7 +44,7 @@
 
         <c:if test="${currentPage lt numberOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="admin?command=${command}&currentPage=${currentPage+1}&rowCount=${rowCount}">Next</a>
+                                     href="admin?command=${command}&currentPage=${currentPage+1}&rowCount=${rowCount}"><fmt:message key="pagination.next"/></a>
             </li>
         </c:if>
     </ul>

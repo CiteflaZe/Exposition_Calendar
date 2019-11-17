@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
         this.mapper = mapper;
     }
 
+    //TODO possible rework to return null in case of invalid login
     @Override
     public User login(String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> showAll(Integer startFrom, Integer rowCount) {
 
-        List<UserEntity> userEntities = userDao.findAll( startFrom, rowCount);
+        List<UserEntity> userEntities = userDao.findAll(startFrom, rowCount);
         return userEntities.stream()
                 .map(mapper::mapUserEntityToUser)
                 .collect(Collectors.toList());

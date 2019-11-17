@@ -18,7 +18,7 @@ public class AccessRestrictionFilter implements Filter {
 
         final String adminUrl = "/admin";
         final String userUrl = "/user";
-        final String signInUrl = "/sign-in.jsp";
+        final String signInUrl = "/login.jsp";
         final String registerUrl = "/register.jsp";
         final String indexUrl = "/index.jsp";
         final String homePageUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + "/";

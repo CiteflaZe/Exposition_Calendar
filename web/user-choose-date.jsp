@@ -23,20 +23,20 @@
             <div class="myform form ">
                 <div class="logo mb-3">
                     <div class="col-md-12 text-center">
-                        <h1>Date</h1>
+                        <h1><fmt:message key="user.chooseDate.title"/></h1>
                     </div>
                 </div>
                 <form action="user" method="post" name="login">
                     <input type="hidden" name="command" value="processDate">
                     <div class="form-group">
-                        <label for="date">Date<span class="asteriskField">*</span></label>
+                        <label for="date"><fmt:message key="user.chooseDate.date"/><span class="asteriskField">*</span></label>
                         <input type="text" name="date" id="date" class="form-control" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
-                        <label for="tickets">Tickets</label>
+                        <label for="tickets"><fmt:message key="user.chooseDate.tickets"/></label>
                         <input type="number" name="tickets" id="tickets" class="form-control" aria-describedby="emailHelp" min="1">
                         <p></p>
-                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Process</button>
+                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm"><fmt:message key="user.chooseDate.process"/></button>
                     </div>
                 </form>
             </div>

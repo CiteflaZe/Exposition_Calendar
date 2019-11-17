@@ -22,6 +22,6 @@ public class ShowExpositionsCommand implements Command {
 
         request.getSession().setAttribute("expositions", expositions);
 
-        return "show-expositions.jsp";
+        return "user-show-expositions.jsp";
     }
 }

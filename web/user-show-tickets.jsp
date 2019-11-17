@@ -8,13 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="text"/>
 <html>
 <head>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-<%--    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">--%>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <title>Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>Tickets</title>
 </head>
 <body>
 <c:import url="header.jsp"/>
@@ -24,11 +26,11 @@
         <table class="table table-striped table-responsive-md btn-table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Exposition Title</th>
-                <th scope="col">Hall</th>
-                <th scope="col">Ticket Amount</th>
-                <th scope="col">Date</th>
-                <th scope="col">Download</th>
+                <th scope="col"><fmt:message key="user.showTickets.expoTitle"/></th>
+                <th scope="col"><fmt:message key="user.showTickets.hall"/></th>
+                <th scope="col"><fmt:message key="user.showTickets.ticketAmount"/></th>
+                <th scope="col"><fmt:message key="user.showTickets.date"/></th>
+                <th scope="col"><fmt:message key="user.showTickets.download"/></th>
             </tr>
             </thead>
 

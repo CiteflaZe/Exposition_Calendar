@@ -22,9 +22,9 @@
 <div id="notfound">
     <div class="notfound">
         <div class="notfound-404">
-            <h1><fmt:message key="error.text"/></h1>
+            <h1><fmt:message key="404-error.text"/></h1>
         </div>
-        <h2><fmt:message key="error.message"/></h2>
+        <h2><fmt:message key="404-error.message"/></h2>
         <a href="/"><span class="arrow"></span><fmt:message key="error.homepage"/></a>
     </div>
 </div>

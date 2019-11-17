@@ -18,7 +18,7 @@
         <ul class="navbar-nav ml-auto">
             <a class="nav-link active" href="?locale=en">English</a>
             <a class="nav-link active" href="?locale=ru">Русский</a>
-            <form class="form-inline my-2 my-lg-0" action="user" method="post">
+            <form class="form-inline my-2 my-lg-0" action="logout" method="post">
                 <input class="form-control mr-sm-2" type="hidden" name="command" value="logout">
                 <button class="btn btn-dark" type="submit"><fmt:message key="header.logout"/></button>
             </form>

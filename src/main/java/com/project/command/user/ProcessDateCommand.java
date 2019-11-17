@@ -10,6 +10,6 @@ public class ProcessDateCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().setAttribute("date", request.getParameter("date"));
         request.getSession().setAttribute("tickets", request.getParameter("tickets"));
-        return "payment-page.jsp";
+        return "user-payment-page.jsp";
     }
 }

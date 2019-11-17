@@ -64,7 +64,7 @@ public class DownloadTicketsCommand implements Command {
 
         return "user";
     }
-
+    //TODO split method
     private String createPDF(Long paymentId, List<Ticket> tickets) {
         Document document = new Document();
         final String fileName = "ticket_" + paymentId + ".pdf";
@@ -99,8 +99,7 @@ public class DownloadTicketsCommand implements Command {
         title.setAlignment(Element.ALIGN_CENTER);
         title.setSpacingAfter(32);
 
-        for (Ticket ticket :
-                tickets) {
+        for (Ticket ticket : tickets) {
             chunk = new Chunk("Ticket ID", paragraphFont).setUnderline(1f, -2f);
             text = new Chunk(" " + ticket.getId(), chunkFont);
             ticketId.add(chunk);

@@ -40,7 +40,7 @@
             <nav class="nav nav-masthead justify-content-center">
                 <a class="nav-link" href="?locale=en">English</a>
                 <a class="nav-link" href="?locale=ru">Русский</a>
-                <a class="nav-link" href="sign-in.jsp"><fmt:message key="signIn.submit"/></a>
+                <a class="nav-link" href="login?command=loginForm"><fmt:message key="signIn.submit"/></a>
             </nav>
         </div>
     </header>
@@ -48,7 +48,7 @@
         <h1 class="cover-heading"><fmt:message key="index.brandName"/></h1>
         <p class="lead"><fmt:message key="index.text"/> </p>
         <p class="lead">
-            <a href="register.jsp" class="btn btn-lg btn-secondary"><fmt:message key="index.register"/> </a>
+            <a href="register?command=registerForm" class="btn btn-lg btn-secondary"><fmt:message key="index.register"/> </a>
         </p>
     </main>
 

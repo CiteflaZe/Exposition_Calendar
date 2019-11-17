@@ -24,41 +24,41 @@
         <form action="admin">
             <input type="hidden" name="command" value="addExposition">
             <div class="col-sm-3 my-1">
-                <label for="title">Title</label>
-                <input name="title" type="text" class="form-control" id="title"  placeholder="Title">
+                <label for="title"><fmt:message key="admin.addExposition.title"/></label>
+                <input name="title" type="text" class="form-control" id="title"  placeholder="<fmt:message key="admin.addExposition.title"/>" required>
             </div>
             <div class="col-sm-3 my-1">
-                <label for="theme">Theme</label>
-                <input name="theme" type="text" class="form-control" id="theme" placeholder="Theme">
+                <label for="theme"><fmt:message key="admin.addExposition.theme"/></label>
+                <input name="theme" type="text" class="form-control" id="theme" placeholder="<fmt:message key="admin.addExposition.theme"/>" required>
             </div>
             <div class="col-sm-3 my-1">
-                <label for="dateStart">Start Date</label>
-                <input name="dateStart" type="text" id="dateStart" class="form-control">
+                <label for="dateStart"><fmt:message key="admin.addExposition.startDate"/></label>
+                <input name="dateStart" type="text" id="dateStart" class="form-control" required>
             </div>
             <div class="col-sm-3 my-1">
-                <label for="dateEnd">End Date</label>
-                <input name="dateEnd" type="text" id="dateEnd" class="form-control">
+                <label for="dateEnd"><fmt:message key="admin.addExposition.endDate"/></label>
+                <input name="dateEnd" type="text" id="dateEnd" class="form-control" required>
             </div>
             <div class="col-sm-3 my-1">
-                <label for="ticketPrice">Ticket Price</label>
-                <input name="ticketPrice" type="number" step=".01" class="form-control" id="ticketPrice" placeholder="Ticket Price">
+                <label for="ticketPrice"><fmt:message key="admin.addExposition.ticketPrice"/></label>
+                <input name="ticketPrice" type="number" step=".01" class="form-control" id="ticketPrice" placeholder="<fmt:message key="admin.addExposition.ticketPrice"/>" required>
             </div>
             <div class="col-sm-3 my-1">
-                <label for="description">Description</label>
-                <textarea name="description" type="text" class="form-control" id="description" maxlength="500" rows="5"></textarea>
+                <label for="description"><fmt:message key="admin.addExposition.description"/></label>
+                <textarea name="description" type="text" class="form-control" id="description" maxlength="500" rows="5" required></textarea>
             </div>
             <div class="col-sm-3 my-1">
-                <label for="hallId">Hall</label>
+                <label for="hallId"><fmt:message key="admin.addExposition.hall"/></label>
                 <select name="hallId" id="hallId" class="custom-select custom-select-lg mb-3">
-                    <option selected>Open this select menu</option>
+                    <option selected><fmt:message key="admin.addExposition.dropdown"/></option>
                     <c:forEach begin="0" end="${halls.size()-1}" var="i">
-                        <option value="${i+1}">${halls.get(i).getName()}</option>
+                        <option value="${halls.get(i).getId()}">${halls.get(i).getName()}</option>
                     </c:forEach>
 
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary"><fmt:message key="admin.submit"/></button>
         </form>
     </div>
 </div>

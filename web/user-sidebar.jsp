@@ -17,19 +17,6 @@
 
     <link href="css/sidebar.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
-
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-            crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-            crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-            crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
 
     <style>
@@ -41,10 +28,10 @@
     <ul class="list-unstyled components">
         <p><fmt:message key="sidebar.menu"/> </p>
         <li>
-            <a href="?command=showExpositions">Show Expositions</a>
+            <a href="?command=showExpositions"><fmt:message key="user.sidebar.showExpos"/></a>
         </li>
         <li>
-            <a href="?command=showTickets">View tickets</a>
+            <a href="?command=showTickets"><fmt:message key="user.sidebar.showTickets"/></a>
         </li>
     </ul>
 </nav>

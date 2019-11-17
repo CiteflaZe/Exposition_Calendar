@@ -22,8 +22,8 @@
 <div class="wrapper">
     <c:import url="admin-sidebar.jsp"/>
     <div id="content">
-        <h2><fmt:message key="user-page.welcome"/> <c:out value="${sessionScope.user.getName()}"/> <c:out value="${sessionScope.user.getSurname()}"/></h2>
-        <p><fmt:message key="user-page.message"/></p>
+        <h2><fmt:message key="user.welcome"/> <c:out value="${sessionScope.user.getName()}"/> <c:out value="${sessionScope.user.getSurname()}"/></h2>
+        <p><fmt:message key="user.message"/></p>
     </div>
 </div>
 </body>

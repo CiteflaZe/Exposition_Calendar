@@ -18,7 +18,7 @@
     <ul class="pagination">
         <c:if test="${currentPage ne 1}">
             <li class="page-item"><a class="page-link"
-                                     href="admin?command=${command}&currentPage=${currentPage-1}&rowCount=${rowCount}">Prev</a>
+                                     href="user?command=${command}&currentPage=${currentPage-1}&rowCount=${rowCount}"><fmt:message key="pagination.prev"/></a>
             </li>
         </c:if>
 
@@ -32,7 +32,7 @@
                     </c:when>
                     <c:otherwise>
                         <li class="page-item"><a class="page-link"
-                                                 href="admin?command=${command}&currentPage=${i}&rowCount=${rowCount}">${i}</a>
+                                                 href="user?command=${command}&currentPage=${i}&rowCount=${rowCount}">${i}</a>
                         </li>
                     </c:otherwise>
                 </c:choose>
@@ -41,7 +41,7 @@
 
         <c:if test="${currentPage lt numberOfPages}">
             <li class="page-item"><a class="page-link"
-                                     href="admin?command=${command}&currentPage=${currentPage+1}&rowCount=${rowCount}">Next</a>
+                                     href="user?command=${command}&currentPage=${currentPage+1}&rowCount=${rowCount}"><fmt:message key="pagination.next"/></a>
             </li>
         </c:if>
     </ul>

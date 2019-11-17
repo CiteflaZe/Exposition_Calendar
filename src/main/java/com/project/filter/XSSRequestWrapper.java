@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
-
+    //TODO make tests параметрический тест
     private static Pattern[] patterns = new Pattern[]{
             // Script fragments
             Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE),
@@ -63,14 +63,8 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
 
     private String stripXSS(String value) {
         if (value != null) {
-            // NOTE: It's highly recommended to use the ESAPI library and uncomment the following line to
-            // avoid encoded attacks.
-            // value = ESAPI.encoder().canonicalize(value);
-
-            // Avoid null characters
             value = value.replaceAll("\0", "");
 
-            // Remove all sections that match a pattern
             for (Pattern scriptPattern : patterns){
                 value = scriptPattern.matcher(value).replaceAll("");
             }

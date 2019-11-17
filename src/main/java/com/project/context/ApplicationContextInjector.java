@@ -3,8 +3,16 @@ package com.project.context;
 import com.project.command.Command;
 import com.project.command.DefaultCommand;
 import com.project.command.admin.AddExpositionCommand;
+import com.project.command.admin.AddHallCommand;
 import com.project.command.admin.ExpositionFormCommand;
+import com.project.command.admin.HallFormCommand;
+import com.project.command.admin.ShowHallsCommand;
 import com.project.command.admin.ShowUsersCommand;
+import com.project.command.authentication.LogInCommand;
+import com.project.command.authentication.LogInFormCommand;
+import com.project.command.authentication.LogOutCommand;
+import com.project.command.authentication.RegisterCommand;
+import com.project.command.authentication.RegisterFormCommand;
 import com.project.command.user.*;
 import com.project.dao.*;
 import com.project.dao.impl.*;
@@ -91,7 +99,19 @@ public class ApplicationContextInjector {
 
     private static final ShowUsersCommand SHOW_USERS_COMMAND = new ShowUsersCommand(USER_SERVICE, PAGINATION_VALIDATOR);
 
+    private static final HallFormCommand HALL_FORM_COMMAND = new HallFormCommand();
+
+    private static final AddHallCommand ADD_HALL_COMMAND = new AddHallCommand(HALL_SERVICE);
+
+    private static final ShowHallsCommand SHOW_HALLS_COMMAND = new ShowHallsCommand(HALL_SERVICE);
+
+    private static final LogInFormCommand LOGIN_FORM_COMMAND = new LogInFormCommand();
+
+    private static final RegisterFormCommand REGISTER_FORM_COMMAND = new RegisterFormCommand();
+
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
+
+    private static final Map<String, Command> AUTHENTICATION_COMMAND_NAME_TO_COMMAND = mapAuthenticationCommand();
 
     private static final Map<String, Command> USER_COMMAND_NAME_TO_COMMAND = mapUserCommand();
 
@@ -113,11 +133,20 @@ public class ApplicationContextInjector {
         return applicationContextInjector;
     }
 
+    private static Map<String, Command> mapAuthenticationCommand(){
+        Map<String, Command> authenticationCommandNameToCommand = new HashMap<>();
+        authenticationCommandNameToCommand.put("login", LOGIN_COMMAND);
+        authenticationCommandNameToCommand.put("register", REGISTER_COMMAND);
+        authenticationCommandNameToCommand.put("logout", LOGOUT_COMMAND);
+        authenticationCommandNameToCommand.put("loginForm", LOGIN_FORM_COMMAND);
+        authenticationCommandNameToCommand.put("registerForm", REGISTER_FORM_COMMAND);
+        authenticationCommandNameToCommand.put("default", DEFAULT_COMMAND);
+
+        return authenticationCommandNameToCommand;
+    }
+
     private static Map<String, Command> mapUserCommand() {
         Map<String, Command> userCommandNameToCommand = new HashMap<>();
-        userCommandNameToCommand.put("login", LOGIN_COMMAND);
-        userCommandNameToCommand.put("logout", LOGOUT_COMMAND);
-        userCommandNameToCommand.put("register", REGISTER_COMMAND);
         userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
         userCommandNameToCommand.put("showTickets", SHOW_TICKETS_COMMAND);
         userCommandNameToCommand.put("download", DOWNLOAD_TICKETS_COMMAND);
@@ -125,6 +154,7 @@ public class ApplicationContextInjector {
         userCommandNameToCommand.put("processDate", PROCESS_DATE_COMMAND);
         userCommandNameToCommand.put("makePayment", MAKE_PAYMENT);
         userCommandNameToCommand.put("default", DEFAULT_COMMAND);
+
 
         return userCommandNameToCommand;
     }
@@ -135,6 +165,9 @@ public class ApplicationContextInjector {
         adminCommandNameToCommand.put("expositionForm", EXPOSITION_FORM_COMMAND);
         adminCommandNameToCommand.put("addExposition", ADD_EXPOSITION_COMMAND);
         adminCommandNameToCommand.put("showUsers", SHOW_USERS_COMMAND);
+        adminCommandNameToCommand.put("hallForm", HALL_FORM_COMMAND);
+        adminCommandNameToCommand.put("addHall", ADD_HALL_COMMAND);
+        adminCommandNameToCommand.put("showHalls", SHOW_HALLS_COMMAND);
         adminCommandNameToCommand.put("logout", LOGOUT_COMMAND);
         adminCommandNameToCommand.put("default", DEFAULT_COMMAND);
 
@@ -163,6 +196,10 @@ public class ApplicationContextInjector {
 
     public static HallService getHallService() {
         return HALL_SERVICE;
+    }
+
+    public Map<String, Command> getAuthenticationCommands() {
+        return AUTHENTICATION_COMMAND_NAME_TO_COMMAND;
     }
 
     public Map<String, Command> getUserCommands() {
