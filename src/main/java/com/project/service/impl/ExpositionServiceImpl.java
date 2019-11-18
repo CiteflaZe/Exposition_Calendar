@@ -35,46 +35,15 @@ public class ExpositionServiceImpl implements ExpositionService {
     }
 
     @Override
-    public List<Exposition> showAll() {
-        final List<ExpositionEntity> entities = expositionDao.findAll(0, 5);
+    public List<Exposition> showAll(Integer startFrom, Integer rowCount) {
+        final List<ExpositionEntity> entities = expositionDao.findAll(startFrom, rowCount);
         return entities.stream()
                 .map(mapper::mapExpositionEntityToExposition)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Exposition> showByTitle(String title) {
-        final Optional<ExpositionEntity> entity = expositionDao.findByTitle(title);
-        return entity.map(mapper::mapExpositionEntityToExposition);
-    }
-
-    @Override
-    public List<Exposition> showByTheme(String theme) {
-        final List<ExpositionEntity> entities = expositionDao.findByTheme(theme);
-        return mapExpositionEntityListToExpositionList(entities);
-    }
-
-    @Override
-    public List<Exposition> showByDate(LocalDate date) {
-        final List<ExpositionEntity> entities = expositionDao.findByDate(date);
-        return mapExpositionEntityListToExpositionList(entities);
-    }
-
-    @Override
-    public List<Exposition> showByHallId(Long id) {
-        final List<ExpositionEntity> entities = expositionDao.findByHallId(id);
-        return mapExpositionEntityListToExpositionList(entities);
-    }
-
-    @Override
-    public List<Exposition> showByPriceRange(BigDecimal min, BigDecimal max) {
-        final List<ExpositionEntity> entities = expositionDao.findByPriceRange(min, max);
-        return mapExpositionEntityListToExpositionList(entities);
-    }
-
-    private List<Exposition> mapExpositionEntityListToExpositionList(List<ExpositionEntity> entities){
-        return entities.stream()
-                .map(mapper::mapExpositionEntityToExposition)
-                .collect(Collectors.toList());
+    public Integer showEntriesAmount() {
+        return expositionDao.countEntries();
     }
 }

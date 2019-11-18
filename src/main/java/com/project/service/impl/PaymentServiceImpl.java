@@ -50,24 +50,6 @@ public class PaymentServiceImpl implements PaymentService {
         return mapPaymentEntityListToPaymentList(entities);
     }
 
-    @Override
-    public List<Payment> showByStatus(Status status) {
-        final List<PaymentEntity> entities = paymentDao.findByStatus(status);
-        return mapPaymentEntityListToPaymentList(entities);
-    }
-
-    @Override
-    public List<Payment> showByExpositionId(Long id) {
-        final List<PaymentEntity> entities = paymentDao.findByExpositionId(id);
-        return mapPaymentEntityListToPaymentList(entities);
-    }
-
-    @Override
-    public List<Payment> showByTimeRange(LocalDateTime from, LocalDateTime to) {
-        final List<PaymentEntity> entities = paymentDao.findByTimeRange(from, to);
-        return mapPaymentEntityListToPaymentList(entities);
-    }
-
     private List<Payment> mapPaymentEntityListToPaymentList(List<PaymentEntity> entities) {
         return entities.stream()
                 .map(mapper::mapPaymentEntityToPayment)

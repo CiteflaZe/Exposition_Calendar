@@ -29,6 +29,8 @@ import com.project.service.impl.PaymentServiceImpl;
 import com.project.service.impl.TicketServiceImpl;
 import com.project.service.impl.UserServiceImpl;
 import com.project.service.mapper.*;
+import com.project.service.util.PDFCreator;
+import com.project.service.util.PaginationUtil;
 import com.project.service.validator.PaginationValidator;
 import com.project.service.validator.UserValidator;
 import com.project.service.validator.Validator;
@@ -65,6 +67,10 @@ public class ApplicationContextInjector {
 
     private static final PaginationValidator PAGINATION_VALIDATOR = new PaginationValidator();
 
+    private static final PaginationUtil PAGINATION_UTIL = new PaginationUtil();
+
+    private static final PDFCreator PDF_CREATOR = new PDFCreator();
+
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_VALIDATOR, PASSWORD_ENCODER, USER_MAPPER);
 
     private static final ExpositionService EXPOSITION_SERVICE = new ExpositionServiceImpl(EXPOSITION_DAO, EXPOSITION_MAPPER);
@@ -81,11 +87,11 @@ public class ApplicationContextInjector {
 
     private static final RegisterCommand REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
 
-    private static final ShowExpositionsCommand SHOW_EXPOSITIONS_COMMAND = new ShowExpositionsCommand(EXPOSITION_SERVICE);
+    private static final ShowExpositionsCommand SHOW_EXPOSITIONS_COMMAND = new ShowExpositionsCommand(EXPOSITION_SERVICE, PAGINATION_UTIL);
 
     private static final ShowTicketsCommand SHOW_TICKETS_COMMAND = new ShowTicketsCommand(PAYMENT_SERVICE, TICKET_SERVICE);
 
-    private static final DownloadTicketsCommand DOWNLOAD_TICKETS_COMMAND = new DownloadTicketsCommand(TICKET_SERVICE);
+    private static final DownloadTicketsCommand DOWNLOAD_TICKETS_COMMAND = new DownloadTicketsCommand(TICKET_SERVICE, PDF_CREATOR);
 
     private static final ProcessExpositionCommand PROCESS_EXPOSITION_COMMAND = new ProcessExpositionCommand();
 
@@ -97,13 +103,13 @@ public class ApplicationContextInjector {
 
     private static final AddExpositionCommand ADD_EXPOSITION_COMMAND = new AddExpositionCommand(EXPOSITION_SERVICE);
 
-    private static final ShowUsersCommand SHOW_USERS_COMMAND = new ShowUsersCommand(USER_SERVICE, PAGINATION_VALIDATOR);
+    private static final ShowUsersCommand SHOW_USERS_COMMAND = new ShowUsersCommand(USER_SERVICE, PAGINATION_UTIL);
 
     private static final HallFormCommand HALL_FORM_COMMAND = new HallFormCommand();
 
     private static final AddHallCommand ADD_HALL_COMMAND = new AddHallCommand(HALL_SERVICE);
 
-    private static final ShowHallsCommand SHOW_HALLS_COMMAND = new ShowHallsCommand(HALL_SERVICE);
+    private static final ShowHallsCommand SHOW_HALLS_COMMAND = new ShowHallsCommand(HALL_SERVICE, PAGINATION_UTIL);
 
     private static final LogInFormCommand LOGIN_FORM_COMMAND = new LogInFormCommand();
 

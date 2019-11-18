@@ -43,24 +43,6 @@ public class HallServiceImpl implements HallService {
         return hallDao.countEntries();
     }
 
-    @Override
-    public Optional<Hall> showByName(String name) {
-        final Optional<HallEntity> entity = hallDao.findByName(name);
-        return entity.map(mapper::mapHallEntityToHall);
-    }
-
-    @Override
-    public List<Hall> showByCity(String city) {
-        final List<HallEntity> entities = hallDao.findByCity(city);
-        return mapHallEntityListToHallList(entities);
-    }
-
-    @Override
-    public Optional<Hall> showByStreet(String street) {
-        final Optional<HallEntity> entity = hallDao.findByStreetName(street);
-        return entity.map(mapper::mapHallEntityToHall);
-    }
-
     private List<Hall> mapHallEntityListToHallList(List<HallEntity> entities){
         return entities.stream()
                 .map(mapper::mapHallEntityToHall)

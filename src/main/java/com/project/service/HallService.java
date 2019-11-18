@@ -11,10 +11,4 @@ public interface HallService {
     List<Hall> showAll(Integer startFrom, Integer rowCount);
 
     Integer showEntriesAmount();
-
-    Optional<Hall> showByName(String name);
-
-    List<Hall> showByCity(String city);
-
-    Optional<Hall> showByStreet(String street);
 }

@@ -10,15 +10,7 @@ import java.util.Optional;
 public interface ExpositionService {
     boolean add(Exposition exposition);
 
-    List<Exposition> showAll();
+    List<Exposition> showAll(Integer startFrom, Integer rowCount);
 
-    Optional<Exposition> showByTitle(String title);
-
-    List<Exposition> showByTheme(String theme);
-
-    List<Exposition> showByDate(LocalDate date);
-
-    List<Exposition> showByHallId(Long id);
-
-    List<Exposition> showByPriceRange(BigDecimal min, BigDecimal max);
+    Integer showEntriesAmount();
 }
