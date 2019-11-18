@@ -1,23 +1,26 @@
-package com.project.command.admin;
+package com.project.command.user;
 
-import com.project.service.HallService;
+import com.project.domain.exposition.Exposition;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
+import java.util.Collections;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExpositionFormCommandTest {
+public class ProcessExpositionCommandTest {
 
     @Mock
     private HttpServletRequest request;
@@ -25,24 +28,22 @@ public class ExpositionFormCommandTest {
     private HttpServletResponse response;
     @Mock
     private HttpSession session;
-    @Mock
-    private HallService hallService;
 
     @InjectMocks
-    private ExpositionFormCommand expositionFormCommand;
+    private ProcessExpositionCommand processExpositionCommand;
 
     @Test
-    public void executeShouldReturnExpositionFormPage() {
+    public void executeShouldReturnChoseDatePage() {
         when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("expositions")).thenReturn(Collections.singletonList(Exposition.builder()
+                .withId(4L)
+                .build()));
+        when(request.getParameter("exposition")).thenReturn("0");
 
-        final String actual = expositionFormCommand.execute(request, response);
-        String expected = "admin-add-exposition.jsp";
 
-        verify(hallService).showEntriesAmount();
-        verify(hallService).showAll(anyInt(), anyInt());
-        verify(session).setAttribute(anyString(), any(List.class));
+        final String actual = processExpositionCommand.execute(request, response);
+        String expected = "user-choose-date.jsp";
 
         MatcherAssert.assertThat(actual, Is.is(expected));
     }
-
 }

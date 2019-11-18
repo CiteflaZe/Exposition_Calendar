@@ -47,9 +47,6 @@
         <li>
             <a href="?command=showHalls&currentPage=1&rowCount=15"><fmt:message key="admin.sidebar.showHalls"/></a>
         </li>
-        <li>
-            <a href="#"><fmt:message key="admin.sidebar.showExpositions"/></a>
-        </li>
     </ul>
 </nav>
 </body>

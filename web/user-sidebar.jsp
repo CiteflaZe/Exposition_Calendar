@@ -28,7 +28,7 @@
     <ul class="list-unstyled components">
         <p><fmt:message key="sidebar.menu"/> </p>
         <li>
-            <a href="?command=showExpositions"><fmt:message key="user.sidebar.showExpos"/></a>
+            <a href="?command=showExpositions&currentPage=1&rowCount=15"><fmt:message key="user.sidebar.showExpos"/></a>
         </li>
         <li>
             <a href="?command=showTickets"><fmt:message key="user.sidebar.showTickets"/></a>

@@ -48,8 +48,8 @@ public class DownloadTicketsCommand implements Command {
             out.close();
             file.delete();
         } catch (IOException e) {
-            LOGGER.error("Unable to download pdf file", e);
-            throw new DownloadTicketsException(e);
+            LOGGER.warn("Unable to download pdf file", e);
+            throw new DownloadTicketsException("Unable to download file", e);
         }
 
         return "user";

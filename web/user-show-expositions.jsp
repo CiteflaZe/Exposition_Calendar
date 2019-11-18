@@ -59,6 +59,7 @@
 
             </tbody>
         </table>
+        <c:import url="user-pagination.jsp"/>
     </div>
 </div>
 
