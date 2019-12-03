@@ -1,12 +1,13 @@
 package com.project.service;
 
-import com.project.domain.ticket.Ticket;
+import com.project.domain.Ticket;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TicketService {
     boolean add(Ticket ticket);
 
-    List<Ticket> showByPaymentId(Long id);
+    Ticket showOneByPaymentId(Long id);
+
+    List<Ticket> showAllByPaymentIdAndUserId(Long paymentId, Long userId);
 }

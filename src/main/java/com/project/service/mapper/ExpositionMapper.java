@@ -1,9 +1,9 @@
 package com.project.service.mapper;
 
-import com.project.domain.exposition.Exposition;
-import com.project.domain.hall.Hall;
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.entity.hall.HallEntity;
+import com.project.domain.Exposition;
+import com.project.domain.Hall;
+import com.project.entity.ExpositionEntity;
+import com.project.entity.HallEntity;
 
 public class ExpositionMapper {
     public Exposition mapExpositionEntityToExposition(ExpositionEntity expositionEntity){
@@ -11,8 +11,8 @@ public class ExpositionMapper {
                 .withId(expositionEntity.getId())
                 .withTitle(expositionEntity.getTitle())
                 .withTheme(expositionEntity.getTheme())
-                .withStartTime(expositionEntity.getStartTime())
-                .withFinishTime(expositionEntity.getFinishTime())
+                .withStartDate(expositionEntity.getStartDate())
+                .withEndDate(expositionEntity.getEndDate())
                 .withTicketPrice(expositionEntity.getTicketPrice())
                 .withDescription(expositionEntity.getDescription())
                 .withHall(Hall.builder()
@@ -27,8 +27,8 @@ public class ExpositionMapper {
                 .withId(exposition.getId())
                 .withTitle(exposition.getTitle())
                 .withTheme(exposition.getTheme())
-                .withStartTime(exposition.getStartTime())
-                .withFinishTime(exposition.getFinishTime())
+                .withStartDate(exposition.getStartDate())
+                .withEndDate(exposition.getEndDate())
                 .withTicketPrice(exposition.getTicketPrice())
                 .withDescription(exposition.getDescription())
                 .withHall(HallEntity.builder()

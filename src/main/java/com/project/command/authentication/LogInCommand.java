@@ -1,8 +1,8 @@
 package com.project.command.authentication;
 
 import com.project.command.Command;
-import com.project.domain.user.User;
-import com.project.entity.user.Role;
+import com.project.domain.User;
+import com.project.entity.Role;
 import com.project.exception.InvalidLoginException;
 import com.project.service.UserService;
 

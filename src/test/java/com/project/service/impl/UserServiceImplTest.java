@@ -1,9 +1,8 @@
 package com.project.service.impl;
 
 import com.project.dao.UserDao;
-import com.project.domain.user.User;
-import com.project.entity.user.Role;
-import com.project.entity.user.UserEntity;
+import com.project.domain.User;
+import com.project.entity.UserEntity;
 import com.project.exception.EmailAlreadyExistException;
 import com.project.exception.InvalidLoginException;
 import com.project.service.encoder.PasswordEncoder;
@@ -18,39 +17,42 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.project.MockData.MOCK_USER;
+import static com.project.MockData.MOCK_USER_ENTITY;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.singletonList;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
+
+    private static final User USER = MOCK_USER;
+    private static final UserEntity USER_ENTITY = MOCK_USER_ENTITY;
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-
-    private final User user = initUser();
-
-    private final UserEntity entity = initEntity();
 
     @Mock
     private UserDao userDao;
     @Mock
     private Validator<User> userValidator;
     @Mock
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder encoder;
     @Mock
-    private UserMapper mapper;
+    private UserMapper userMapper;
 
     @InjectMocks
     private UserServiceImpl userService;
 
     @After
     public void resetMock() {
-        reset(userDao, userValidator, passwordEncoder, mapper);
+        reset(userDao, userValidator, encoder, userMapper);
     }
 
     @Test
@@ -58,7 +60,8 @@ public class UserServiceImplTest {
         expectedException.expect(InvalidLoginException.class);
         expectedException.expectMessage("Invalid email or password");
 
-        when(passwordEncoder.encode(anyString())).thenReturn("1");
+        when(userDao.findByEmail(anyString())).thenReturn(Optional.empty());
+
         userService.login("s", "1");
     }
 
@@ -67,77 +70,78 @@ public class UserServiceImplTest {
         expectedException.expect(InvalidLoginException.class);
         expectedException.expectMessage("Invalid email or password");
 
-        when(passwordEncoder.encode(anyString())).thenReturn("21");
-        when(userDao.findByEmail(anyString())).thenReturn(Optional.of(entity));
+        when(encoder.encode(anyString())).thenReturn("21");
+        when(userDao.findByEmail(anyString())).thenReturn(Optional.of(USER_ENTITY));
 
-        userService.login("mail", "22");
+        userService.login(USER.getEmail(), USER.getPassword());
     }
 
     @Test
     public void loginShouldReturnUser() {
-        when(passwordEncoder.encode("1111")).thenReturn("1111");
-        when(userDao.findByEmail("user@gmail.com")).thenReturn(Optional.of(entity));
-        when(mapper.mapUserEntityToUser(any(UserEntity.class))).thenReturn(user);
-        User expected = user;
+        when(userDao.findByEmail(anyString())).thenReturn(Optional.of(USER_ENTITY));
+        when(encoder.encode(MOCK_USER_ENTITY.getPassword())).thenReturn(MOCK_USER_ENTITY.getPassword());
+        when(userMapper.mapUserEntityToUser(any(UserEntity.class))).thenReturn(USER);
 
-        User actual = userService.login("user@gmail.com", "1111");
+        User actual = userService.login(USER.getEmail(), USER.getPassword());
 
-        assertThat(actual, is(expected));
+        assertThat(actual.getName(), is(MOCK_USER_ENTITY.getName()));
+        assertThat(actual.getSurname(), is(MOCK_USER_ENTITY.getSurname()));
+        assertThat(actual.getEmail(), is(MOCK_USER_ENTITY.getEmail()));
+        assertThat(actual.getPassword(), is(MOCK_USER_ENTITY.getPassword()));
     }
 
     @Test
     public void registerShouldThrowEmailAlreadyExistException() {
         expectedException.expect(EmailAlreadyExistException.class);
         expectedException.expectMessage("User with such email already exists");
-        when(userDao.findByEmail(anyString())).thenReturn(Optional.of(entity));
 
-        userService.register(user);
+        when(userDao.findByEmail(anyString())).thenReturn(Optional.of(USER_ENTITY));
+
+        userService.register(USER);
     }
 
     @Test
     public void registerShouldReturnTrue() {
-        when(passwordEncoder.encode("1111")).thenReturn("1111");
-        when(userDao.findByEmail(anyString())).thenReturn(Optional.ofNullable(null));
-        when(mapper.mapUserToUserEntity(any(User.class))).thenReturn(entity);
-        when(userDao.save(entity)).thenReturn(true);
+        when(encoder.encode(USER.getPassword())).thenReturn(USER.getPassword());
+        when(userDao.findByEmail(anyString())).thenReturn(Optional.empty());
+        when(userMapper.mapUserToUserEntity(any(User.class))).thenReturn(USER_ENTITY);
+        when(userDao.save(USER_ENTITY)).thenReturn(true);
 
-        Boolean actual = userService.register(user);
+        Boolean actual = userService.register(USER);
 
-        assertEquals(true, actual);
+        verify(encoder).encode(anyString());
+        verify(userDao).save(any(UserEntity.class));
+        assertThat(actual, is(true));
+    }
+
+    @Test
+    public void showAllShouldReturnEmptyList() {
+        when(userDao.findAll(anyInt(), anyInt())).thenReturn(emptyList());
+
+        List<User> actual = userService.showAll(1, 1);
+
+        assertThat(actual, is(emptyList()));
     }
 
     @Test
     public void showAllShouldReturnList() {
-        List<User> users = Collections.singletonList(user);
-        List<UserEntity> entities = Collections.singletonList(entity);
-        when(userDao.findAll(anyInt(), anyInt())).thenReturn(entities);
-        when(mapper.mapUserEntityToUser(entity)).thenReturn(user);
+        when(userDao.findAll(anyInt(), anyInt())).thenReturn(singletonList(USER_ENTITY));
+        when(userMapper.mapUserEntityToUser(USER_ENTITY)).thenReturn(USER);
 
         List<User> actual = userService.showAll(1, 1);
 
-        assertThat(actual, is(users));
+        verify(userDao).findAll(anyInt(), anyInt());
+        assertThat(actual, hasItem(USER));
     }
 
-    private UserEntity initEntity() {
-        return UserEntity.builder()
-                .withId(1L)
-                .withName("Name")
-                .withSurname("Surname")
-                .withEmail("user@gmail.com")
-                .withPassword("1111")
-                .withRole(Role.USER)
-                .build();
-    }
+    @Test
+    public void showEntriesAmountShouldReturnAmountOfRowsInDatabase() {
+        when(userDao.countEntries()).thenReturn(5L);
 
-    private User initUser() {
-        return User.builder()
-                .withId(1L)
-                .withName("Name")
-                .withSurname("Surname")
-                .withEmail("user@gmail.com")
-                .withPassword("1111")
-                .withRole(Role.USER)
-                .build();
+        final Long actual = userService.showEntriesAmount();
+
+        verify(userDao).countEntries();
+        assertThat(actual, is(5L));
     }
 
 }

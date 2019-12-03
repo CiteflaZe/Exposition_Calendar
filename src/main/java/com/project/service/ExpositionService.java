@@ -1,16 +1,17 @@
 package com.project.service;
 
-import com.project.domain.exposition.Exposition;
+import com.project.domain.Exposition;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface ExpositionService {
     boolean add(Exposition exposition);
 
-    List<Exposition> showAll(Integer startFrom, Integer rowCount);
+    List<Exposition> showAll(Integer page, Integer rowCount);
 
-    Integer showEntriesAmount();
+    List<Exposition> showAllNotFinished(Integer page, Integer rowCount);
+
+    Long showEntriesAmount();
+
+    Long showNotFinishedEntriesAmount();
 }

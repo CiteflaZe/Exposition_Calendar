@@ -1,8 +1,8 @@
 package com.project.command.admin;
 
 import com.project.command.Command;
-import com.project.domain.exposition.Exposition;
-import com.project.domain.hall.Hall;
+import com.project.domain.Exposition;
+import com.project.domain.Hall;
 import com.project.service.ExpositionService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +31,8 @@ public class AddExpositionCommand implements Command {
         Exposition exposition = Exposition.builder()
                 .withTitle(title)
                 .withTheme(theme)
-                .withStartTime(dateStart)
-                .withFinishTime(dateEnd)
+                .withStartDate(dateStart)
+                .withEndDate(dateEnd)
                 .withTicketPrice(BigDecimal.valueOf(ticketPrice))
                 .withDescription(description)
                 .withHall(Hall.builder()

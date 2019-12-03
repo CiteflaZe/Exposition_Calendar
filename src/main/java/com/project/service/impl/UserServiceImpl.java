@@ -1,8 +1,8 @@
 package com.project.service.impl;
 
 import com.project.dao.UserDao;
-import com.project.domain.user.User;
-import com.project.entity.user.UserEntity;
+import com.project.domain.User;
+import com.project.entity.UserEntity;
 import com.project.exception.EmailAlreadyExistException;
 import com.project.exception.InvalidLoginException;
 import com.project.service.UserService;
@@ -14,6 +14,9 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.*;
 
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
@@ -30,12 +33,10 @@ public class UserServiceImpl implements UserService {
         this.mapper = mapper;
     }
 
-    //TODO possible rework to return null in case of invalid login
     @Override
     public User login(String email, String password) {
         String encodedPassword = passwordEncoder.encode(password);
         Optional<UserEntity> entity = userDao.findByEmail(email);
-        //TODO rewrite to full Optional
 
         if (!entity.isPresent()) {
             LOGGER.warn("No such email");
@@ -68,15 +69,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> showAll(Integer startFrom, Integer rowCount) {
-
         List<UserEntity> userEntities = userDao.findAll(startFrom, rowCount);
-        return userEntities.stream()
-                .map(mapper::mapUserEntityToUser)
-                .collect(Collectors.toList());
+
+        return userEntities.isEmpty() ? emptyList() :
+                userEntities.stream()
+                        .map(mapper::mapUserEntityToUser)
+                        .collect(toList());
     }
 
     @Override
-    public Integer showEntriesAmount() {
+    public Long showEntriesAmount() {
         return userDao.countEntries();
     }
 

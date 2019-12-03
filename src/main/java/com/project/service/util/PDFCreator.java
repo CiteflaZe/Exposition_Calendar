@@ -9,7 +9,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.project.domain.ticket.Ticket;
+import com.project.domain.Ticket;
 import com.project.exception.PDFCreationException;
 import org.apache.log4j.Logger;
 
@@ -114,7 +114,7 @@ public class PDFCreator {
             paragraphs.get("exposition").add(text);
 
             chunk = new Chunk("Hall", fonts.get("paragraphFont")).setUnderline(1f, -2f);
-            text = new Chunk(" " + ticket.getHall().getName(), fonts.get("chunkFont"));
+            text = new Chunk(" " + ticket.getExposition().getHall().getName(), fonts.get("chunkFont"));
             paragraphs.get("hall").add(chunk);
             paragraphs.get("hall").add(separator);
             paragraphs.get("hall").add(text);

@@ -118,16 +118,16 @@ public abstract class AbstractDaoImpl<E> implements CrudDao<E, Long> {
     }
 
     @Override
-    public Integer countEntries() {
+    public Long countEntries() {
         return countEntriesByQuery(countQuery);
     }
 
-    protected Integer countEntriesByQuery(String query){
+    protected Long countEntriesByQuery(String query){
         try (Connection connection = connector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next() ? resultSet.getInt("count") : 0;
+                return resultSet.next() ? resultSet.getLong("count") : 0;
             }
         } catch (SQLException e) {
             LOGGER.error("Connection was not established", e);

@@ -3,8 +3,9 @@ package com.project.dao.impl;
 import com.project.exception.DataBaseRuntimeException;
 import com.project.dao.DBConnector;
 import com.project.dao.ExpositionDao;
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.entity.hall.HallEntity;
+import com.project.entity.ExpositionEntity;
+import com.project.entity.HallEntity;
+import com.project.service.ExpositionService;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -14,17 +15,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> implements ExpositionDao {
-    private static final String SAVE_QUERY = "INSERT INTO expositions(title, theme, start_time, finish_time, ticket_price, description, hall_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String SAVE_QUERY = "INSERT INTO expositions(title, theme, start_date, end_date, ticket_price, description, hall_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM expositions INNER JOIN halls ON expositions.hall_id = halls.id WHERE expositions.id = ?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM expositions INNER JOIN halls ON expositions.hall_id = halls.id ORDER BY expositions.id DESC LIMIT ?, ?";
-    private static final String UPDATE_QUERY = "UPDATE expositions SET title = ?, theme = ?, start_time = ?, finish_time = ?, ticket_price = ?, description = ?, hall_id = ? WHERE id = ?";
+    private static final String UPDATE_QUERY = "UPDATE expositions SET title = ?, theme = ?, start_date = ?, end_date = ?, ticket_price = ?, description = ?, hall_id = ? WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM expositions";
 
-    private static final String FIND_BY_TITLE_QUERY = "SELECT * FROM expositions WHERE title = ?";
-    private static final String FIND_BY_THEME_QUERY = "SELECT * FROM expositions WHERE theme = ?";
-    private static final String FIND_BY_PRICE_RANGE_QUERY = "SELECT * FROM expositions WHERE ticket_price > ? AND ticket_price < ?";
-    private static final String FIND_BY_DATE_QUERY = "SELECT * FROM expositions WHERE finish_time > ? AND start_time < ?";
-    private static final String FIND_BY_HALL_ID = "SELECT * FROM expositions WHERE hall_id = ?";
+    private static final String COUNT_BY_END_DATE_GREATER_THAN = "SELECT COUNT(*) AS count FROM expositions_calendar.expositions WHERE end_date > now()";
+    private static final String FIND_NOT_ENDED = "SELECT * FROM expositions_calendar.expositions INNER JOIN halls ON expositions.hall_id = halls.id WHERE end_date > now() ORDER BY expositions.id DESC LIMIT ?, ?";
+    private static final String FIND_BY_TITLE_QUERY = "SELECT * FROM expositions INNER JOIN halls ON expositions.hall_id = halls.id WHERE title = ?";
 
     public ExpositionDaoImpl(DBConnector connector) {
         super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -36,17 +35,12 @@ public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> impleme
     }
 
     @Override
-    public List<ExpositionEntity> findByTheme(String theme) {
-        return findListByStringParam(theme, FIND_BY_THEME_QUERY);
-    }
-
-    @Override
-    public List<ExpositionEntity> findByPriceRange(BigDecimal min, BigDecimal max) {
+    public List<ExpositionEntity> findAllWhereEndDateGreaterThanNow(Integer startFrom, Integer rowCount) {
         try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_PRICE_RANGE_QUERY)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_NOT_ENDED)) {
 
-            preparedStatement.setBigDecimal(1, min);
-            preparedStatement.setBigDecimal(2, max);
+            preparedStatement.setInt(1, startFrom);
+            preparedStatement.setInt(2, rowCount);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<ExpositionEntity> entities = new ArrayList<>();
                 while (resultSet.next()) {
@@ -55,40 +49,29 @@ public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> impleme
                 return entities;
             }
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException(e);
+            throw new DataBaseRuntimeException("Connection not established", e);
         }
     }
 
     @Override
-    public List<ExpositionEntity> findByDate(LocalDate date) {
+    public long countByEndDateGreaterThan() {
         try (Connection connection = connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_DATE_QUERY)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(COUNT_BY_END_DATE_GREATER_THAN)) {
 
-            preparedStatement.setDate(1, Date.valueOf(date));
-            preparedStatement.setDate(2, Date.valueOf(date));
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
-                List<ExpositionEntity> entities = new ArrayList<>();
-                while (resultSet.next()) {
-                    mapResultSetToEntity(resultSet).ifPresent(entities::add);
-                }
-                return entities;
+                return resultSet.next() ? resultSet.getLong("count") : 0;
             }
         } catch (SQLException e) {
-            throw new DataBaseRuntimeException(e);
+            throw new DataBaseRuntimeException("Connection was not established", e);
         }
-    }
-
-    @Override
-    public List<ExpositionEntity> findByHallId(Long id) {
-        return findListByLongParam(id, FIND_BY_HALL_ID);
     }
 
     @Override
     protected void insertStatementMapper(PreparedStatement preparedStatement, ExpositionEntity entity) throws SQLException {
         preparedStatement.setString(1, entity.getTitle());
         preparedStatement.setString(2, entity.getTheme());
-        preparedStatement.setDate(3, Date.valueOf(entity.getStartTime()));
-        preparedStatement.setDate(4, Date.valueOf(entity.getFinishTime()));
+        preparedStatement.setDate(3, Date.valueOf(entity.getStartDate()));
+        preparedStatement.setDate(4, Date.valueOf(entity.getEndDate()));
         preparedStatement.setBigDecimal(5, entity.getTicketPrice());
         preparedStatement.setString(6, entity.getDescription());
         preparedStatement.setLong(7, entity.getHall().getId());
@@ -106,12 +89,13 @@ public class ExpositionDaoImpl extends AbstractDaoImpl<ExpositionEntity> impleme
                 .withId(resultSet.getLong("hall_id"))
                 .withName(resultSet.getString("halls.name"))
                 .build();
+
         return Optional.ofNullable(ExpositionEntity.builder()
                 .withId(resultSet.getLong("expositions.id"))
                 .withTitle(resultSet.getString("title"))
                 .withTheme(resultSet.getString("theme"))
-                .withStartTime(resultSet.getDate("start_time").toLocalDate())
-                .withFinishTime(resultSet.getDate("finish_time").toLocalDate())
+                .withStartDate(resultSet.getDate("start_date").toLocalDate())
+                .withEndDate(resultSet.getDate("end_date").toLocalDate())
                 .withTicketPrice(resultSet.getBigDecimal("ticket_price"))
                 .withDescription(resultSet.getString("description"))
                 .withHall(hall)

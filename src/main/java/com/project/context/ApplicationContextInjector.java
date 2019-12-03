@@ -16,7 +16,7 @@ import com.project.command.authentication.RegisterFormCommand;
 import com.project.command.user.*;
 import com.project.dao.*;
 import com.project.dao.impl.*;
-import com.project.domain.user.User;
+import com.project.domain.User;
 import com.project.service.ExpositionService;
 import com.project.service.HallService;
 import com.project.service.PaymentService;
@@ -109,7 +109,7 @@ public class ApplicationContextInjector {
 
     private static final AddHallCommand ADD_HALL_COMMAND = new AddHallCommand(HALL_SERVICE);
 
-    private static final ShowHallsCommand SHOW_HALLS_COMMAND = new ShowHallsCommand(HALL_SERVICE, PAGINATION_UTIL);
+    private static final ShowHallsCommand SHOW_HALLS_COMMAND = new ShowHallsCommand(HALL_SERVICE);
 
     private static final LogInFormCommand LOGIN_FORM_COMMAND = new LogInFormCommand();
 

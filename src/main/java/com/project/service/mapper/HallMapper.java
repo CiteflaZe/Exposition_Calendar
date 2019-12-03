@@ -1,9 +1,10 @@
 package com.project.service.mapper;
 
-import com.project.domain.hall.Hall;
-import com.project.entity.hall.HallEntity;
+import com.project.domain.Hall;
+import com.project.entity.HallEntity;
 
 public class HallMapper {
+
     public Hall mapHallEntityToHall(HallEntity hallEntity) {
         return Hall.builder()
                 .withId(hallEntity.getId())
@@ -16,7 +17,6 @@ public class HallMapper {
 
     public HallEntity mapHallToHallEntity(Hall hall) {
         return HallEntity.builder()
-                .withId(hall.getId())
                 .withName(hall.getName())
                 .withCity(hall.getCity())
                 .withStreet(hall.getStreet())

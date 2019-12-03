@@ -1,6 +1,6 @@
 package com.project.service.validator;
 
-import com.project.domain.user.User;
+import com.project.domain.User;
 import com.project.exception.InvalidRegistrationException;
 import org.apache.log4j.Logger;
 
@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 public class UserValidator implements Validator<User> {
     private static final Logger LOGGER = Logger.getLogger(UserValidator.class);
 
-    private static final String NAME_REGEX = "^[a-zA-Zа-яА-Яієї']{2,}$";
-    private static final String SURNAME_REGEX = "^[a-zA-Zа-яА-Яієї']{2,}$";
+    private static final String NAME_REGEX = "^[a-zA-Zа-яА-Яієї']{2,25}$";
+    private static final String SURNAME_REGEX = "^[a-zA-Zа-яА-Яієї']{2,25}$";
     private static final String EMAIL_REGEX = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,4}$";
     private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,15}$";
     private static final Pattern NAME_PATTERN = Pattern.compile(NAME_REGEX);

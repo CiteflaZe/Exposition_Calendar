@@ -38,7 +38,7 @@
             <c:forEach begin="0" end="${tickets.size()-1}" var="i">
                 <tr>
                     <td>${tickets.get(i).getExposition().getTitle()}</td>
-                    <td>${tickets.get(i).getHall().getName()}</td>
+                    <td>${tickets.get(i).getExposition().getHall().getName()}</td>
                     <td>${ticketAmount.get(i)}</td>
                     <td>${tickets.get(i).getValidDate()}</td>
                     <td>

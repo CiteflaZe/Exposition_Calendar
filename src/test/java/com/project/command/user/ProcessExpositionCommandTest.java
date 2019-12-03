@@ -1,13 +1,12 @@
 package com.project.command.user;
 
-import com.project.domain.exposition.Exposition;
+import com.project.domain.Exposition;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import java.util.Collections;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

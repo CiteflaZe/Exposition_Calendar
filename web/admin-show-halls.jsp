@@ -46,7 +46,6 @@
 
             </tbody>
         </table>
-        <c:import url="admin-pagination.jsp"/>
     </div>
 </div>
 </body>

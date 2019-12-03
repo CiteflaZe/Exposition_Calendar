@@ -12,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
 import static org.mockito.Mockito.*;
@@ -21,10 +22,16 @@ public class ShowExpositionsCommandTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Mock
     private HttpServletResponse response;
+
+    @Mock
+    private HttpSession session;
+
     @Mock
     ExpositionService expositionService;
+
     @Mock
     private PaginationUtil paginationUtil;
 
@@ -35,12 +42,13 @@ public class ShowExpositionsCommandTest {
     public void executeShouldReturnExpositionsPage() {
         Integer[] validPagination = new Integer[]{1, 2, 3};
         when(paginationUtil.checkPagination(any(), any(), any())).thenReturn(validPagination);
+        when(request.getSession()).thenReturn(session);
         when(expositionService.showAll(anyInt(), anyInt())).thenReturn(Collections.emptyList());
 
         final String actual = showExpositionsCommand.execute(request, response);
         String expected = "user-show-expositions.jsp";
 
-        verify(request, times(5)).setAttribute(anyString(), any());
+        verify(request, times(4)).setAttribute(anyString(), any());
         MatcherAssert.assertThat(actual, Is.is(expected));
     }
 

@@ -1,4 +1,4 @@
-package com.project.domain.hall;
+package com.project.domain;
 
 import java.util.Objects;
 

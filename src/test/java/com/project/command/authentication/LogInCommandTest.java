@@ -1,11 +1,9 @@
 package com.project.command.authentication;
 
-import com.project.domain.user.User;
-import com.project.entity.user.Role;
+import com.project.domain.User;
+import com.project.entity.Role;
 import com.project.exception.InvalidLoginException;
 import com.project.service.UserService;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.Is;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

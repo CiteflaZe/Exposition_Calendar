@@ -1,7 +1,7 @@
 package com.project.command.admin;
 
 import com.project.command.Command;
-import com.project.domain.hall.Hall;
+import com.project.domain.Hall;
 import com.project.service.HallService;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,87 +1,51 @@
 package com.project.service.mapper;
 
-import com.project.domain.exposition.Exposition;
-import com.project.domain.hall.Hall;
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.entity.hall.HallEntity;
+import com.project.domain.Exposition;
+import com.project.entity.ExpositionEntity;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
+import static com.project.MockData.MOCK_EXPOSITION;
+import static com.project.MockData.MOCK_EXPOSITION_ENTITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 
 public class ExpositionMapperTest {
 
-    private ExpositionMapper mapper = new ExpositionMapper();
+    private static final Exposition EXPOSITION = MOCK_EXPOSITION;
+    private static final ExpositionEntity EXPOSITION_ENTITY = MOCK_EXPOSITION_ENTITY;
 
-    private final Exposition exposition = initExposition();
-
-    private final ExpositionEntity expositionEntity = initExpositionEntity();
+    private ExpositionMapper expositionMapper = new ExpositionMapper();
 
 
     @Test
     public void mapExpositionEntityToExpositionShouldReturnExposition() {
-        final Exposition actual = mapper.mapExpositionEntityToExposition(expositionEntity);
+        final Exposition actual = expositionMapper.mapExpositionEntityToExposition(EXPOSITION_ENTITY);
 
-        assertThat(actual.getId(), is(expositionEntity.getId()));
-        assertThat(actual.getTitle(), is(expositionEntity.getTitle()));
-        assertThat(actual.getTheme(), is(expositionEntity.getTheme()));
-        assertThat(actual.getStartTime(), is(expositionEntity.getStartTime()));
-        assertThat(actual.getFinishTime(), is(expositionEntity.getFinishTime()));
-        assertThat(actual.getTicketPrice(), is(expositionEntity.getTicketPrice()));
-        assertThat(actual.getDescription(), is(expositionEntity.getDescription()));
-        assertThat(actual.getHall().getId(), is(expositionEntity.getHall().getId()));
-        assertThat(actual.getHall().getName(), is(expositionEntity.getHall().getName()));
+        assertThat(actual.getId(), is(MOCK_EXPOSITION_ENTITY.getId()));
+        assertThat(actual.getTitle(), is(MOCK_EXPOSITION_ENTITY.getTitle()));
+        assertThat(actual.getTheme(), is(MOCK_EXPOSITION_ENTITY.getTheme()));
+        assertThat(actual.getStartDate(), is(MOCK_EXPOSITION_ENTITY.getStartDate()));
+        assertThat(actual.getEndDate(), is(MOCK_EXPOSITION_ENTITY.getEndDate()));
+        assertThat(actual.getTicketPrice(), is(MOCK_EXPOSITION_ENTITY.getTicketPrice()));
+        assertThat(actual.getDescription(), is(MOCK_EXPOSITION_ENTITY.getDescription()));
+        assertThat(actual.getHall().getId(), is(MOCK_EXPOSITION_ENTITY.getHall().getId()));
+        assertThat(actual.getHall().getName(), is(MOCK_EXPOSITION_ENTITY.getHall().getName()));
     }
 
     @Test
     public void mapExpositionToExpositionEntityShouldReturnExpositionEntity() {
-        final ExpositionEntity actual = mapper.mapExpositionToExpositionEntity(exposition);
+        final ExpositionEntity actual = expositionMapper.mapExpositionToExpositionEntity(EXPOSITION);
 
-        assertThat(actual.getId(), is(exposition.getId()));
-        assertThat(actual.getTitle(), is(exposition.getTitle()));
-        assertThat(actual.getTheme(), is(exposition.getTheme()));
-        assertThat(actual.getStartTime(), is(exposition.getStartTime()));
-        assertThat(actual.getFinishTime(), is(exposition.getFinishTime()));
-        assertThat(actual.getTicketPrice(), is(exposition.getTicketPrice()));
-        assertThat(actual.getDescription(), is(exposition.getDescription()));
-        assertThat(actual.getHall().getId(), is(exposition.getHall().getId()));
-        assertThat(actual.getHall().getName(), is(exposition.getHall().getName()));
-    }
-
-    private Exposition initExposition() {
-        return Exposition.builder()
-                .withId(1L)
-                .withTitle("Title")
-                .withTheme("Theme")
-                .withStartTime(LocalDate.of(2019, 7, 13))
-                .withFinishTime(LocalDate.of(2019, 8, 24))
-                .withTicketPrice(BigDecimal.valueOf(14.25))
-                .withDescription("Some generic description")
-                .withHall(Hall.builder()
-                        .withId(5L)
-                        .withName("Hall")
-                        .build())
-                .build();
-    }
-
-    private ExpositionEntity initExpositionEntity() {
-        return ExpositionEntity.builder()
-                .withId(2L)
-                .withTitle("Title 2")
-                .withTheme("Generic Theme")
-                .withStartTime(LocalDate.of(2019, 9, 11))
-                .withFinishTime(LocalDate.of(2019, 10, 20))
-                .withTicketPrice(BigDecimal.valueOf(46.20))
-                .withDescription("Made up description")
-                .withHall(HallEntity.builder()
-                        .withId(4L)
-                        .withName("Some Hall")
-                        .build())
-                .build();
+        assertThat(actual.getId(), is(MOCK_EXPOSITION.getId()));
+        assertThat(actual.getTitle(), is(MOCK_EXPOSITION.getTitle()));
+        assertThat(actual.getTheme(), is(MOCK_EXPOSITION.getTheme()));
+        assertThat(actual.getStartDate(), is(MOCK_EXPOSITION.getStartDate()));
+        assertThat(actual.getEndDate(), is(MOCK_EXPOSITION.getEndDate()));
+        assertThat(actual.getTicketPrice(), is(MOCK_EXPOSITION.getTicketPrice()));
+        assertThat(actual.getDescription(), is(MOCK_EXPOSITION.getDescription()));
+        assertThat(actual.getHall().getId(), is(MOCK_EXPOSITION.getHall().getId()));
+        assertThat(actual.getHall().getName(), is(MOCK_EXPOSITION.getHall().getName()));
     }
 
 }

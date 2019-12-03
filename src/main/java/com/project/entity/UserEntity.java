@@ -1,7 +1,4 @@
-package com.project.entity.user;
-
-import com.project.entity.payment.PaymentEntity;
-import com.project.entity.ticket.TicketEntity;
+package com.project.entity;
 
 import java.util.List;
 import java.util.Objects;

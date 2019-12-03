@@ -1,12 +1,11 @@
 package com.project.command.admin;
 
 import com.project.command.Command;
-import com.project.domain.hall.Hall;
+import com.project.domain.Hall;
 import com.project.service.HallService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class ExpositionFormCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final List<Hall> halls = hallService.showAll(0, hallService.showEntriesAmount());
+        final List<Hall> halls = hallService.showAll();
         halls.sort(Comparator.comparing(Hall::getId));
 
         request.getSession().setAttribute("halls", halls);

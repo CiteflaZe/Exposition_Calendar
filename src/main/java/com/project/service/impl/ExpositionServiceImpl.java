@@ -1,17 +1,14 @@
 package com.project.service.impl;
 
 import com.project.dao.ExpositionDao;
-import com.project.domain.exposition.Exposition;
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.exception.InvalidEntityException;
+import com.project.domain.Exposition;
+import com.project.entity.ExpositionEntity;
+import com.project.exception.ExpositionAlreadyExistException;
 import com.project.service.ExpositionService;
 import com.project.service.mapper.ExpositionMapper;
 import org.apache.log4j.Logger;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ExpositionServiceImpl implements ExpositionService {
@@ -28,8 +25,14 @@ public class ExpositionServiceImpl implements ExpositionService {
     public boolean add(Exposition exposition) {
         if (exposition == null) {
             LOGGER.warn("Exposition can't be null");
-            throw new InvalidEntityException("Exposition is null");
+            throw new IllegalArgumentException("Exposition is null");
         }
+
+        if(expositionDao.findByTitle(exposition.getTitle()).isPresent()){
+            LOGGER.warn("Exposition with this title already exists");
+            throw new ExpositionAlreadyExistException("Exposition with this title already exists");
+        }
+
         final ExpositionEntity entity = mapper.mapExpositionToExpositionEntity(exposition);
         return expositionDao.save(entity);
     }
@@ -37,13 +40,28 @@ public class ExpositionServiceImpl implements ExpositionService {
     @Override
     public List<Exposition> showAll(Integer startFrom, Integer rowCount) {
         final List<ExpositionEntity> entities = expositionDao.findAll(startFrom, rowCount);
-        return entities.stream()
-                .map(mapper::mapExpositionEntityToExposition)
-                .collect(Collectors.toList());
+        return mapExpositionEntityListToExpositionList(entities);
     }
 
     @Override
-    public Integer showEntriesAmount() {
+    public List<Exposition> showAllNotFinished(Integer page, Integer rowCount) {
+        final List<ExpositionEntity> entities = expositionDao.findAllWhereEndDateGreaterThanNow(page, rowCount);
+        return mapExpositionEntityListToExpositionList(entities);
+    }
+
+    @Override
+    public Long showEntriesAmount() {
         return expositionDao.countEntries();
+    }
+
+    @Override
+    public Long showNotFinishedEntriesAmount() {
+        return expositionDao.countByEndDateGreaterThan();
+    }
+
+    private List<Exposition> mapExpositionEntityListToExpositionList(List<ExpositionEntity> entities) {
+        return entities.stream()
+                .map(mapper::mapExpositionEntityToExposition)
+                .collect(Collectors.toList());
     }
 }

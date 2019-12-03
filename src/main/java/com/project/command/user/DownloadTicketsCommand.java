@@ -1,7 +1,8 @@
 package com.project.command.user;
 
 import com.project.command.Command;
-import com.project.domain.ticket.Ticket;
+import com.project.domain.Ticket;
+import com.project.domain.User;
 import com.project.exception.DownloadTicketsException;
 import com.project.service.TicketService;
 import com.project.service.util.PDFCreator;
@@ -27,8 +28,9 @@ public class DownloadTicketsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
+        final Long userId = ((User) req.getSession().getAttribute("user")).getId();
         final Long paymentId = Long.parseLong(req.getParameter("paymentId"));
-        final List<Ticket> tickets = ticketService.showByPaymentId(paymentId);
+        final List<Ticket> tickets = ticketService.showAllByPaymentIdAndUserId(paymentId, userId);
         String filePath = pdfCreator.createPDF(paymentId, tickets);
         File file = new File("tickets/" + filePath);
 

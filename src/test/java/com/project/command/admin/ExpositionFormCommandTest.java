@@ -38,8 +38,7 @@ public class ExpositionFormCommandTest {
         final String actual = expositionFormCommand.execute(request, response);
         String expected = "admin-add-exposition.jsp";
 
-        verify(hallService).showEntriesAmount();
-        verify(hallService).showAll(anyInt(), anyInt());
+        verify(hallService).showAll();
         verify(session).setAttribute(anyString(), any(List.class));
 
         MatcherAssert.assertThat(actual, Is.is(expected));

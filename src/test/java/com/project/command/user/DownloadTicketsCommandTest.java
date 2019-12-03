@@ -1,5 +1,6 @@
 package com.project.command.user;
 
+import com.project.MockData;
 import com.project.exception.DownloadTicketsException;
 import com.project.service.TicketService;
 import com.project.service.util.PDFCreator;
@@ -33,6 +34,8 @@ public class DownloadTicketsCommandTest {
     @Mock
     private HttpServletResponse response;
     @Mock
+    private HttpSession session;
+    @Mock
     private TicketService ticketService;
     @Mock
     private PDFCreator pdfCreator;
@@ -46,6 +49,8 @@ public class DownloadTicketsCommandTest {
         expectedException.expectMessage("Unable to download file");
 
         when(request.getParameter("paymentId")).thenReturn("2");
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("user")).thenReturn(MockData.MOCK_USER);
 
         downloadTicketsCommand.execute(request, response);
     }

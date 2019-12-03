@@ -1,15 +1,14 @@
 package com.project.service.impl;
 
 import com.project.dao.HallDao;
-import com.project.domain.hall.Hall;
-import com.project.entity.hall.HallEntity;
-import com.project.exception.InvalidEntityException;
+import com.project.domain.Hall;
+import com.project.entity.HallEntity;
+import com.project.exception.HallAlreadyExistException;
 import com.project.service.HallService;
 import com.project.service.mapper.HallMapper;
 import org.apache.log4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HallServiceImpl implements HallService {
@@ -24,26 +23,31 @@ public class HallServiceImpl implements HallService {
 
     @Override
     public boolean add(Hall hall) {
-        if (hall == null){
+        if (hall == null) {
             LOGGER.warn("Hall can't be null");
-            throw new InvalidEntityException("Hall is null");
+            throw new IllegalArgumentException("Hall is null");
+        }
+
+        if (hallDao.findByName(hall.getName()).isPresent()) {
+            LOGGER.warn("Hall with such name already exists");
+            throw new HallAlreadyExistException("Hall with such name already exists");
         }
         final HallEntity entity = mapper.mapHallToHallEntity(hall);
         return hallDao.save(entity);
     }
 
     @Override
-    public List<Hall> showAll(Integer startFrom, Integer rowCount) {
-        final List<HallEntity> entities = hallDao.findAll(startFrom, rowCount);
+    public List<Hall> showAll() {
+        final List<HallEntity> entities = hallDao.findAll();
         return mapHallEntityListToHallList(entities);
     }
 
     @Override
-    public Integer showEntriesAmount() {
+    public Long showEntriesAmount() {
         return hallDao.countEntries();
     }
 
-    private List<Hall> mapHallEntityListToHallList(List<HallEntity> entities){
+    private List<Hall> mapHallEntityListToHallList(List<HallEntity> entities) {
         return entities.stream()
                 .map(mapper::mapHallEntityToHall)
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package com.project.entity.payment;
+package com.project.entity;
 
 public enum Status {
     PASSED("Passed"), FAILED("Failed");

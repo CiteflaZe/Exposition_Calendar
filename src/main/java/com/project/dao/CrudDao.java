@@ -12,7 +12,7 @@ public interface CrudDao<E, ID extends Serializable> {
 
     List<E> findAll(Integer startFrom, Integer rowCount);
 
-    Integer countEntries();
+    Long countEntries();
 
     boolean update(E entity);
 

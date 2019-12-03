@@ -24,24 +24,17 @@ public class ShowHallsCommandTest {
     private HttpServletResponse response;
     @Mock
     private HallService hallService;
-    @Mock
-    PaginationUtil paginationUtil;
 
     @InjectMocks
-    ShowHallsCommand showHallsCommand;
+    private ShowHallsCommand showHallsCommand;
 
     @Test
     public void executeShouldReturnShowHallsPage() {
-        Integer[] res = new Integer[]{1, 2, 3};
-        when(request.getParameter(anyString())).thenReturn("1");
-        when(paginationUtil.checkPagination(anyString(), anyString(), anyInt())).thenReturn(res);
-
         final String actual = showHallsCommand.execute(request, response);
         String expected = "admin-show-halls.jsp";
 
-        verify(request, times(2)).getParameter(anyString());
-        verify(request, times(5)).setAttribute(anyString(), any());
-        verify(hallService).showAll(anyInt(), anyInt());
+        verify(request, times(2)).setAttribute(anyString(), any());
+        verify(hallService).showAll();
 
         MatcherAssert.assertThat(actual, Is.is(expected));
     }

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
-    //TODO make tests параметрический тест
     private static Pattern[] patterns = new Pattern[]{
             // Script fragments
             Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE),

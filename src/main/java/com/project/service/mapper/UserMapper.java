@@ -1,7 +1,7 @@
 package com.project.service.mapper;
 
-import com.project.domain.user.User;
-import com.project.entity.user.UserEntity;
+import com.project.domain.User;
+import com.project.entity.UserEntity;
 
 public class UserMapper {
 

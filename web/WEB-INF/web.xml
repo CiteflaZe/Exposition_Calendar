@@ -51,7 +51,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
     <filter>
         <filter-name>AccessRestrictionFilter</filter-name>
         <filter-class>com.project.filter.AccessRestrictionFilter</filter-class>
@@ -66,7 +65,6 @@
         <exception-type>com.project.exception.InvalidLoginException</exception-type>
         <location>/login.jsp</location>
     </error-page>
-
 
     <error-page>
         <location>/general-error.jsp</location>

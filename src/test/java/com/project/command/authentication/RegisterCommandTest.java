@@ -1,10 +1,8 @@
 package com.project.command.authentication;
 
-import com.project.domain.user.User;
+import com.project.domain.User;
 import com.project.exception.EmailAlreadyExistException;
 import com.project.service.UserService;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

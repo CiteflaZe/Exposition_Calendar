@@ -1,14 +1,13 @@
 package com.project.service;
 
-import com.project.domain.hall.Hall;
+import com.project.domain.Hall;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface HallService {
     boolean add(Hall hall);
 
-    List<Hall> showAll(Integer startFrom, Integer rowCount);
+    List<Hall> showAll();
 
-    Integer showEntriesAmount();
+    Long showEntriesAmount();
 }

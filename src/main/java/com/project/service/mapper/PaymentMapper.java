@@ -1,11 +1,11 @@
 package com.project.service.mapper;
 
-import com.project.domain.exposition.Exposition;
-import com.project.domain.payment.Payment;
-import com.project.domain.user.User;
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.entity.payment.PaymentEntity;
-import com.project.entity.user.UserEntity;
+import com.project.domain.Exposition;
+import com.project.domain.Payment;
+import com.project.domain.User;
+import com.project.entity.ExpositionEntity;
+import com.project.entity.PaymentEntity;
+import com.project.entity.UserEntity;
 
 public class PaymentMapper {
     public Payment mapPaymentEntityToPayment(PaymentEntity paymentEntity){

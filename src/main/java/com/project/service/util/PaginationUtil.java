@@ -3,12 +3,12 @@ package com.project.service.util;
 import com.project.exception.IllegalPaginationValuesException;
 import org.apache.log4j.Logger;
 
-public class PaginationUtil {
+public class    PaginationUtil {
     private static final Logger LOGGER = Logger.getLogger(PaginationUtil.class);
     private static final Integer DEFAULT_ROW_COUNT = 15;
     private static final Integer DEFAULT_PAGE = 1;
 
-    public Integer[] checkPagination(String currentPageString, String rowCountString, Integer entriesAmount){
+    public Integer[] checkPagination(String currentPageString, String rowCountString, Long entriesAmount){
         if (currentPageString == null || currentPageString.isEmpty() ||
                 rowCountString == null || rowCountString.isEmpty()
                 || entriesAmount == null) {

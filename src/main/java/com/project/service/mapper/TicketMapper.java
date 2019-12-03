@@ -1,15 +1,15 @@
 package com.project.service.mapper;
 
-import com.project.domain.exposition.Exposition;
-import com.project.domain.hall.Hall;
-import com.project.domain.payment.Payment;
-import com.project.domain.ticket.Ticket;
-import com.project.domain.user.User;
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.entity.hall.HallEntity;
-import com.project.entity.payment.PaymentEntity;
-import com.project.entity.ticket.TicketEntity;
-import com.project.entity.user.UserEntity;
+import com.project.domain.Exposition;
+import com.project.domain.Hall;
+import com.project.domain.Payment;
+import com.project.domain.Ticket;
+import com.project.domain.User;
+import com.project.entity.ExpositionEntity;
+import com.project.entity.HallEntity;
+import com.project.entity.PaymentEntity;
+import com.project.entity.TicketEntity;
+import com.project.entity.UserEntity;
 
 public class TicketMapper {
     public Ticket mapTicketEntityToTicket(TicketEntity ticketEntity){
@@ -25,10 +25,10 @@ public class TicketMapper {
                 .withExposition(Exposition.builder()
                         .withId(ticketEntity.getExposition().getId())
                         .withTitle(ticketEntity.getExposition().getTitle())
-                        .build())
-                .withHall(Hall.builder()
-                        .withId(ticketEntity.getHall().getId())
-                        .withName(ticketEntity.getHall().getName())
+                        .withHall(Hall.builder()
+                                .withId(ticketEntity.getExposition().getHall().getId())
+                                .withName(ticketEntity.getExposition().getHall().getName())
+                                .build())
                         .build())
                 .build();
     }
@@ -46,10 +46,10 @@ public class TicketMapper {
                 .withExposition(ExpositionEntity.builder()
                         .withId(ticket.getExposition().getId())
                         .withTitle(ticket.getExposition().getTitle())
-                        .build())
-                .withHall(HallEntity.builder()
-                        .withId(ticket.getHall().getId())
-                        .withName(ticket.getHall().getName())
+                        .withHall(HallEntity.builder()
+                                .withId(ticket.getExposition().getHall().getId())
+                                .withName(ticket.getExposition().getHall().getName())
+                                .build())
                         .build())
                 .build();
     }

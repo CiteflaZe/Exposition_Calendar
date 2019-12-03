@@ -1,4 +1,4 @@
-package com.project.entity.user;
+package com.project.entity;
 
 public enum Role {
     ADMIN("Admin"), USER("User");

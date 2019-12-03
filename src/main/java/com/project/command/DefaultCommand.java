@@ -1,7 +1,7 @@
 package com.project.command;
 
-import com.project.domain.user.User;
-import com.project.entity.user.Role;
+import com.project.domain.User;
+import com.project.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,6 +1,7 @@
 package com.project.service.validator;
 
-import com.project.domain.user.User;
+import com.project.MockData;
+import com.project.domain.User;
 import com.project.exception.InvalidRegistrationException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,12 +33,24 @@ public class UserValidatorTest {
     }
 
     @Test
+    public void validateShouldThrowInvalidRegistrationExceptionWithInvalidSurname() {
+        expectedException.expect(InvalidRegistrationException.class);
+        expectedException.expectMessage("SurName does not match regex");
+
+        userValidator.validate(User.builder()
+                .withName("Name")
+                .withSurname("sS1")
+                .build());
+    }
+
+    @Test
     public void validateShouldThrowInvalidRegistrationExceptionWithInvalidEmail() {
         expectedException.expect(InvalidRegistrationException.class);
         expectedException.expectMessage("Email does not match regex");
 
         userValidator.validate(User.builder()
                 .withName("Name")
+                .withSurname("Surname")
                 .withEmail("12")
                 .build());
     }
@@ -49,18 +62,15 @@ public class UserValidatorTest {
 
         userValidator.validate(User.builder()
                 .withName("Name")
+                .withSurname("Surname")
                 .withEmail("email@gmail.com")
                 .withPassword("1")
                 .build());
     }
 
     @Test
-    public void validateShouldNotThrowException(){
-        userValidator.validate(User.builder()
-                .withName("Name")
-                .withEmail("email@gmail.com")
-                .withPassword("Pass111")
-                .build());
+    public void validateShouldNotThrowException() {
+        userValidator.validate(MockData.MOCK_USER);
     }
 
 }

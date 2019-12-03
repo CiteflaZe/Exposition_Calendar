@@ -1,6 +1,6 @@
 package com.project.command.admin;
 
-import com.project.domain.exposition.Exposition;
+import com.project.domain.Exposition;
 import com.project.service.ExpositionService;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;

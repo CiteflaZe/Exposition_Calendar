@@ -42,8 +42,8 @@
                 <tr>
                     <td>${expositions.get(i).getTitle()}</td>
                     <td>${expositions.get(i).getTheme()}</td>
-                    <td>${expositions.get(i).getStartTime()}</td>
-                    <td>${expositions.get(i).getFinishTime()}</td>
+                    <td>${expositions.get(i).getStartDate()}</td>
+                    <td>${expositions.get(i).getEndDate()}</td>
                     <td>${expositions.get(i).getTicketPrice()}</td>
                     <td>${expositions.get(i).getDescription()}</td>
                     <td>${expositions.get(i).getHall().getName()}</td>

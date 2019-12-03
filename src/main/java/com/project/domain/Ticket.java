@@ -1,9 +1,4 @@
-package com.project.domain.ticket;
-
-import com.project.domain.exposition.Exposition;
-import com.project.domain.hall.Hall;
-import com.project.domain.payment.Payment;
-import com.project.domain.user.User;
+package com.project.domain;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -14,7 +9,6 @@ public class Ticket {
     private final User user;
     private final Payment payment;
     private final Exposition exposition;
-    private final Hall hall;
 
     private Ticket(Builder builder) {
         this.id = builder.id;
@@ -22,7 +16,6 @@ public class Ticket {
         this.user = builder.user;
         this.payment = builder.payment;
         this.exposition = builder.exposition;
-        this.hall = builder.hall;
     }
 
     public static Builder builder() {
@@ -49,10 +42,6 @@ public class Ticket {
         return exposition;
     }
 
-    public Hall getHall() {
-        return hall;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -66,13 +55,12 @@ public class Ticket {
                 Objects.equals(validDate, ticket.validDate) &&
                 Objects.equals(user, ticket.user) &&
                 Objects.equals(payment, ticket.payment) &&
-                Objects.equals(exposition, ticket.exposition) &&
-                Objects.equals(hall, ticket.hall);
+                Objects.equals(exposition, ticket.exposition);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, validDate, user, payment, exposition, hall);
+        return Objects.hash(id, validDate, user, payment, exposition);
     }
 
     @Override
@@ -83,7 +71,6 @@ public class Ticket {
                 ", user=" + user +
                 ", payment=" + payment +
                 ", exposition=" + exposition +
-                ", hall=" + hall +
                 '}';
     }
 
@@ -93,7 +80,6 @@ public class Ticket {
         private User user;
         private Payment payment;
         private Exposition exposition;
-        private Hall hall;
 
         private Builder() {
         }
@@ -124,11 +110,6 @@ public class Ticket {
 
         public Builder withExposition(Exposition exposition) {
             this.exposition = exposition;
-            return this;
-        }
-
-        public Builder withHall(Hall hall) {
-            this.hall = hall;
             return this;
         }
     }

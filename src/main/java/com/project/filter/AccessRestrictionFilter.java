@@ -1,7 +1,7 @@
 package com.project.filter;
 
-import com.project.domain.user.User;
-import com.project.entity.user.Role;
+import com.project.domain.User;
+import com.project.entity.Role;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AccessRestrictionFilter implements Filter {
-
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

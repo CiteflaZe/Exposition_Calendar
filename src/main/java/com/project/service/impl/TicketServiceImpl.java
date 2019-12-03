@@ -1,15 +1,15 @@
 package com.project.service.impl;
 
 import com.project.dao.TicketDao;
-import com.project.domain.ticket.Ticket;
-import com.project.entity.ticket.TicketEntity;
-import com.project.exception.InvalidEntityException;
+import com.project.domain.Ticket;
+import com.project.entity.TicketEntity;
+import com.project.exception.EntityNotFoundException;
 import com.project.service.TicketService;
 import com.project.service.mapper.TicketMapper;
 import org.apache.log4j.Logger;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TicketServiceImpl implements TicketService {
@@ -26,16 +26,23 @@ public class TicketServiceImpl implements TicketService {
     public boolean add(Ticket ticket) {
         if (ticket == null) {
             LOGGER.warn("Ticket can't be null");
-            throw new InvalidEntityException("Ticket is null");
+            throw new IllegalArgumentException("Ticket is null");
         }
+
         final TicketEntity entity = mapper.mapTicketToTicketEntity(ticket);
         return ticketDao.save(entity);
     }
 
     @Override
-    public List<Ticket> showByPaymentId(Long id) {
-        final List<TicketEntity> entities = ticketDao.findByPaymentId(id);
-        return mapTicketEntityListToTicketList(entities);
+    public Ticket showOneByPaymentId(Long id) {
+        final Optional<TicketEntity> ticketEntity = ticketDao.findFirstByPaymentId(id);
+        return ticketEntity.map(mapper::mapTicketEntityToTicket).orElseThrow(() -> new EntityNotFoundException("No tickets found"));
+    }
+
+    @Override
+    public List<Ticket> showAllByPaymentIdAndUserId(Long paymentId, Long userId) {
+        final List<TicketEntity> tickets = ticketDao.findByPaymentIdAndUserId(paymentId, userId);
+        return mapTicketEntityListToTicketList(tickets);
     }
 
     private List<Ticket> mapTicketEntityListToTicketList(List<TicketEntity> entities) {

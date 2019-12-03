@@ -1,17 +1,14 @@
 package com.project.service.impl;
 
 import com.project.dao.PaymentDao;
-import com.project.domain.payment.Payment;
-import com.project.entity.payment.PaymentEntity;
-import com.project.entity.payment.Status;
-import com.project.exception.InvalidEntityException;
+import com.project.domain.Payment;
+import com.project.entity.PaymentEntity;
+import com.project.exception.EntityNotFoundException;
 import com.project.service.PaymentService;
 import com.project.service.mapper.PaymentMapper;
 import org.apache.log4j.Logger;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PaymentServiceImpl implements PaymentService {
@@ -28,26 +25,22 @@ public class PaymentServiceImpl implements PaymentService {
     public boolean add(Payment payment) {
         if (payment == null || payment.getPrice().doubleValue() <= 0) {
             LOGGER.warn("Payment can't be null and (or) it's price can't be less or equals to zero");
-            throw new InvalidEntityException("Invalid payment parameters");
+            throw new IllegalArgumentException("Invalid payment parameters");
         }
         return paymentDao.save(mapper.mapPaymentToPaymentEntity(payment));
     }
 
     @Override
-    public Optional<Payment> showLastPaymentByUserId(Long id) {
-        return paymentDao.findLastByUserId(id).map(mapper::mapPaymentEntityToPayment);
+    public List<Payment> showAllByUserId(Long id) {
+        final List<PaymentEntity> payments = paymentDao.findAllByUserId(id);
+        return mapPaymentEntityListToPaymentList(payments);
     }
 
     @Override
-    public List<Payment> showAll(Integer rowCount, Integer startFrom) {
-        final List<PaymentEntity> entities = paymentDao.findAll(rowCount, startFrom);
-        return mapPaymentEntityListToPaymentList(entities);
-    }
-
-    @Override
-    public List<Payment> showByUserId(Long id) {
-        final List<PaymentEntity> entities = paymentDao.findByUserId(id);
-        return mapPaymentEntityListToPaymentList(entities);
+    public Payment showLastByUserId(Long id) {
+        return paymentDao.findLastByUserId(id)
+                .map(mapper::mapPaymentEntityToPayment)
+                .orElseThrow(() -> new EntityNotFoundException("No payments found"));
     }
 
     private List<Payment> mapPaymentEntityListToPaymentList(List<PaymentEntity> entities) {

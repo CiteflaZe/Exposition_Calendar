@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>epam-project</groupId>
+    <groupId>servlet-project</groupId>
     <artifactId>epam-project-final</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -18,11 +18,13 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.3</version>
                 <configuration>
                     <webXml>web\WEB-INF\web.xml</webXml>
                 </configuration>

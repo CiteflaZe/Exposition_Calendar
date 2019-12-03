@@ -1,43 +1,44 @@
 package com.project.service.mapper;
 
-import com.project.domain.user.User;
-import com.project.entity.user.Role;
-import com.project.entity.user.UserEntity;
+import com.project.domain.User;
+import com.project.entity.Role;
+import com.project.entity.UserEntity;
 import org.junit.Test;
 
+import static com.project.MockData.MOCK_USER;
+import static com.project.MockData.MOCK_USER_ENTITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class UserMapperTest {
 
-    private UserMapper mapper = new UserMapper();
+    private static final User USER = MOCK_USER;
+    private static final UserEntity USER_ENTITY = MOCK_USER_ENTITY;
 
-    private final User user = initUser();
-
-    private final UserEntity userEntity = initUserEntity();
+    private final UserMapper userMapper = new UserMapper();
 
     @Test
     public void mapUserEntityToUserShouldReturnUser() {
-        final User actual = mapper.mapUserEntityToUser(userEntity);
+        final User actual = userMapper.mapUserEntityToUser(USER_ENTITY);
 
-        assertThat(actual.getId(), is(userEntity.getId()));
-        assertThat(actual.getName(), is(userEntity.getName()));
-        assertThat(actual.getSurname(), is(userEntity.getSurname()));
-        assertThat(actual.getEmail(), is(userEntity.getEmail()));
-        assertThat(actual.getPassword(), is(userEntity.getPassword()));
-        assertThat(actual.getRole(), is(userEntity.getRole()));
+        assertThat(actual.getId(), is(MOCK_USER_ENTITY.getId()));
+        assertThat(actual.getName(), is(MOCK_USER_ENTITY.getName()));
+        assertThat(actual.getSurname(), is(MOCK_USER_ENTITY.getSurname()));
+        assertThat(actual.getEmail(), is(MOCK_USER_ENTITY.getEmail()));
+        assertThat(actual.getPassword(), is(MOCK_USER_ENTITY.getPassword()));
+        assertThat(actual.getRole(), is(MOCK_USER_ENTITY.getRole()));
     }
 
     @Test
     public void mapUserToUserEntityShouldReturnUserEntity() {
-        final UserEntity actual = mapper.mapUserToUserEntity(user);
+        final UserEntity actual = userMapper.mapUserToUserEntity(USER);
 
-        assertThat(actual.getId(), is(user.getId()));
-        assertThat(actual.getName(), is(user.getName()));
-        assertThat(actual.getSurname(), is(user.getSurname()));
-        assertThat(actual.getEmail(), is(user.getEmail()));
-        assertThat(actual.getPassword(), is(user.getPassword()));
-        assertThat(actual.getRole(), is(user.getRole()));
+        assertThat(actual.getId(), is(MOCK_USER.getId()));
+        assertThat(actual.getName(), is(MOCK_USER.getName()));
+        assertThat(actual.getSurname(), is(MOCK_USER.getSurname()));
+        assertThat(actual.getEmail(), is(MOCK_USER.getEmail()));
+        assertThat(actual.getPassword(), is(MOCK_USER.getPassword()));
+        assertThat(actual.getRole(), is(MOCK_USER.getRole()));
     }
 
     private User initUser() {

@@ -1,21 +1,14 @@
 package com.project.dao;
 
-import com.project.entity.payment.PaymentEntity;
-import com.project.entity.payment.Status;
+import com.project.entity.PaymentEntity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface PaymentDao extends CrudDao<PaymentEntity, Long> {
+
     Optional<PaymentEntity> findLastByUserId(Long id);
 
-    List<PaymentEntity> findByTimeRange(LocalDateTime from, LocalDateTime to);
+    List<PaymentEntity> findAllByUserId(Long id);
 
-    List<PaymentEntity> findByStatus(Status status);
-
-    List<PaymentEntity> findByUserId(Long id);
-
-    List<PaymentEntity> findByExpositionId(Long id);
 }

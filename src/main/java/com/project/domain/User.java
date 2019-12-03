@@ -1,6 +1,6 @@
-package com.project.domain.user;
+package com.project.domain;
 
-import com.project.entity.user.Role;
+import com.project.entity.Role;
 
 import java.util.Objects;
 

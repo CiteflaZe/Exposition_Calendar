@@ -1,10 +1,9 @@
 package com.project.command.admin;
 
 import com.project.command.Command;
-import com.project.domain.user.User;
+import com.project.domain.User;
 import com.project.service.UserService;
 import com.project.service.util.PaginationUtil;
-import com.project.service.validator.PaginationValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,7 @@ public class ShowUsersCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final String currentPageString = request.getParameter("currentPage");
         final String rowCountString = request.getParameter("rowCount");
-        final Integer entriesAmount = userService.showEntriesAmount();
+        final Long entriesAmount = userService.showEntriesAmount();
         final Integer[] validPagination = paginationUtil.checkPagination(currentPageString, rowCountString, entriesAmount);
 
         final Integer currentPage = validPagination[0];

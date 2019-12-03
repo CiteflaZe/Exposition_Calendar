@@ -1,11 +1,11 @@
 package com.project.command.user;
 
 import com.project.command.Command;
-import com.project.domain.exposition.Exposition;
-import com.project.domain.payment.Payment;
-import com.project.domain.ticket.Ticket;
-import com.project.domain.user.User;
-import com.project.entity.payment.Status;
+import com.project.domain.Exposition;
+import com.project.domain.Payment;
+import com.project.domain.Ticket;
+import com.project.domain.User;
+import com.project.entity.Status;
 import com.project.service.PaymentService;
 import com.project.service.TicketService;
 
@@ -32,10 +32,10 @@ public class MakePayment implements Command {
         final Exposition exposition = (Exposition) request.getSession().getAttribute("exposition");
 
         String[] stringDate = ((String) request.getSession().getAttribute("date")).split("/");
-        int[] indDate = Arrays.stream(stringDate)
+        int[] intDate = Arrays.stream(stringDate)
                 .mapToInt(Integer::parseInt)
                 .toArray();
-        LocalDate date = LocalDate.of(indDate[0], indDate[1], indDate[2]);
+        LocalDate date = LocalDate.of(intDate[0], intDate[1], intDate[2]);
 
         final Integer ticketsAmount = Integer.valueOf((String) request.getSession().getAttribute("tickets"));
 
@@ -50,19 +50,16 @@ public class MakePayment implements Command {
 
         paymentService.add(payment);
 
-        final Optional<Payment> lastPayment = paymentService.showLastPaymentByUserId(user.getId());
+        final Payment lastPayment = paymentService.showLastByUserId(user.getId());
 
-        if (lastPayment.isPresent()) {
-            for (int i = 0; i < ticketsAmount; i++) {
-                Ticket ticket = Ticket.builder()
-                        .withValidDate(date)
-                        .withUser(user)
-                        .withPayment(lastPayment.get())
-                        .withExposition(exposition)
-                        .withHall(exposition.getHall())
-                        .build();
-                ticketService.add(ticket);
-            }
+        for (int i = 0; i < lastPayment.getTicketAmount(); i++) {
+            Ticket ticket = Ticket.builder()
+                    .withValidDate(date)
+                    .withUser(user)
+                    .withPayment(lastPayment)
+                    .withExposition(exposition)
+                    .build();
+            ticketService.add(ticket);
         }
 
         return "user";

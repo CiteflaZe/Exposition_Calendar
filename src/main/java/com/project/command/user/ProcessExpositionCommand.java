@@ -1,7 +1,7 @@
 package com.project.command.user;
 
 import com.project.command.Command;
-import com.project.domain.exposition.Exposition;
+import com.project.domain.Exposition;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

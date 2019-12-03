@@ -1,6 +1,4 @@
-package com.project.entity.exposition;
-
-import com.project.entity.hall.HallEntity;
+package com.project.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,8 +8,8 @@ public class ExpositionEntity {
     private final Long id;
     private final String title;
     private final String theme;
-    private final LocalDate startTime;
-    private final LocalDate finishTime;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
     private final BigDecimal ticketPrice;
     private final String description;
     private final HallEntity hall;
@@ -20,8 +18,8 @@ public class ExpositionEntity {
         this.id = builder.id;
         this.title = builder.title;
         this.theme = builder.theme;
-        this.startTime = builder.startTime;
-        this.finishTime = builder.finishTime;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
         this.ticketPrice = builder.ticketPrice;
         this.description = builder.description;
         this.hall = builder.hall;
@@ -43,12 +41,12 @@ public class ExpositionEntity {
         return theme;
     }
 
-    public LocalDate getStartTime() {
-        return startTime;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public LocalDate getFinishTime() {
-        return finishTime;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public BigDecimal getTicketPrice() {
@@ -75,8 +73,8 @@ public class ExpositionEntity {
         return Objects.equals(id, that.id) &&
                 Objects.equals(title, that.title) &&
                 Objects.equals(theme, that.theme) &&
-                Objects.equals(startTime, that.startTime) &&
-                Objects.equals(finishTime, that.finishTime) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate) &&
                 Objects.equals(ticketPrice, that.ticketPrice) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(hall, that.hall);
@@ -84,7 +82,7 @@ public class ExpositionEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, theme, startTime, finishTime, ticketPrice, description, hall);
+        return Objects.hash(id, title, theme, startDate, endDate, ticketPrice, description, hall);
     }
 
     @Override
@@ -93,8 +91,8 @@ public class ExpositionEntity {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", theme='" + theme + '\'' +
-                ", startTime=" + startTime +
-                ", finishTime=" + finishTime +
+                ", startTime=" + startDate +
+                ", finishTime=" + endDate +
                 ", ticketPrice=" + ticketPrice +
                 ", description='" + description + '\'' +
                 ", hall=" + hall +
@@ -105,8 +103,8 @@ public class ExpositionEntity {
         private Long id;
         private String title;
         private String theme;
-        private LocalDate startTime;
-        private LocalDate finishTime;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private BigDecimal ticketPrice;
         private String description;
         private HallEntity hall;
@@ -133,13 +131,13 @@ public class ExpositionEntity {
             return this;
         }
 
-        public Builder withStartTime(LocalDate startTime) {
-            this.startTime = startTime;
+        public Builder withStartDate(LocalDate startDate) {
+            this.startDate = startDate;
             return this;
         }
 
-        public Builder withFinishTime(LocalDate finishTime) {
-            this.finishTime = finishTime;
+        public Builder withEndDate(LocalDate endDate) {
+            this.endDate = endDate;
             return this;
         }
 

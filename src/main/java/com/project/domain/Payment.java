@@ -1,32 +1,27 @@
-package com.project.entity.payment;
+package com.project.domain;
 
-import com.project.entity.exposition.ExpositionEntity;
-import com.project.entity.ticket.TicketEntity;
-import com.project.entity.user.UserEntity;
+import com.project.entity.Status;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
-public class PaymentEntity {
+public class Payment {
     private final Long id;
     private final LocalDateTime paymentTime;
     private final Status status;
-    private final BigDecimal price;
     private final Integer ticketAmount;
-    private final UserEntity user;
-    private final ExpositionEntity exposition;
-    private final List<TicketEntity> tickets;
+    private final BigDecimal price;
+    private final User user;
+    private final Exposition exposition;
 
-    private PaymentEntity(Builder builder) {
+    private Payment(Builder builder) {
         this.id = builder.id;
         this.paymentTime = builder.paymentTime;
         this.status = builder.status;
-        this.price = builder.price;
         this.ticketAmount = builder.ticketAmount;
+        this.price = builder.price;
         this.user = builder.user;
-        this.tickets = builder.tickets;
         this.exposition = builder.exposition;
     }
 
@@ -46,23 +41,19 @@ public class PaymentEntity {
         return status;
     }
 
-    public Integer getTicketAmount() {
-        return ticketAmount;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
 
-    public UserEntity getUser() {
+    public Integer getTicketAmount() {
+        return ticketAmount;
+    }
+
+    public User getUser() {
         return user;
     }
 
-    public List<TicketEntity> getTickets() {
-        return tickets;
-    }
-
-    public ExpositionEntity getExposition() {
+    public Exposition getExposition() {
         return exposition;
     }
 
@@ -74,49 +65,48 @@ public class PaymentEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PaymentEntity that = (PaymentEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(paymentTime, that.paymentTime) &&
-                status == that.status &&
-                Objects.equals(price, that.price) &&
-                Objects.equals(user, that.user) &&
-                Objects.equals(exposition, that.exposition) &&
-                Objects.equals(tickets, that.tickets);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, paymentTime, status, price, user, exposition, tickets);
+        Payment payment = (Payment) o;
+        return Objects.equals(id, payment.id) &&
+                Objects.equals(paymentTime, payment.paymentTime) &&
+                status == payment.status &&
+                Objects.equals(ticketAmount, payment.ticketAmount) &&
+                Objects.equals(price, payment.price) &&
+                Objects.equals(user, payment.user) &&
+                Objects.equals(exposition, payment.exposition);
     }
 
     @Override
     public String toString() {
-        return "PaymentEntity{" +
+        return "Payment{" +
                 "id=" + id +
                 ", paymentTime=" + paymentTime +
                 ", status=" + status +
+                ", ticketAmount=" + ticketAmount +
                 ", price=" + price +
                 ", user=" + user +
                 ", exposition=" + exposition +
-                ", tickets=" + tickets +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, paymentTime, status, ticketAmount, price, user, exposition);
     }
 
     public static class Builder {
         private Long id;
         private LocalDateTime paymentTime;
         private Status status;
-        private BigDecimal price;
         private Integer ticketAmount;
-        private UserEntity user;
-        private ExpositionEntity exposition;
-        private List<TicketEntity> tickets;
+        private BigDecimal price;
+        private User user;
+        private Exposition exposition;
 
         private Builder() {
         }
 
-        public PaymentEntity build() {
-            return new PaymentEntity(this);
+        public Payment build() {
+            return new Payment(this);
         }
 
         public Builder withId(Long id) {
@@ -134,28 +124,23 @@ public class PaymentEntity {
             return this;
         }
 
-        public Builder withPrice(BigDecimal price) {
-            this.price = price;
-            return this;
-        }
-
         public Builder withTicketAmount(Integer ticketAmount) {
             this.ticketAmount = ticketAmount;
             return this;
         }
 
-        public Builder withUser(UserEntity user) {
+        public Builder withPrice(BigDecimal price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder withUser(User user) {
             this.user = user;
             return this;
         }
 
-        public Builder withExposition(ExpositionEntity exposition) {
+        public Builder withExposition(Exposition exposition) {
             this.exposition = exposition;
-            return this;
-        }
-
-        public Builder withTickets(List<TicketEntity> tickets) {
-            this.tickets = tickets;
             return this;
         }
     }

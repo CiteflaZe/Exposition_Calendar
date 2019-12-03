@@ -1,7 +1,7 @@
 package com.project.command.user;
 
 import com.project.command.Command;
-import com.project.domain.exposition.Exposition;
+import com.project.domain.Exposition;
 import com.project.service.ExpositionService;
 import com.project.service.util.PaginationUtil;
 
@@ -23,7 +23,7 @@ public class ShowExpositionsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         final String currentPageString = request.getParameter("currentPage");
         final String rowCountString = request.getParameter("rowCount");
-        final Integer entriesAmount = expositionService.showEntriesAmount();
+        final Long entriesAmount = expositionService.showEntriesAmount();
         final Integer[] validPagination = paginationUtil.checkPagination(currentPageString, rowCountString, entriesAmount);
 
         final Integer currentPage = validPagination[0];
@@ -33,7 +33,7 @@ public class ShowExpositionsCommand implements Command {
 
         final List<Exposition> expositions = expositionService.showAll(startFrom, rowCount);
 
-        request.setAttribute("expositions", expositions);
+        request.getSession().setAttribute("expositions", expositions);
         request.setAttribute("command", "showExpositions");
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("rowCount", rowCount);

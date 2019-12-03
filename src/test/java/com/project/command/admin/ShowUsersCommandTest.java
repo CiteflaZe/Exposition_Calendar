@@ -1,6 +1,5 @@
 package com.project.command.admin;
 
-import com.project.service.HallService;
 import com.project.service.UserService;
 import com.project.service.util.PaginationUtil;
 import org.hamcrest.MatcherAssert;
@@ -14,12 +13,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShowUsersCommandTest {
@@ -37,10 +33,10 @@ public class ShowUsersCommandTest {
     ShowUsersCommand showUsersCommand;
 
     @Test
-    public void executeShouldReturnShowUsersPage(){
+    public void executeShouldReturnShowUsersPage() {
         Integer[] res = new Integer[]{1, 2, 3};
         when(request.getParameter(anyString())).thenReturn("1");
-        when(paginationUtil.checkPagination(anyString(), anyString(), anyInt())).thenReturn(res);
+        when(paginationUtil.checkPagination(anyString(), anyString(), anyLong())).thenReturn(res);
 
         final String actual = showUsersCommand.execute(request, response);
         String expected = "admin-show-users.jsp";

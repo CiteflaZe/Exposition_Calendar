@@ -1,7 +1,6 @@
 package com.project.command.user;
 
-import com.project.domain.payment.Payment;
-import com.project.domain.user.User;
+import com.project.domain.User;
 import com.project.service.PaymentService;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
@@ -9,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +39,7 @@ public class ShowTicketsCommandTest {
         when(session.getAttribute("user")).thenReturn(User.builder()
         .withId(1L)
         .build());
-        when(paymentService.showByUserId(anyLong())).thenReturn(Collections.emptyList());
+        when(paymentService.showAllByUserId(anyLong())).thenReturn(Collections.emptyList());
 
         final String actual = showTicketsCommand.execute(request, response);
         String expected = "user-show-tickets.jsp";

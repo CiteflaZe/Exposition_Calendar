@@ -1,6 +1,4 @@
-package com.project.entity.hall;
-
-import com.project.entity.exposition.ExpositionEntity;
+package com.project.entity;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package com.project.command.admin;
 
-import com.project.domain.hall.Hall;
+import com.project.domain.Hall;
 import com.project.service.HallService;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.Is;
@@ -13,7 +13,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -28,7 +27,7 @@ public class AddHallCommandTest {
     HallService hallService;
 
     @InjectMocks
-    AddHallCommand addHallCommand;
+    private AddHallCommand addHallCommand;
 
     @Test
     public void executeShouldReturnString(){

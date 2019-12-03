@@ -1,7 +1,7 @@
 package com.project.command.authentication;
 
 import com.project.command.Command;
-import com.project.domain.user.User;
+import com.project.domain.User;
 import com.project.exception.EmailAlreadyExistException;
 import com.project.service.UserService;
 

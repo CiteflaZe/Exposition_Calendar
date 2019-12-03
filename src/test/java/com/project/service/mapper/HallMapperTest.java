@@ -1,59 +1,39 @@
 package com.project.service.mapper;
 
-import com.project.domain.hall.Hall;
-import com.project.entity.hall.HallEntity;
+import com.project.domain.Hall;
+import com.project.entity.HallEntity;
 import org.junit.Test;
 
+import static com.project.MockData.MOCK_HALL;
+import static com.project.MockData.MOCK_HALL_ENTITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class HallMapperTest {
 
-    private final HallMapper mapper = new HallMapper();
+    private static final Hall HALL = MOCK_HALL;
+    private static final HallEntity HALL_ENTITY = MOCK_HALL_ENTITY;
 
-    private final Hall hall = initHall();
-
-    private final HallEntity hallEntity = initHallEntity();
+    private final HallMapper hallMapper = new HallMapper();
 
     @Test
     public void mapHallEntityToHallShouldReturnHall() {
-        final Hall actual = mapper.mapHallEntityToHall(hallEntity);
+        final Hall actual = hallMapper.mapHallEntityToHall(HALL_ENTITY);
 
-        assertThat(actual.getId(), is(hallEntity.getId()));
-        assertThat(actual.getName(), is(hallEntity.getName()));
-        assertThat(actual.getCity(), is(hallEntity.getCity()));
-        assertThat(actual.getStreet(), is(hallEntity.getStreet()));
-        assertThat(actual.getHouseNumber(), is(hallEntity.getHouseNumber()));
+        assertThat(actual.getId(), is(MOCK_HALL_ENTITY.getId()));
+        assertThat(actual.getName(), is(MOCK_HALL_ENTITY.getName()));
+        assertThat(actual.getCity(), is(MOCK_HALL_ENTITY.getCity()));
+        assertThat(actual.getStreet(), is(MOCK_HALL_ENTITY.getStreet()));
+        assertThat(actual.getHouseNumber(), is(MOCK_HALL_ENTITY.getHouseNumber()));
     }
 
     @Test
     public void mapHallToHallEntityShouldReturnHallEntity() {
-        final HallEntity actual = mapper.mapHallToHallEntity(hall);
+        final HallEntity actual = hallMapper.mapHallToHallEntity(HALL);
 
-        assertThat(actual.getId(), is(hall.getId()));
-        assertThat(actual.getName(), is(hall.getName()));
-        assertThat(actual.getCity(), is(hall.getCity()));
-        assertThat(actual.getStreet(), is(hall.getStreet()));
-        assertThat(actual.getHouseNumber(), is(hall.getHouseNumber()));
-    }
-
-    private Hall initHall() {
-        return Hall.builder()
-                .withId(4L)
-                .withName("Hall")
-                .withCity("City")
-                .withStreet("Street")
-                .withHouseNumber(13)
-                .build();
-    }
-
-    private HallEntity initHallEntity() {
-        return HallEntity.builder()
-                .withId(9L)
-                .withName("Generic Hall Name")
-                .withCity("Big City")
-                .withStreet("Some Street")
-                .withHouseNumber(18)
-                .build();
+        assertThat(actual.getName(), is(MOCK_HALL.getName()));
+        assertThat(actual.getCity(), is(MOCK_HALL.getCity()));
+        assertThat(actual.getStreet(), is(MOCK_HALL.getStreet()));
+        assertThat(actual.getHouseNumber(), is(MOCK_HALL.getHouseNumber()));
     }
 }
