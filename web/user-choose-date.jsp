@@ -30,7 +30,7 @@
                     <input type="hidden" name="command" value="processDate">
                     <div class="form-group">
                         <label for="date"><fmt:message key="user.chooseDate.date"/><span class="asteriskField">*</span></label>
-                        <input type="text" name="date" id="date" class="form-control" aria-describedby="emailHelp">
+                        <input type="date" name="date" id="date" class="form-control" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
                         <label for="tickets"><fmt:message key="user.chooseDate.tickets"/></label>
@@ -54,8 +54,8 @@
         var date_input=$('input[name="date"]');
         var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
-            format: 'yyyy/mm/dd',
-            startDate: '+0d',
+            format: 'yyyy-mm-dd',
+            startDate: '${startDate.toString()}',
             endDate: '${exposition.getEndDate().toString()}',
             container: container,
             todayHighlight: true,

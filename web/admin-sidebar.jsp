@@ -13,13 +13,9 @@
 <fmt:setBundle basename="text"/>
 <html>
 <head>
-    <title>User side bar</title>
-
+    <title>Admin side bar</title>
     <link href="css/sidebar.css" rel="stylesheet"/>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
-
-
-
     <style>
         <%@ include file ="css/sidebar.css"%>
         #sidebar {
@@ -46,6 +42,9 @@
         </li>
         <li>
             <a href="?command=showHalls&currentPage=1&rowCount=15"><fmt:message key="admin.sidebar.showHalls"/></a>
+        </li>
+        <li>
+            <a href="?command=showExpositions&currentPage=1&rowCount=5"><fmt:message key="admin.sidebar.showExpositions"/></a>
         </li>
     </ul>
 </nav>

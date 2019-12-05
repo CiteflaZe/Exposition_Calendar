@@ -23,7 +23,7 @@
     <c:import url="admin-sidebar.jsp"/>
     <div id="content">
         <table class="table table-striped table-responsive-md btn-table">
-            <thead>
+            <thead class="thead-dark">
             <tr>
                 <th scope="col"><fmt:message key="admin.showHalls.id"/></th>
                 <th scope="col"><fmt:message key="admin.showHalls.name"/></th>
@@ -43,7 +43,6 @@
                     <td>${hall.getHouseNumber()}</td>
                 </tr>
             </c:forEach>
-
             </tbody>
         </table>
     </div>

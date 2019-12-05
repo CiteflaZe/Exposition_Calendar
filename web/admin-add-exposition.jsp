@@ -33,11 +33,11 @@
             </div>
             <div class="col-sm-3 my-1">
                 <label for="dateStart"><fmt:message key="admin.addExposition.startDate"/></label>
-                <input name="dateStart" type="text" id="dateStart" class="form-control" required>
+                <input name="dateStart" type="date" id="dateStart" class="form-control" required>
             </div>
             <div class="col-sm-3 my-1">
                 <label for="dateEnd"><fmt:message key="admin.addExposition.endDate"/></label>
-                <input name="dateEnd" type="text" id="dateEnd" class="form-control" required>
+                <input name="dateEnd" type="date" id="dateEnd" class="form-control" required>
             </div>
             <div class="col-sm-3 my-1">
                 <label for="ticketPrice"><fmt:message key="admin.addExposition.ticketPrice"/></label>
@@ -50,7 +50,6 @@
             <div class="col-sm-3 my-1">
                 <label for="hallId"><fmt:message key="admin.addExposition.hall"/></label>
                 <select name="hallId" id="hallId" class="custom-select custom-select-lg mb-3">
-                    <option selected><fmt:message key="admin.addExposition.dropdown"/></option>
                     <c:forEach begin="0" end="${halls.size()-1}" var="i">
                         <option value="${halls.get(i).getId()}">${halls.get(i).getName()}</option>
                     </c:forEach>

@@ -23,43 +23,49 @@
 <div class="wrapper">
     <c:import url="user-sidebar.jsp"/>
     <div id="content">
-        <table class="table table-striped table-responsive-md btn-table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col"><fmt:message key="user.showExpositions.title"/></th>
-                <th scope="col"><fmt:message key="user.showExpositions.theme"/></th>
-                <th scope="col"><fmt:message key="user.showExpositions.start"/></th>
-                <th scope="col"><fmt:message key="user.showExpositions.end"/></th>
-                <th scope="col"><fmt:message key="user.showExpositions.ticketPrice"/></th>
-                <th scope="col" style="width:30%"><fmt:message key="user.showExpositions.description"/></th>
-                <th scope="col"><fmt:message key="user.showExpositions.hall"/></th>
-                <th scope="col" style="width:8%"></th>
-            </tr>
-            </thead>
+        <c:choose>
+            <c:when test="${expositions.isEmpty()}">
+                <h2><fmt:message key="list.empty"/></h2>
+            </c:when>
+            <c:otherwise>
+                <table class="table table-striped table-responsive-md btn-table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"><fmt:message key="user.showExpositions.title"/></th>
+                        <th scope="col"><fmt:message key="user.showExpositions.theme"/></th>
+                        <th scope="col"><fmt:message key="user.showExpositions.start"/></th>
+                        <th scope="col"><fmt:message key="user.showExpositions.end"/></th>
+                        <th scope="col"><fmt:message key="user.showExpositions.ticketPrice"/></th>
+                        <th scope="col" style="width:30%"><fmt:message key="user.showExpositions.description"/></th>
+                        <th scope="col"><fmt:message key="user.showExpositions.hall"/></th>
+                        <th scope="col" style="width:8%"></th>
+                    </tr>
+                    </thead>
 
-            <tbody>
-            <c:forEach begin="0" end="${expositions.size()-1}" var="i">
-                <tr>
-                    <td>${expositions.get(i).getTitle()}</td>
-                    <td>${expositions.get(i).getTheme()}</td>
-                    <td>${expositions.get(i).getStartDate()}</td>
-                    <td>${expositions.get(i).getEndDate()}</td>
-                    <td>${expositions.get(i).getTicketPrice()}</td>
-                    <td>${expositions.get(i).getDescription()}</td>
-                    <td>${expositions.get(i).getHall().getName()}</td>
-                    <td>
-                        <form action="user" method="post">
-                            <input type="hidden" name="command" value="processExposition"/>
-                            <input type="hidden" name="exposition" value="${i}"/>
-                            <button type="submit" class="btn btn-success"><fmt:message key="user.showExpositions.order"/></button>
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
-
-            </tbody>
-        </table>
-        <c:import url="user-pagination.jsp"/>
+                    <tbody>
+                    <c:forEach var="exposition" items="${expositions}">
+                        <tr>
+                            <td>${exposition.getTitle()}</td>
+                            <td>${exposition.getTheme()}</td>
+                            <td>${exposition.getStartDate()}</td>
+                            <td>${exposition.getEndDate()}</td>
+                            <td>${exposition.getTicketPrice()}</td>
+                            <td>${exposition.getDescription()}</td>
+                            <td>${exposition.getHall().getName()}</td>
+                            <td>
+                                <form action="user" method="post">
+                                    <input type="hidden" name="command" value="processExposition"/>
+                                    <input type="hidden" name="expositionId" value="${exposition.getId()}"/>
+                                    <button type="submit" class="btn btn-success"><fmt:message key="user.showExpositions.order"/></button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <c:import url="user-pagination.jsp"/>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 

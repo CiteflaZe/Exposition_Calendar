@@ -25,19 +25,19 @@
             <input type="hidden" name="command" value="addHall">
             <div class="col-sm-3 my-1">
                 <label for="name"><fmt:message key="admin.addHall.name"/></label>
-                <input name="name" type="text" class="form-control" id="name"  placeholder="<fmt:message key="admin.addHall.name"/>">
+                <input name="name" type="text" class="form-control" id="name" placeholder="<fmt:message key="admin.addHall.name"/>" required>
             </div>
             <div class="col-sm-3 my-1">
                 <label for="city"><fmt:message key="admin.addHall.city"/></label>
-                <input name="city" type="text" class="form-control" id="city" placeholder="<fmt:message key="admin.addHall.city"/>">
+                <input name="city" type="text" class="form-control" id="city" placeholder="<fmt:message key="admin.addHall.city"/>" required>
             </div>
             <div class="col-sm-3 my-1">
                 <label for="street"><fmt:message key="admin.addHall.street"/></label>
-                <input name="street" type="text" id="street" class="form-control" placeholder="<fmt:message key="admin.addHall.street"/>">
+                <input name="street" type="text" id="street" class="form-control" placeholder="<fmt:message key="admin.addHall.street"/>" required>
             </div>
             <div class="col-sm-3 my-1">
                 <label for="houseNumber"><fmt:message key="admin.addHall.houseNumber"/></label>
-                <input name="houseNumber" type="number" min="1" id="houseNumber" class="form-control" >
+                <input name="houseNumber" type="number" min="1" id="houseNumber" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary"><fmt:message key="admin.submit"/></button>
         </form>
