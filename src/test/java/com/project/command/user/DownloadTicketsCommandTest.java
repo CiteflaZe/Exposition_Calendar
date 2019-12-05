@@ -3,23 +3,18 @@ package com.project.command.user;
 import com.project.MockData;
 import com.project.exception.DownloadTicketsException;
 import com.project.service.TicketService;
-import com.project.service.util.PDFCreator;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.Is;
+import com.project.service.helper.PDFCreator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 
@@ -31,12 +26,16 @@ public class DownloadTicketsCommandTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Mock
     private HttpServletResponse response;
+
     @Mock
     private HttpSession session;
+
     @Mock
     private TicketService ticketService;
+
     @Mock
     private PDFCreator pdfCreator;
 

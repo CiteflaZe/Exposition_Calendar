@@ -1,5 +1,6 @@
 package com.project.command.user;
 
+import com.project.domain.Payment;
 import com.project.domain.Ticket;
 import com.project.service.PaymentService;
 import com.project.service.TicketService;
@@ -23,12 +24,16 @@ public class MakePaymentTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Mock
     private HttpServletResponse response;
+
     @Mock
     private HttpSession session;
+
     @Mock
     private PaymentService paymentService;
+
     @Mock
     private TicketService ticketService;
 
@@ -37,11 +42,9 @@ public class MakePaymentTest {
 
     @Test
     public void executeShouldReturnUserPage() {
-        final String ticketsAmount = "6";
-
         when(request.getSession()).thenReturn(session);
-        when(session.getAttribute("date")).thenReturn("2019/7/13");
-        when(session.getAttribute("tickets")).thenReturn(ticketsAmount);
+        when(session.getAttribute("date")).thenReturn("2019-07-13");
+        when(session.getAttribute("tickets")).thenReturn(MOCK_PAYMENT.getTicketAmount().toString());
         when(session.getAttribute("user")).thenReturn(MOCK_USER);
         when(session.getAttribute("exposition")).thenReturn(MOCK_EXPOSITION);
         when(paymentService.showLastByUserId(anyLong())).thenReturn(MOCK_PAYMENT);
@@ -50,7 +53,9 @@ public class MakePaymentTest {
         String expected = "user";
 
         verify(session, times(4)).getAttribute(anyString());
-        verify(ticketService, times(Integer.parseInt(ticketsAmount))).add(any(Ticket.class));
+        verify(paymentService).add(any(Payment.class));
+        verify(ticketService, times(MOCK_PAYMENT.getTicketAmount())).add(any(Ticket.class));
+        verify(session, times(3)).removeAttribute(anyString());
         assertThat(actual, Is.is(expected));
     }
 

@@ -150,6 +150,7 @@ public class MockData {
 
     private static Ticket initTicket() {
         return Ticket.builder()
+                .withId(TICKET_ID)
                 .withValidDate(TICKET_VALID_DATE)
                 .withUser(MOCK_USER)
                 .withExposition(MOCK_EXPOSITION)

@@ -12,8 +12,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.core.Is.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -21,8 +21,10 @@ public class RegisterCommandTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Mock
     private HttpServletResponse response;
+
     @Mock
     private UserService userService;
 
@@ -42,7 +44,7 @@ public class RegisterCommandTest {
     }
 
     @Test
-    public void executeShouldReturnRegisterPageWithExistingEmail(){
+    public void executeShouldReturnRegisterPageWithExistingEmail() {
         when(request.getParameter(anyString())).thenReturn("pass");
         when(userService.register(any(User.class))).thenThrow(EmailAlreadyExistException.class);
 
@@ -55,7 +57,7 @@ public class RegisterCommandTest {
     }
 
     @Test
-    public void executeShouldReturnIndexPage(){
+    public void executeShouldReturnIndexPage() {
         final String actual = registerCommand.execute(request, response);
         String expected = "/";
 

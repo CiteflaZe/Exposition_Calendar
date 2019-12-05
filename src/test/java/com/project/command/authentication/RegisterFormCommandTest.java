@@ -1,7 +1,5 @@
 package com.project.command.authentication;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,11 +9,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterFormCommandTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Mock
     private HttpServletResponse response;
 
@@ -27,7 +29,7 @@ public class RegisterFormCommandTest {
         final String actual = registerFormCommand.execute(request, response);
         String expected = "register.jsp";
 
-        MatcherAssert.assertThat(actual, Is.is(expected));
+        assertThat(actual, is(expected));
     }
 
 }

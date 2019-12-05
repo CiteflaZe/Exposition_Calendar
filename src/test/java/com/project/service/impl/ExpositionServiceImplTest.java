@@ -3,6 +3,7 @@ package com.project.service.impl;
 import com.project.dao.ExpositionDao;
 import com.project.domain.Exposition;
 import com.project.entity.ExpositionEntity;
+import com.project.exception.EntityNotFoundException;
 import com.project.exception.ExpositionAlreadyExistException;
 import com.project.service.mapper.ExpositionMapper;
 import org.junit.After;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +63,25 @@ public class ExpositionServiceImplTest {
     }
 
     @Test
+    public void addShouldThrowIllegalArgumentExceptionWithIncorrectDates(){
+        Exposition exposition = Exposition.builder()
+                .withId(MOCK_EXPOSITION.getId())
+                .withTitle(MOCK_EXPOSITION.getTitle())
+                .withTheme(MOCK_EXPOSITION.getTheme())
+                .withStartDate(MOCK_EXPOSITION.getEndDate())
+                .withEndDate(MOCK_EXPOSITION.getStartDate())
+                .withTicketPrice(MOCK_EXPOSITION.getTicketPrice())
+                .withDescription(MOCK_EXPOSITION.getDescription())
+                .withHall(MOCK_EXPOSITION.getHall())
+                .build();
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Start date is greater than end date");
+
+        expositionService.add(exposition);
+    }
+
+    @Test
     public void addShouldThrowExpositionAlreadyExistException() {
         expectedException.expect(ExpositionAlreadyExistException.class);
         expectedException.expectMessage("Exposition with this title already exists");
@@ -80,6 +101,25 @@ public class ExpositionServiceImplTest {
         verify(expositionDao).save(EXPOSITION_ENTITY);
     }
 
+    @Test
+    public void showByIdShouldThrowEntityNotFoundException(){
+        expectedException.expect(EntityNotFoundException.class);
+        expectedException.expectMessage("There is no expositions with this id");
+
+        when(expositionDao.findById(anyLong())).thenReturn(Optional.empty());
+
+        expositionService.showById(1L);
+    }
+
+    @Test
+    public void showByIdShouldReturnExposition(){
+        when(expositionDao.findById(anyLong())).thenReturn(Optional.of(EXPOSITION_ENTITY));
+        when(expositionMapper.mapExpositionEntityToExposition(any(ExpositionEntity.class))).thenReturn(EXPOSITION);
+
+        final Exposition actual = expositionService.showById(1L);
+
+        assertThat(actual, is(EXPOSITION));
+    }
 
     @Test
     public void showAllShouldReturnEmptyList() {

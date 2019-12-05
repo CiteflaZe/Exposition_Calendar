@@ -24,15 +24,18 @@ public class LogInCommandTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Mock
     private HttpServletResponse response;
+
     @Mock
     private HttpSession session;
+
     @Mock
     private UserService userService;
 
     @InjectMocks
-    LogInCommand logInCommand;
+    private LogInCommand logInCommand;
 
     @After
     public void resetMocks() {
