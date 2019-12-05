@@ -2,17 +2,32 @@ package com.project.command.user;
 
 import com.project.command.Command;
 import com.project.domain.Exposition;
+import com.project.service.ExpositionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+
+import static java.time.LocalDate.now;
 
 public class ProcessExpositionCommand implements Command {
+
+    private final ExpositionService expositionService;
+
+    public ProcessExpositionCommand(ExpositionService expositionService) {
+        this.expositionService = expositionService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final List<Exposition> expositions = (List<Exposition>) request.getSession().getAttribute("expositions");
-        final Integer expositionId = Integer.parseInt(request.getParameter("exposition"));
-        request.getSession().setAttribute("exposition", expositions.get(expositionId));
+        final long expositionId = Long.parseLong(request.getParameter("expositionId"));
+
+        final Exposition exposition = expositionService.showById(expositionId);
+
+        request.getSession().setAttribute("exposition", exposition);
+        request.setAttribute("startDate", now().compareTo(exposition.getStartDate()) >= 0 ?
+                now() :
+                exposition.getStartDate());
+
         return "user-choose-date.jsp";
     }
 }

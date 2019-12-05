@@ -11,6 +11,7 @@ import com.project.service.TicketService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,16 +29,12 @@ public class MakePayment implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        final User user = (User) request.getSession().getAttribute("user");
-        final Exposition exposition = (Exposition) request.getSession().getAttribute("exposition");
+        final HttpSession session = request.getSession();
 
-        String[] stringDate = ((String) request.getSession().getAttribute("date")).split("/");
-        int[] intDate = Arrays.stream(stringDate)
-                .mapToInt(Integer::parseInt)
-                .toArray();
-        LocalDate date = LocalDate.of(intDate[0], intDate[1], intDate[2]);
-
-        final Integer ticketsAmount = Integer.valueOf((String) request.getSession().getAttribute("tickets"));
+        final User user = (User) session.getAttribute("user");
+        final Exposition exposition = (Exposition) session.getAttribute("exposition");
+        LocalDate date = LocalDate.parse(session.getAttribute("date").toString());
+        final int ticketsAmount = Integer.parseInt((String) session.getAttribute("tickets"));
 
         Payment payment = Payment.builder()
                 .withPaymentTime(LocalDateTime.now())
@@ -47,7 +44,6 @@ public class MakePayment implements Command {
                 .withUser(user)
                 .withExposition(exposition)
                 .build();
-
         paymentService.add(payment);
 
         final Payment lastPayment = paymentService.showLastByUserId(user.getId());
@@ -61,6 +57,10 @@ public class MakePayment implements Command {
                     .build();
             ticketService.add(ticket);
         }
+
+        session.removeAttribute("exposition");
+        session.removeAttribute("date");
+        session.removeAttribute("tickets");
 
         return "user";
     }

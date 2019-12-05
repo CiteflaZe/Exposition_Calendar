@@ -6,6 +6,7 @@ import com.project.command.admin.AddExpositionCommand;
 import com.project.command.admin.AddHallCommand;
 import com.project.command.admin.ExpositionFormCommand;
 import com.project.command.admin.HallFormCommand;
+import com.project.command.admin.ShowExpositionsAdminCommand;
 import com.project.command.admin.ShowHallsCommand;
 import com.project.command.admin.ShowUsersCommand;
 import com.project.command.authentication.LogInCommand;
@@ -13,9 +14,23 @@ import com.project.command.authentication.LogInFormCommand;
 import com.project.command.authentication.LogOutCommand;
 import com.project.command.authentication.RegisterCommand;
 import com.project.command.authentication.RegisterFormCommand;
-import com.project.command.user.*;
-import com.project.dao.*;
-import com.project.dao.impl.*;
+import com.project.command.user.DownloadTicketsCommand;
+import com.project.command.user.MakePayment;
+import com.project.command.user.ProcessDateCommand;
+import com.project.command.user.ProcessExpositionCommand;
+import com.project.command.user.ShowExpositionsUserCommand;
+import com.project.command.user.ShowTicketsCommand;
+import com.project.dao.DBConnector;
+import com.project.dao.ExpositionDao;
+import com.project.dao.HallDao;
+import com.project.dao.PaymentDao;
+import com.project.dao.TicketDao;
+import com.project.dao.UserDao;
+import com.project.dao.impl.ExpositionDaoImpl;
+import com.project.dao.impl.HallDaoImpl;
+import com.project.dao.impl.PaymentDaoImpl;
+import com.project.dao.impl.TicketDaoImpl;
+import com.project.dao.impl.UserDaoImpl;
 import com.project.domain.User;
 import com.project.service.ExpositionService;
 import com.project.service.HallService;
@@ -28,10 +43,12 @@ import com.project.service.impl.HallServiceImpl;
 import com.project.service.impl.PaymentServiceImpl;
 import com.project.service.impl.TicketServiceImpl;
 import com.project.service.impl.UserServiceImpl;
-import com.project.service.mapper.*;
-import com.project.service.util.PDFCreator;
-import com.project.service.util.PaginationUtil;
-import com.project.service.validator.PaginationValidator;
+import com.project.service.mapper.ExpositionMapper;
+import com.project.service.mapper.HallMapper;
+import com.project.service.mapper.PaymentMapper;
+import com.project.service.mapper.TicketMapper;
+import com.project.service.mapper.UserMapper;
+import com.project.service.helper.PDFCreator;
 import com.project.service.validator.UserValidator;
 import com.project.service.validator.Validator;
 
@@ -65,10 +82,6 @@ public class ApplicationContextInjector {
 
     private static final ExpositionMapper EXPOSITION_MAPPER = new ExpositionMapper();
 
-    private static final PaginationValidator PAGINATION_VALIDATOR = new PaginationValidator();
-
-    private static final PaginationUtil PAGINATION_UTIL = new PaginationUtil();
-
     private static final PDFCreator PDF_CREATOR = new PDFCreator();
 
     private static final UserService USER_SERVICE = new UserServiceImpl(USER_DAO, USER_VALIDATOR, PASSWORD_ENCODER, USER_MAPPER);
@@ -87,13 +100,13 @@ public class ApplicationContextInjector {
 
     private static final RegisterCommand REGISTER_COMMAND = new RegisterCommand(USER_SERVICE);
 
-    private static final ShowExpositionsCommand SHOW_EXPOSITIONS_COMMAND = new ShowExpositionsCommand(EXPOSITION_SERVICE, PAGINATION_UTIL);
+    private static final ShowExpositionsUserCommand SHOW_EXPOSITIONS_USER_COMMAND = new ShowExpositionsUserCommand(EXPOSITION_SERVICE);
 
     private static final ShowTicketsCommand SHOW_TICKETS_COMMAND = new ShowTicketsCommand(PAYMENT_SERVICE, TICKET_SERVICE);
 
     private static final DownloadTicketsCommand DOWNLOAD_TICKETS_COMMAND = new DownloadTicketsCommand(TICKET_SERVICE, PDF_CREATOR);
 
-    private static final ProcessExpositionCommand PROCESS_EXPOSITION_COMMAND = new ProcessExpositionCommand();
+    private static final ProcessExpositionCommand PROCESS_EXPOSITION_COMMAND = new ProcessExpositionCommand(EXPOSITION_SERVICE);
 
     private static final ProcessDateCommand PROCESS_DATE_COMMAND = new ProcessDateCommand();
 
@@ -103,7 +116,7 @@ public class ApplicationContextInjector {
 
     private static final AddExpositionCommand ADD_EXPOSITION_COMMAND = new AddExpositionCommand(EXPOSITION_SERVICE);
 
-    private static final ShowUsersCommand SHOW_USERS_COMMAND = new ShowUsersCommand(USER_SERVICE, PAGINATION_UTIL);
+    private static final ShowUsersCommand SHOW_USERS_COMMAND = new ShowUsersCommand(USER_SERVICE);
 
     private static final HallFormCommand HALL_FORM_COMMAND = new HallFormCommand();
 
@@ -114,6 +127,8 @@ public class ApplicationContextInjector {
     private static final LogInFormCommand LOGIN_FORM_COMMAND = new LogInFormCommand();
 
     private static final RegisterFormCommand REGISTER_FORM_COMMAND = new RegisterFormCommand();
+
+    private static final ShowExpositionsAdminCommand SHOW_EXPOSITIONS_ADMIN_COMMAND = new ShowExpositionsAdminCommand(EXPOSITION_SERVICE);
 
     private static final DefaultCommand DEFAULT_COMMAND = new DefaultCommand();
 
@@ -139,7 +154,7 @@ public class ApplicationContextInjector {
         return applicationContextInjector;
     }
 
-    private static Map<String, Command> mapAuthenticationCommand(){
+    private static Map<String, Command> mapAuthenticationCommand() {
         Map<String, Command> authenticationCommandNameToCommand = new HashMap<>();
         authenticationCommandNameToCommand.put("login", LOGIN_COMMAND);
         authenticationCommandNameToCommand.put("register", REGISTER_COMMAND);
@@ -153,19 +168,17 @@ public class ApplicationContextInjector {
 
     private static Map<String, Command> mapUserCommand() {
         Map<String, Command> userCommandNameToCommand = new HashMap<>();
-        userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_COMMAND);
+        userCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_USER_COMMAND);
         userCommandNameToCommand.put("showTickets", SHOW_TICKETS_COMMAND);
         userCommandNameToCommand.put("download", DOWNLOAD_TICKETS_COMMAND);
         userCommandNameToCommand.put("processExposition", PROCESS_EXPOSITION_COMMAND);
         userCommandNameToCommand.put("processDate", PROCESS_DATE_COMMAND);
         userCommandNameToCommand.put("makePayment", MAKE_PAYMENT);
-        userCommandNameToCommand.put("default", DEFAULT_COMMAND);
-
 
         return userCommandNameToCommand;
     }
 
-    private static Map<String, Command> mapAdminCommand(){
+    private static Map<String, Command> mapAdminCommand() {
         Map<String, Command> adminCommandNameToCommand = new HashMap<>();
 
         adminCommandNameToCommand.put("expositionForm", EXPOSITION_FORM_COMMAND);
@@ -174,34 +187,10 @@ public class ApplicationContextInjector {
         adminCommandNameToCommand.put("hallForm", HALL_FORM_COMMAND);
         adminCommandNameToCommand.put("addHall", ADD_HALL_COMMAND);
         adminCommandNameToCommand.put("showHalls", SHOW_HALLS_COMMAND);
+        adminCommandNameToCommand.put("showExpositions", SHOW_EXPOSITIONS_ADMIN_COMMAND);
         adminCommandNameToCommand.put("logout", LOGOUT_COMMAND);
-        adminCommandNameToCommand.put("default", DEFAULT_COMMAND);
 
         return adminCommandNameToCommand;
-    }
-
-    public PaginationValidator getPaginationValidator() {
-        return PAGINATION_VALIDATOR;
-    }
-
-    public UserService getUserService() {
-        return USER_SERVICE;
-    }
-
-    public ExpositionService getExpositionService() {
-        return EXPOSITION_SERVICE;
-    }
-
-    public PaymentService getPaymentService() {
-        return PAYMENT_SERVICE;
-    }
-
-    public TicketService getTicketService() {
-        return TICKET_SERVICE;
-    }
-
-    public static HallService getHallService() {
-        return HALL_SERVICE;
     }
 
     public Map<String, Command> getAuthenticationCommands() {
@@ -212,7 +201,11 @@ public class ApplicationContextInjector {
         return USER_COMMAND_NAME_TO_COMMAND;
     }
 
-    public Map<String, Command> getAdminCommands(){
+    public Map<String, Command> getAdminCommands() {
         return ADMIN_COMMAND_NAME_TO_COMMAND;
+    }
+
+    public DefaultCommand getDefaultCommand() {
+        return DEFAULT_COMMAND;
     }
 }

@@ -10,7 +10,7 @@ public interface UserService {
 
     boolean register(User user);
 
-    List<User> showAll(Integer startFrom, Integer rowCount);
+    List<User> showAll(Integer page, Integer rowCount);
 
     Long showEntriesAmount();
 

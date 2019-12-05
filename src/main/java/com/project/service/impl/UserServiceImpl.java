@@ -13,13 +13,13 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
+
     private final UserDao userDao;
     private final Validator<User> userValidator;
     private final PasswordEncoder passwordEncoder;
@@ -68,10 +68,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> showAll(Integer startFrom, Integer rowCount) {
-        List<UserEntity> userEntities = userDao.findAll(startFrom, rowCount);
+    public List<User> showAll(Integer page, Integer rowCount) {
+        Integer offset = page * rowCount - rowCount;
+        List<UserEntity> userEntities = userDao.findAll(offset, rowCount);
 
-        return userEntities.isEmpty() ? emptyList() :
+        return userEntities.isEmpty() ?
+                emptyList() :
                 userEntities.stream()
                         .map(mapper::mapUserEntityToUser)
                         .collect(toList());

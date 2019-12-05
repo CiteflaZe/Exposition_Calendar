@@ -13,10 +13,12 @@ import java.util.Map;
 public class AdminServlet extends HttpServlet {
 
     private final Map<String, Command> commandNameToCommand;
+    private final Command defaultCommand;
 
     public AdminServlet() {
         final ApplicationContextInjector injector = ApplicationContextInjector.getInstance();
         this.commandNameToCommand = injector.getAdminCommands();
+        this.defaultCommand = injector.getDefaultCommand();
     }
 
     @Override
@@ -28,7 +30,7 @@ public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String command = req.getParameter("command");
 
-        final String page = commandNameToCommand.getOrDefault(command, commandNameToCommand.get("default")).execute(req, resp);
+        final String page = commandNameToCommand.getOrDefault(command, defaultCommand).execute(req, resp);
 
         if ("logout".equals(command) || "addExposition".equals(command) || "addHall".equals(command)) {
             resp.sendRedirect(page);

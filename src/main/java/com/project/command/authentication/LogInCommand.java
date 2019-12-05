@@ -22,7 +22,7 @@ public class LogInCommand implements Command {
         final String email = request.getParameter("email");
         final String password = request.getParameter("password");
 
-        User user = null;
+        User user;
         try {
             user = userService.login(email, password);
         } catch (InvalidLoginException e) {
@@ -33,10 +33,9 @@ public class LogInCommand implements Command {
         Role role = user.getRole();
 
         request.getSession().setAttribute("user", user);
-        if(role == Role.ADMIN){
+        if (role == Role.ADMIN) {
             return "admin";
-        }
-        else{
+        } else {
             return "user";
         }
     }

@@ -1,18 +1,18 @@
 package com.project.command.admin;
 
 import com.project.command.Command;
-import com.project.domain.User;
-import com.project.service.UserService;
+import com.project.domain.Exposition;
+import com.project.service.ExpositionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowUsersCommand implements Command {
-    private final UserService userService;
+public class ShowExpositionsAdminCommand implements Command {
+    private final ExpositionService expositionService;
 
-    public ShowUsersCommand(UserService userService) {
-        this.userService = userService;
+    public ShowExpositionsAdminCommand(ExpositionService expositionService) {
+        this.expositionService = expositionService;
     }
 
     @Override
@@ -24,12 +24,12 @@ public class ShowUsersCommand implements Command {
 
         final int page = Integer.parseInt(stringPage);
         final int rowCount = Integer.parseInt(stringRowCount);
-        final List<User> users = userService.showAll(page, rowCount);
+        final List<Exposition> expositions = expositionService.showAll(page, rowCount);
 
-        paginate(page, rowCount, userService.showEntriesAmount(), request, "showUsers");
+        paginate(page, rowCount, expositionService.showEntriesAmount(), request, "showExpositions");
 
-        request.setAttribute("users", users);
+        request.setAttribute("expositions", expositions);
 
-        return "admin-show-users.jsp";
+        return "admin-show-expositions.jsp";
     }
 }

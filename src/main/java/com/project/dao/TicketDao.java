@@ -12,4 +12,6 @@ public interface TicketDao extends CrudDao<TicketEntity, Long> {
 
     Optional<TicketEntity> findFirstByPaymentId(Long id);
 
+    List<TicketEntity> findAllByUserId(Long id);
+
 }

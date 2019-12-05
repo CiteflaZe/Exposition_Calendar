@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class HallServiceImpl implements HallService {
     private static final Logger LOGGER = Logger.getLogger(HallServiceImpl.class);
+
     private final HallDao hallDao;
     private final HallMapper mapper;
 
@@ -40,11 +41,6 @@ public class HallServiceImpl implements HallService {
     public List<Hall> showAll() {
         final List<HallEntity> entities = hallDao.findAll();
         return mapHallEntityListToHallList(entities);
-    }
-
-    @Override
-    public Long showEntriesAmount() {
-        return hallDao.countEntries();
     }
 
     private List<Hall> mapHallEntityListToHallList(List<HallEntity> entities) {

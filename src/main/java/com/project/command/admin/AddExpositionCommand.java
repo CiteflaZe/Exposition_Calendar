@@ -24,7 +24,7 @@ public class AddExpositionCommand implements Command {
         final String theme = request.getParameter("theme");
         final LocalDate dateStart = LocalDate.parse(request.getParameter("dateStart"));
         final LocalDate dateEnd = LocalDate.parse(request.getParameter("dateEnd"));
-        final Double ticketPrice = Double.valueOf(request.getParameter("ticketPrice"));
+        final double ticketPrice = Double.parseDouble(request.getParameter("ticketPrice"));
         final String description = request.getParameter("description");
         final Long hallId = Long.parseLong(request.getParameter("hallId"));
 

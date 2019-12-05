@@ -25,7 +25,7 @@ public class RegisterCommand implements Command {
         final String password = request.getParameter("password");
         final String passwordConfirmation = request.getParameter("passwordConfirmation");
 
-        if (!Objects.equals(password, passwordConfirmation)){
+        if (!Objects.equals(password, passwordConfirmation)) {
             request.setAttribute("registerMessage", "Passwords should be the same");
             return "register?command=registerForm";
         }

@@ -5,7 +5,7 @@ import com.project.domain.Ticket;
 import com.project.domain.User;
 import com.project.exception.DownloadTicketsException;
 import com.project.service.TicketService;
-import com.project.service.util.PDFCreator;
+import com.project.service.helper.PDFCreator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

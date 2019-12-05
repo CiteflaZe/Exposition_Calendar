@@ -28,19 +28,17 @@ public class ShowTicketsCommand implements Command {
         final User user = (User) request.getSession().getAttribute("user");
 
         final List<Payment> payments = paymentService.showAllByUserId(user.getId());
-        final List<Ticket> tickets = new ArrayList<>();
+        final List<Ticket> tickets = ticketService.showAllByUserId(user.getId());
         final List<Integer> ticketAmount = new ArrayList<>();
 
         for (Payment payment : payments) {
             if (payment.getStatus() != Status.FAILED) {
-                final Ticket ticket = ticketService.showOneByPaymentId(payment.getId());
-                tickets.add(ticket);
                 ticketAmount.add(payment.getTicketAmount());
             }
         }
 
-        request.getSession().setAttribute("tickets", tickets);
-        request.getSession().setAttribute("ticketAmount", ticketAmount);
+        request.setAttribute("tickets", tickets);
+        request.setAttribute("ticketAmount", ticketAmount);
 
         return "user-show-tickets.jsp";
     }

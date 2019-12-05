@@ -26,8 +26,9 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
     private static final String UPDATE_QUERY = "UPDATE tickets SET valid_date = ?, user_id = ?, payment_id = ? exposition_id = ?, WHERE id = ?";
     private static final String COUNT_QUERY = "SELECT COUNT(*) AS count FROM tickets";
 
-    private static final String FIND_FIRST_BY_PAYMENT_ID = "SELECT * FROM expositions_calendar.tickets INNER JOIN expositions ON exposition_id = expositions.id INNER JOIN halls ON hall_id = halls.id WHERE payment_id = ? LIMIT 1";
-    private static final String FIND_BY_PAYMENT_ID_AND_USER_ID = "SELECT * FROM expositions_calendar.tickets INNER JOIN expositions ON exposition_id = expositions.id INNER JOIN halls ON hall_id = halls.id WHERE payment_id = ? AND user_id = ?";
+    private static final String FIND_FIRST_BY_PAYMENT_ID = "SELECT * FROM tickets INNER JOIN expositions ON exposition_id = expositions.id INNER JOIN halls ON hall_id = halls.id WHERE payment_id = ? LIMIT 1";
+    private static final String FIND_BY_PAYMENT_ID_AND_USER_ID = "SELECT * FROM tickets INNER JOIN expositions ON exposition_id = expositions.id INNER JOIN halls ON hall_id = halls.id WHERE payment_id = ? AND user_id = ?";
+    private static final String FIND_ALL_BY_USER_ID = "SELECT * FROM tickets INNER JOIN expositions ON exposition_id = expositions.id INNER JOIN halls ON hall_id = halls.id WHERE user_id = ? GROUP BY payment_id ORDER BY payment_id DESC";
 
     public TicketDaoImpl(DBConnector connector) {
         super(connector, SAVE_QUERY, FIND_BY_ID_QUERY, FIND_ALL_QUERY, UPDATE_QUERY, COUNT_QUERY);
@@ -55,6 +56,11 @@ public class TicketDaoImpl extends AbstractDaoImpl<TicketEntity> implements Tick
     @Override
     public Optional<TicketEntity> findFirstByPaymentId(Long id) {
         return findByLongParam(id, FIND_FIRST_BY_PAYMENT_ID);
+    }
+
+    @Override
+    public List<TicketEntity> findAllByUserId(Long id) {
+        return findListByLongParam(id, FIND_ALL_BY_USER_ID);
     }
 
     @Override

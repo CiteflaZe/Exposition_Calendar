@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class PaymentServiceImpl implements PaymentService {
     private static final Logger LOGGER = Logger.getLogger(PaymentServiceImpl.class);
+
     private final PaymentDao paymentDao;
     private final PaymentMapper mapper;
 

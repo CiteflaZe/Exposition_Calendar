@@ -12,8 +12,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.emptyList;
+
 public class TicketServiceImpl implements TicketService {
     private static final Logger LOGGER = Logger.getLogger(TicketServiceImpl.class);
+
     private final TicketDao ticketDao;
     private final TicketMapper mapper;
 
@@ -45,9 +48,17 @@ public class TicketServiceImpl implements TicketService {
         return mapTicketEntityListToTicketList(tickets);
     }
 
+    @Override
+    public List<Ticket> showAllByUserId(Long id) {
+        final List<TicketEntity> tickets = ticketDao.findAllByUserId(id);
+        return mapTicketEntityListToTicketList(tickets);
+    }
+
     private List<Ticket> mapTicketEntityListToTicketList(List<TicketEntity> entities) {
-        return entities.stream()
-                .map(mapper::mapTicketEntityToTicket)
-                .collect(Collectors.toList());
+        return entities.isEmpty() ?
+                emptyList() :
+                entities.stream()
+                        .map(mapper::mapTicketEntityToTicket)
+                        .collect(Collectors.toList());
     }
 }

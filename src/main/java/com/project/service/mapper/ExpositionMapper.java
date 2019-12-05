@@ -6,6 +6,7 @@ import com.project.entity.ExpositionEntity;
 import com.project.entity.HallEntity;
 
 public class ExpositionMapper {
+
     public Exposition mapExpositionEntityToExposition(ExpositionEntity expositionEntity){
         return Exposition.builder()
                 .withId(expositionEntity.getId())
@@ -24,7 +25,6 @@ public class ExpositionMapper {
 
     public ExpositionEntity mapExpositionToExpositionEntity(Exposition exposition){
         return ExpositionEntity.builder()
-                .withId(exposition.getId())
                 .withTitle(exposition.getTitle())
                 .withTheme(exposition.getTheme())
                 .withStartDate(exposition.getStartDate())

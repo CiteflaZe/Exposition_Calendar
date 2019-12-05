@@ -13,10 +13,12 @@ import java.util.Map;
 public class UserServlet extends HttpServlet {
 
     private final Map<String, Command> commandNameToCommand;
+    private final Command defaultCommand;
 
     public UserServlet() {
         ApplicationContextInjector injector = ApplicationContextInjector.getInstance();
         this.commandNameToCommand = injector.getUserCommands();
+        this.defaultCommand = injector.getDefaultCommand();
     }
 
     @Override
@@ -28,11 +30,11 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final String command = req.getParameter("command");
 
-        final String page = commandNameToCommand.getOrDefault(command, commandNameToCommand.get("default")).execute(req, resp);
+        final String page = commandNameToCommand.getOrDefault(command, defaultCommand).execute(req, resp);
 
         if ("logout".equals(command) || "makePayment".equals(command)) {
             resp.sendRedirect(page);
-        }else {
+        } else {
             req.getRequestDispatcher(page).forward(req, resp);
         }
     }
