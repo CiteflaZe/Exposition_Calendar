@@ -41,7 +41,7 @@
             <a href="?command=showUsers&currentPage=1&rowCount=15"><fmt:message key="admin.sidebar.showUsers"/></a>
         </li>
         <li>
-            <a href="?command=showHalls&currentPage=1&rowCount=15"><fmt:message key="admin.sidebar.showHalls"/></a>
+            <a href="?command=showHall"><fmt:message key="admin.sidebar.showHalls"/></a>
         </li>
         <li>
             <a href="?command=showExpositions&currentPage=1&rowCount=5"><fmt:message key="admin.sidebar.showExpositions"/></a>

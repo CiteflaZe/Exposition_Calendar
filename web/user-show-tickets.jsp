@@ -23,37 +23,44 @@
 <div class="wrapper">
     <c:import url="user-sidebar.jsp"/>
     <div id="content">
-        <table class="table table-striped table-responsive-md btn-table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col"><fmt:message key="user.showTickets.expoTitle"/></th>
-                <th scope="col"><fmt:message key="user.showTickets.hall"/></th>
-                <th scope="col"><fmt:message key="user.showTickets.ticketAmount"/></th>
-                <th scope="col"><fmt:message key="user.showTickets.date"/></th>
-                <th scope="col"><fmt:message key="user.showTickets.download"/></th>
-            </tr>
-            </thead>
+        <c:choose>
+            <c:when test="${tickets.isEmpty()}">
+                <h2><fmt:message key="list.empty"/></h2>
+            </c:when>
+            <c:otherwise>
+                <table class="table table-striped table-responsive-md btn-table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"><fmt:message key="user.showTickets.expoTitle"/></th>
+                        <th scope="col"><fmt:message key="user.showTickets.hall"/></th>
+                        <th scope="col"><fmt:message key="user.showTickets.ticketAmount"/></th>
+                        <th scope="col"><fmt:message key="user.showTickets.date"/></th>
+                        <th scope="col"><fmt:message key="user.showTickets.download"/></th>
+                    </tr>
+                    </thead>
 
-            <tbody>
-            <c:forEach begin="0" end="${tickets.size()-1}" var="i">
-                <tr>
-                    <td>${tickets.get(i).getExposition().getTitle()}</td>
-                    <td>${tickets.get(i).getExposition().getHall().getName()}</td>
-                    <td>${ticketAmount.get(i)}</td>
-                    <td>${tickets.get(i).getValidDate()}</td>
-                    <td>
-                        <form action="user" method="get">
-                            <input type="hidden" name="command" value="download"/>
-                            <input type="hidden" name="paymentId" value="${tickets.get(i).getPayment().getId()}"/>
-                            <button type="submit" class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></button>
-                        </form>
-                    </td>
+                    <tbody>
+                    <c:forEach begin="0" end="${tickets.size()-1}" var="i">
+                        <tr>
+                            <td>${tickets.get(i).getExposition().getTitle()}</td>
+                            <td>${tickets.get(i).getExposition().getHall().getName()}</td>
+                            <td>${ticketAmount.get(i)}</td>
+                            <td>${tickets.get(i).getValidDate()}</td>
+                            <td>
+                                <form action="user" method="get">
+                                    <input type="hidden" name="command" value="download"/>
+                                    <input type="hidden" name="paymentId" value="${tickets.get(i).getPayment().getId()}"/>
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                </form>
+                            </td>
 
-                </tr>
-            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:otherwise>
+        </c:choose>
 
-            </tbody>
-        </table>
     </div>
 </div>
 </body>

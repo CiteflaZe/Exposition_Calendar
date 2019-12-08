@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
-    private static Pattern[] patterns = new Pattern[]{
+    private static final Pattern[] PATTERNS = new Pattern[]{
             // Script fragments
             Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE),
             // src='...'
@@ -64,7 +64,7 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         if (value != null) {
             value = value.replaceAll("\0", "");
 
-            for (Pattern scriptPattern : patterns){
+            for (Pattern scriptPattern : PATTERNS){
                 value = scriptPattern.matcher(value).replaceAll("");
             }
         }
