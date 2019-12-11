@@ -10,3 +10,8 @@ Also, unlike user, admin can view all expositions not only unfinished.
 Пользователь также имеет возможность просматривать все свои билеты и загружать их в формате PDF.
 Администратор может добавить новую экспозицию и зал, где можно проводить экспозиции.
 Также, в отличие от пользователя, админ может просматривать все экспозиции не только незавершенные.
+##
+Running the project:
+1. Clone project to your local repository
+2. Execute database scripts
+3. Run the project using Tomcat
